@@ -1237,7 +1237,7 @@ body.admin-unlocked .content-card-admin { display:flex; }
       <button type="button" class="content-admin-btn" id="serverAddBtn"><i class="fa-solid fa-plus"></i> Tambah Information</button>
     </div>
 
-    <div class="server-grid" id="serverInfoGrid"><div class="server-card"><div class="server-icon">🏆</div><h2>Weekly Champion</h2><p>Coming Soon</p><span>00:00 WIB</span><div class="content-card-admin"><button type="button" data-server-edit="server-1" title="Edit"><i class="fa-solid fa-pen"></i></button><button type="button" class="delete" data-server-delete="server-1" title="Hapus"><i class="fa-solid fa-trash"></i></button></div></div><div class="server-card"><div class="server-icon">⚔</div><h2>GM Invasion</h2><p>Invasion Every Day</p><span>19.00 - 20.00 WIB</span><div class="content-card-admin"><button type="button" data-server-edit="server-2" title="Edit"><i class="fa-solid fa-pen"></i></button><button type="button" class="delete" data-server-delete="server-2" title="Hapus"><i class="fa-solid fa-trash"></i></button></div></div><div class="server-card"><div class="server-icon">💎</div><h2>Server Rate</h2><p>Coming Soon</p><span>tester</span><div class="content-card-admin"><button type="button" data-server-edit="server-3" title="Edit"><i class="fa-solid fa-pen"></i></button><button type="button" class="delete" data-server-delete="server-3" title="Hapus"><i class="fa-solid fa-trash"></i></button></div></div><div class="server-card"><div class="server-icon">🔥</div><h2>Active Event</h2><p>Coming Soon</p><span>Special Reward Box</span><div class="content-card-admin"><button type="button" data-server-edit="server-4" title="Edit"><i class="fa-solid fa-pen"></i></button><button type="button" class="delete" data-server-delete="server-4" title="Hapus"><i class="fa-solid fa-trash"></i></button></div></div></div>
+    <div class="server-grid" id="serverInfoGrid"><div class="server-card"><div class="server-icon">🏆</div><h2>Weekly Champion</h2><p>Coming Soon</p><span>00:00 WIB</span><div class="content-card-admin"><button type="button" data-server-edit="server-1" title="Edit"><i class="fa-solid fa-pen"></i></button><button type="button" class="delete" data-server-delete="server-1" title="Hapus"><i class="fa-solid fa-trash"></i></button></div></div><div class="server-card"><div class="server-icon">⚔</div><h2>GM Invasion</h2><p>Invasion Every Day</p><span>19:00 - 20:00 WIB</span><div class="content-card-admin"><button type="button" data-server-edit="server-2" title="Edit"><i class="fa-solid fa-pen"></i></button><button type="button" class="delete" data-server-delete="server-2" title="Hapus"><i class="fa-solid fa-trash"></i></button></div></div><div class="server-card"><div class="server-icon">💎</div><h2>Server Rate</h2><p>Coming Soon</p><span>tester</span><div class="content-card-admin"><button type="button" data-server-edit="server-3" title="Edit"><i class="fa-solid fa-pen"></i></button><button type="button" class="delete" data-server-delete="server-3" title="Hapus"><i class="fa-solid fa-trash"></i></button></div></div><div class="server-card"><div class="server-icon">🔥</div><h2>Active Event</h2><p>Coming Soon</p><span>Special Reward Box</span><div class="content-card-admin"><button type="button" data-server-edit="server-4" title="Edit"><i class="fa-solid fa-pen"></i></button><button type="button" class="delete" data-server-delete="server-4" title="Hapus"><i class="fa-solid fa-trash"></i></button></div></div></div>
 
 </section>
 
@@ -1408,7 +1408,7 @@ The Legendary MMORPG Returns
 
    <!-- EXYNOS Security Popup -->
 <div id="exynos-popup" style="display: none;">
-    <div class="popup-box">
+    <div class="popup-box" style="transform: translate(0px, 0px);">
 
         <h2 style="margin:0;">
     🛡️ <span class="emoji">😜</span>
@@ -1424,7 +1424,7 @@ The Legendary MMORPG Returns
 
         </p>
 
-        <button id="popup-ok">OK</button>
+        <button id="popup-ok" style="left: 0px; top: 0px;">OK</button>
 
     </div>
 </div>
@@ -1451,7 +1451,7 @@ The Legendary MMORPG Returns
 <div class="modal-overlay download-modal-wide" id="patchModal">
   <div class="modal-box">
     <h3><i class="fa-solid fa-file-zipper"></i> Kelola Manual Patch</h3>
-    <div id="patchList"></div>
+    <div id="patchList"><table class="download-list-table"><thead><tr><th>Patch</th><th>Versi</th><th>Size</th><th>Aksi</th></tr></thead><tbody><tr><td>07.08.26</td><td>Fixed</td><td>21.6</td><td class="actions"><a href="https://www.mediafire.com/file/xssidoy8gljuf54/manual_update_3_Fix.rar/file" target="_blank" rel="noopener" class="download-edit-btn" style="display:inline-block">Download</a><button class="patch-admin-control" data-pedit="patch-1786118836012-l5mcd"><i class="fa-solid fa-pen"></i></button><button class="delete patch-admin-control" data-pdelete="patch-1786118836012-l5mcd"><i class="fa-solid fa-trash"></i></button></td></tr></tbody></table></div>
     <button type="button" class="btn-add-row patch-admin-control" id="patchAdd"><i class="fa-solid fa-plus"></i> Tambah Patch</button>
     <div class="modal-actions">
       <button class="btn-cancel" id="patchClose">Tutup</button>
@@ -1495,7 +1495,7 @@ The Legendary MMORPG Returns
 
 <div class="modal-overlay content-modal-wide" id="serverEditModal">
   <div class="modal-box">
-    <h3><i class="fa-solid fa-server"></i> <span id="serverEditTitle">Tambah Server Information</span></h3>
+    <h3><i class="fa-solid fa-server"></i> <span id="serverEditTitle">Edit Server Information</span></h3>
     <div class="content-form-grid">
       <div><label>Icon</label><input id="serverIcon" type="text" placeholder="🔥"></div>
       <div><label>Judul</label><input id="serverTitle" type="text" placeholder="Active Event"></div>
