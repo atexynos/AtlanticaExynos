@@ -1690,10 +1690,24 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function loadRankData() {
+        // Local admin edits are kept after refresh until they are published.
+        try {
+            if (localStorage.getItem(RANK_STORAGE_KEY + "_dirty") === "1") {
+                const local = localStorage.getItem(RANK_STORAGE_KEY);
+                if (local) return JSON.parse(local);
+            }
+        } catch (e) {}
         try {
             if (window.SITE_DATA && window.SITE_DATA.ranking) {
-                return JSON.parse(JSON.stringify(window.SITE_DATA.ranking));
+                const remote = JSON.parse(JSON.stringify(window.SITE_DATA.ranking));
+                localStorage.setItem(RANK_STORAGE_KEY, JSON.stringify(remote));
+                localStorage.removeItem(RANK_STORAGE_KEY + "_dirty");
+                return remote;
             }
+        } catch (e) {}
+        try {
+            const local = localStorage.getItem(RANK_STORAGE_KEY);
+            if (local) return JSON.parse(local);
         } catch (e) {}
         return null;
     }
@@ -1701,6 +1715,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function saveRankData(data) {
         try {
             localStorage.setItem(RANK_STORAGE_KEY, JSON.stringify(data));
+            localStorage.setItem(RANK_STORAGE_KEY + "_dirty", "1");
         } catch (e) {
             console.warn("Gagal menyimpan data ranking:", e);
         }
@@ -1996,6 +2011,27 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         window.SITE_DATA = data;
+
+        // GitHub now contains the browser edits; mark this browser as clean.
+        [
+            RANK_STORAGE_KEY,
+            NEWS_STORAGE_KEY,
+            SERVER_STORAGE_KEY,
+            DOWNLOAD_STORAGE_KEY,
+            "atlantica_patches_v1"
+        ].forEach(function (key) {
+            try { localStorage.removeItem(key + "_dirty"); } catch (e) {}
+        });
+
+        // Keep localStorage exactly equal to what was just published.
+        try {
+            localStorage.setItem(RANK_STORAGE_KEY, JSON.stringify(data.ranking));
+            localStorage.setItem(NEWS_STORAGE_KEY, JSON.stringify(data.news));
+            localStorage.setItem(SERVER_STORAGE_KEY, JSON.stringify(data.server));
+            localStorage.setItem(DOWNLOAD_STORAGE_KEY, JSON.stringify(data.downloads));
+            localStorage.setItem("atlantica_patches_v1", JSON.stringify(data.patches));
+        } catch (e) {}
+
         githubStatus.className = "github-status success";
         githubStatus.textContent = "Berhasil publish! GitHub sudah menerima data terbaru. Tunggu beberapa saat sampai GitHub Pages selesai deploy.";
     }
@@ -2032,11 +2068,11 @@ document.addEventListener("DOMContentLoaded", function () {
             // This fixes the old behavior where the downloaded HTML had new values
             // while localStorage still contained an older copy.
             try {
-                localStorage.setItem(RANK_STORAGE_KEY, JSON.stringify(rankData));
-                localStorage.setItem(NEWS_STORAGE_KEY, JSON.stringify(newsData));
-                localStorage.setItem(SERVER_STORAGE_KEY, JSON.stringify(serverData));
-                localStorage.setItem(DOWNLOAD_STORAGE_KEY, JSON.stringify(downloadData));
-                localStorage.setItem("atlantica_patches_v1", JSON.stringify(patchData));
+                saveRankData(rankData);
+                saveJsonStorage(NEWS_STORAGE_KEY, newsData);
+                saveJsonStorage(SERVER_STORAGE_KEY, serverData);
+                saveJsonStorage(DOWNLOAD_STORAGE_KEY, downloadData);
+                saveJsonStorage("atlantica_patches_v1", patchData);
             } catch (e) {
                 console.warn("Gagal menyinkronkan localStorage sebelum backup:", e);
             }
@@ -2251,6 +2287,14 @@ document.addEventListener("DOMContentLoaded", function () {
     ];
 
     function loadJsonStorage(key, fallback) {
+        // If the admin has unsaved-to-GitHub local changes, keep them across refresh.
+        try {
+            if (localStorage.getItem(key + "_dirty") === "1") {
+                const local = localStorage.getItem(key);
+                if (local) return JSON.parse(local);
+            }
+        } catch (e) {}
+
         try {
             const published = window.SITE_DATA || {};
             const sourceMap = {
@@ -2262,12 +2306,17 @@ document.addEventListener("DOMContentLoaded", function () {
             const remote = sourceMap[key];
             if (Array.isArray(remote)) {
                 const fresh = JSON.parse(JSON.stringify(remote));
-                // Keep localStorage synchronized with the live/published source.
-                // This makes the browser cache match what is actually shown.
                 localStorage.setItem(key, JSON.stringify(fresh));
+                localStorage.removeItem(key + "_dirty");
                 return fresh;
             }
         } catch (e) {}
+
+        try {
+            const existing = localStorage.getItem(key);
+            if (existing) return JSON.parse(existing);
+        } catch (e) {}
+
         try {
             const fresh = fallback.map(x => ({...x}));
             localStorage.setItem(key, JSON.stringify(fresh));
@@ -2279,7 +2328,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function saveJsonStorage(key, data) {
         // Every admin edit is persisted immediately to browser storage.
+        // Dirty flag prevents the next page refresh from overwriting the edit
+        // with the older published copy until the admin clicks Publish.
         localStorage.setItem(key, JSON.stringify(data));
+        localStorage.setItem(key + "_dirty", "1");
     }
 
     let downloadData = loadJsonStorage(DOWNLOAD_STORAGE_KEY, DOWNLOAD_DEFAULTS);
