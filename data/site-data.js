@@ -117,7 +117,8 @@ window.SITE_DATA = {
       "title": "Grand Opening",
       "image": "assets/news/news1.jpg",
       "description": "Atlantica Classic V3 Exynos Official Launch.",
-      "url": "#"
+      "url": "#",
+      "events": []
     },
     {
       "id": "news-2",
@@ -125,7 +126,8 @@ window.SITE_DATA = {
       "title": "Weekend Event",
       "image": "assets/news/news2.jpg",
       "description": "Coming Soon",
-      "url": "#"
+      "url": "#",
+      "events": []
     },
     {
       "id": "news-3",
@@ -133,7 +135,8 @@ window.SITE_DATA = {
       "title": "Patch Notes",
       "image": "assets/news/news3.jpg",
       "description": "Coming Soon",
-      "url": "#"
+      "url": "#",
+      "events": []
     }
   ],
   "server": [

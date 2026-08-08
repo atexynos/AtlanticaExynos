@@ -1655,12 +1655,13 @@ The Legendary MMORPG Returns
             <div><label>Repository</label><input id="ghRepo" type="text" value="AtlanticaExynos" autocomplete="off"></div>
             <div><label>Branch</label><input id="ghBranch" type="text" value="main" autocomplete="off"></div>
             <div><label>File</label><input id="ghPath" type="text" value="data/site-data.js" autocomplete="off"></div>
-            <div class="full"><label>GitHub Fine-grained Token</label><input id="ghToken" type="password" placeholder="github_pat_..." autocomplete="off"></div>
+            <div class="full"><label>GitHub Fine-grained Token</label><input id="ghToken" type="password" placeholder="github_pat_..." autocomplete="off"><small style="display:block;margin-top:6px;color:var(--foam-dim)">Token disimpan hanya di browser admin ini. Jangan kirim token ke siapa pun.</small></div>
             <div class="full"><label>Commit Message</label><input id="ghMessage" type="text" value="Update website content from admin panel"></div>
         </div>
         <div id="githubStatus" class="github-status"></div>
         <div class="modal-actions">
             <button class="btn-cancel" id="githubCancelBtn" type="button">Batal</button>
+            <button class="btn-cancel" id="githubTestBtn" type="button"><i class="fa-solid fa-plug"></i> Test</button>
             <button class="btn-save" id="githubPublishBtn" type="button"><i class="fa-solid fa-cloud-arrow-up"></i> Publish</button>
         </div>
     </div>
@@ -2004,6 +2005,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const publishSiteBtn = document.getElementById("publishSiteBtn");
     const githubCancelBtn = document.getElementById("githubCancelBtn");
     const githubPublishBtn = document.getElementById("githubPublishBtn");
+    const githubTestBtn = document.getElementById("githubTestBtn");
     const githubStatus = document.getElementById("githubStatus");
     const ghOwner = document.getElementById("ghOwner");
     const ghRepo = document.getElementById("ghRepo");
@@ -2011,6 +2013,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const ghPath = document.getElementById("ghPath");
     const ghToken = document.getElementById("ghToken");
     const ghMessage = document.getElementById("ghMessage");
+    const GITHUB_TOKEN_KEY = "atlantica_github_token_v1";
 
     (function restoreGithubSettings() {
         try {
@@ -2027,8 +2030,8 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!githubModal) return;
         githubStatus.textContent = "";
         githubStatus.className = "github-status";
-        const sessionToken = sessionStorage.getItem("atlantica_github_token_v1");
-        if (sessionToken) ghToken.value = sessionToken;
+        const savedToken = localStorage.getItem(GITHUB_TOKEN_KEY) || sessionStorage.getItem(GITHUB_TOKEN_KEY) || "";
+        if (savedToken) ghToken.value = savedToken;
         githubModal.classList.add("open");
         if (ghToken) setTimeout(() => ghToken.focus(), 50);
     }
@@ -2064,7 +2067,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     async function githubApi(url, options) {
-        const token = ghToken.value.trim() || sessionStorage.getItem("atlantica_github_token_v1") || "";
+        const token = ghToken.value.trim() || localStorage.getItem(GITHUB_TOKEN_KEY) || sessionStorage.getItem(GITHUB_TOKEN_KEY) || "";
         if (!token) throw new Error("GitHub token belum diisi.");
         const headers = Object.assign({
             "Accept": "application/vnd.github+json",
@@ -2083,13 +2086,44 @@ document.addEventListener("DOMContentLoaded", function () {
         return body;
     }
 
+    async function testGithubConnection() {
+        const owner = ghOwner.value.trim();
+        const repo = ghRepo.value.trim();
+        const token = ghToken.value.trim() || localStorage.getItem(GITHUB_TOKEN_KEY) || sessionStorage.getItem(GITHUB_TOKEN_KEY) || "";
+        if (!owner || !repo || !token) {
+            githubStatus.className = "github-status error";
+            githubStatus.textContent = "Isi Owner, Repository, dan Token terlebih dahulu.";
+            return;
+        }
+        githubStatus.className = "github-status";
+        githubStatus.textContent = "Mengecek koneksi GitHub...";
+        githubTestBtn.disabled = true;
+        try {
+            localStorage.setItem(GITHUB_TOKEN_KEY, token);
+            sessionStorage.setItem(GITHUB_TOKEN_KEY, token);
+            const apiBase = "https://api.github.com/repos/" + encodeURIComponent(owner) + "/" + encodeURIComponent(repo);
+            await githubApi(apiBase, {method: "GET"});
+            githubStatus.className = "github-status success";
+            githubStatus.textContent = "Koneksi OK ✓ Token bisa mengakses repository. Silakan Publish.";
+        } catch (e) {
+            let msg = e.message || "Gagal terhubung ke GitHub.";
+            if (/401|Bad credentials/i.test(msg)) msg = "Token salah / expired. Buat token GitHub baru.";
+            else if (/403|Forbidden/i.test(msg)) msg = "Token tidak punya izin. Aktifkan Contents: Read and write pada repository.";
+            else if (/404|Not Found/i.test(msg)) msg = "Repository tidak ditemukan. Cek Owner dan Repository.";
+            githubStatus.className = "github-status error";
+            githubStatus.textContent = msg;
+        } finally {
+            githubTestBtn.disabled = false;
+        }
+    }
+
     async function publishToGithub() {
         const owner = ghOwner.value.trim();
         const repo = ghRepo.value.trim();
         const branch = ghBranch.value.trim() || "main";
         const path = ghPath.value.trim() || "data/site-data.js";
         const message = ghMessage.value.trim() || "Update website content";
-        const token = ghToken.value.trim() || sessionStorage.getItem("atlantica_github_token_v1") || "";
+        const token = ghToken.value.trim() || localStorage.getItem(GITHUB_TOKEN_KEY) || sessionStorage.getItem(GITHUB_TOKEN_KEY) || "";
 
         if (!owner || !repo || !token) {
             throw new Error("Owner, repository, dan GitHub token wajib diisi.");
@@ -2097,7 +2131,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const settings = {owner, repo, branch, path, message};
         localStorage.setItem("atlantica_github_settings_v1", JSON.stringify(settings));
-        sessionStorage.setItem("atlantica_github_token_v1", token);
+        localStorage.setItem(GITHUB_TOKEN_KEY, token);
+        sessionStorage.setItem(GITHUB_TOKEN_KEY, token);
 
         const apiBase = "https://api.github.com/repos/" + encodeURIComponent(owner) + "/" + encodeURIComponent(repo);
         const fileUrl = apiBase + "/contents/" + path.split("/").map(encodeURIComponent).join("/") + "?ref=" + encodeURIComponent(branch);
@@ -2158,6 +2193,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     if (publishSiteBtn) publishSiteBtn.addEventListener("click", openGithubModal);
+    if (githubTestBtn) githubTestBtn.addEventListener("click", testGithubConnection);
     if (githubCancelBtn) githubCancelBtn.addEventListener("click", closeGithubModal);
     if (githubModal) githubModal.addEventListener("click", e => { if (e.target === githubModal) closeGithubModal(); });
     if (githubPublishBtn) githubPublishBtn.addEventListener("click", async function () {
