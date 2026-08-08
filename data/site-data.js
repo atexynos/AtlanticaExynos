@@ -1,7 +1,7 @@
 /* Atlantica Classic V3 Exynos - published site data. Managed by the web admin editor. */
 window.SITE_DATA = {
   "version": 1,
-  "updatedAt": "2026-08-07T00:00:00Z",
+  "updatedAt": "2026-08-08T00:00:00Z",
   "ranking": {
     "topPlayer": [
       [
