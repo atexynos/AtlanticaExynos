@@ -1120,6 +1120,104 @@ body.admin-unlocked .content-card-admin { display:flex; }
   .download-form-grid .full { grid-column:auto; }
   .patch-item { grid-template-columns:1fr; }
 }
+
+/* =========================================================
+   LATEST NEWS EVENT DETAIL
+   ========================================================= */
+.news-event-manager-head {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  margin-bottom:12px;
+  padding:14px 16px;
+  border:1px solid var(--stone);
+  border-radius:10px;
+  background:rgba(255,255,255,.025);
+}
+.news-event-manager-head strong { color:var(--foam); display:block; }
+.news-event-manager-head small { color:var(--foam-dim); display:block; margin-top:5px; }
+.btn-add-row {
+  border:1px solid rgba(47,208,201,.35);
+  background:rgba(47,208,201,.08);
+  color:var(--aqua);
+  border-radius:7px;
+  padding:9px 13px;
+  cursor:pointer;
+  font-weight:600;
+}
+.news-event-list { display:grid; gap:12px; }
+.news-event-admin-card {
+  border:1px solid var(--stone);
+  border-radius:10px;
+  padding:14px;
+  background:linear-gradient(180deg,var(--deep-2),var(--deep));
+}
+.news-event-admin-grid {
+  display:grid;
+  grid-template-columns:1fr 190px;
+  gap:10px;
+}
+.news-event-admin-card textarea { min-height:110px; resize:vertical; }
+.news-event-admin-card .event-full { grid-column:1 / -1; }
+.news-event-admin-actions { display:flex; justify-content:flex-end; margin-top:9px; }
+.news-event-delete {
+  border:1px solid rgba(220,80,80,.35);
+  background:rgba(220,80,80,.08);
+  color:#ffb0b0;
+  border-radius:6px;
+  padding:7px 10px;
+  cursor:pointer;
+}
+.news-event-empty {
+  text-align:center;
+  padding:20px;
+  color:var(--foam-dim);
+  border:1px dashed var(--stone);
+  border-radius:10px;
+}
+.news-event-chooser-box { max-width:720px; }
+.news-event-chooser-sub { color:var(--foam-dim); margin:-6px 0 18px; }
+.news-event-chooser-list { display:grid; gap:12px; max-height:55vh; overflow:auto; }
+.news-event-choice {
+  width:100%;
+  text-align:left;
+  border:1px solid var(--stone);
+  border-radius:10px;
+  background:linear-gradient(180deg,var(--deep-2),var(--deep));
+  color:var(--foam);
+  padding:16px;
+  cursor:pointer;
+  transition:.2s ease;
+}
+.news-event-choice:hover {
+  transform:translateY(-2px);
+  border-color:rgba(217,180,90,.55);
+  box-shadow:0 10px 24px rgba(0,0,0,.25);
+}
+.news-event-choice-date {
+  color:var(--aqua);
+  font-size:.75rem;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.news-event-choice-title {
+  display:block;
+  font-family:var(--font-display);
+  color:var(--gold-bright);
+  font-size:1.05rem;
+  margin:6px 0;
+}
+.news-event-choice-desc {
+  display:block;
+  color:var(--foam-dim);
+  font-size:.88rem;
+}
+.news-event-no-data { color:var(--foam-dim); text-align:center; padding:24px; }
+@media (max-width:700px) {
+  .news-event-manager-head { align-items:flex-start; flex-direction:column; }
+  .news-event-admin-grid { grid-template-columns:1fr; }
+}
 </style>
 
 </head>
@@ -1213,7 +1311,8 @@ body.admin-unlocked .content-card-admin { display:flex; }
   <button type="button" class="content-admin-btn" id="newsAddBtn"><i class="fa-solid fa-plus"></i> Tambah News</button>
 </div>
 
-<div class="news-grid" id="newsGrid"><div class="news-item"><img src="assets/news/news1.jpg" alt="Grand Opening"><div class="news-info"><span>28 JULY 2026</span><h2>Grand Opening</h2><p>Atlantica Classic V3 Exynos Official Launch.</p><a href="#" target="_blank" rel="noopener">Read More →</a></div><div class="content-card-admin"><button type="button" data-news-edit="news-1" title="Edit"><i class="fa-solid fa-pen"></i></button><button type="button" class="delete" data-news-delete="news-1" title="Hapus"><i class="fa-solid fa-trash"></i></button></div></div><div class="news-item"><img src="assets/news/news2.jpg" alt="Weekend Event"><div class="news-info"><span>30 JULY 2026</span><h2>Weekend Event</h2><p>Coming Soon</p><a href="#" target="_blank" rel="noopener">Read More →</a></div><div class="content-card-admin"><button type="button" data-news-edit="news-2" title="Edit"><i class="fa-solid fa-pen"></i></button><button type="button" class="delete" data-news-delete="news-2" title="Hapus"><i class="fa-solid fa-trash"></i></button></div></div><div class="news-item"><img src="assets/news/news3.jpg" alt="Patch Notes"><div class="news-info"><span>01 AUGUST 2026</span><h2>Patch Notes</h2><p>Coming Soon</p><a href="#" target="_blank" rel="noopener">Read More →</a></div><div class="content-card-admin"><button type="button" data-news-edit="news-3" title="Edit"><i class="fa-solid fa-pen"></i></button><button type="button" class="delete" data-news-delete="news-3" title="Hapus"><i class="fa-solid fa-trash"></i></button></div></div></div>
+<div class="news-grid" id="newsGrid"><div class="news-item"><img src="assets/news/news1.jpg" alt="📢 ATLANTICA EXYNOS – DEVELOPMENT PROGRESS"><div class="news-info"><span>28 JULY 2026</span><h2>📢 ATLANTICA EXYNOS – DEVELOPMENT PROGRESS</h2><p>Grand Opening Release – 28 July 2026</p><a href="#" class="news-read-more" data-news-read="news-1">Read More <small>(1 Event)</small> →</a></div><div class="content-card-admin"><button type="button" data-news-edit="news-1" title="Edit"><i class="fa-solid fa-pen"></i></button><button type="button" class="delete" data-news-delete="news-1" title="Hapus"><i class="fa-solid fa-trash"></i></button></div></div><div class="news-item"><img src="assets/news/news2.jpg" alt="🎉 EXYNOS WEEKLY EVENT"><div class="news-info"><span>30 JULY 2026</span><h2>🎉 EXYNOS WEEKLY EVENT</h2><p></p><a href="#" class="news-read-more" data-news-read="news-2">Read More <small>(1 Event)</small> →</a></div><div class="content-card-admin"><button type="button" data-news-edit="news-2" title="Edit"><i class="fa-solid fa-pen"></i></button><button type="button" class="delete" data-news-delete="news-2" title="Hapus"><i class="fa-solid fa-trash"></i></button></div></div><div class="news-item"><img src="assets/news/news3.jpg" alt="📢 [PENGUMUMAN]"><div class="news-info"><span>08 AUGUST 2026</span><h2>📢 [PENGUMUMAN]</h2><p>Halo Atlantian Exynos!
+Maintenance optimalisasi server telah SELESAI. Terima kasih atas kesabaran dan dukungan kalian selama proses berlangsung.</p><a href="#" class="news-read-more" data-news-read="news-3">Read More <small>(1 Event)</small> →</a></div><div class="content-card-admin"><button type="button" data-news-edit="news-3" title="Edit"><i class="fa-solid fa-pen"></i></button><button type="button" class="delete" data-news-delete="news-3" title="Hapus"><i class="fa-solid fa-trash"></i></button></div></div></div>
 
 </section>
 
@@ -1237,7 +1336,7 @@ body.admin-unlocked .content-card-admin { display:flex; }
       <button type="button" class="content-admin-btn" id="serverAddBtn"><i class="fa-solid fa-plus"></i> Tambah Information</button>
     </div>
 
-    <div class="server-grid" id="serverInfoGrid"><div class="server-card"><div class="server-icon">🏆</div><h2>Weekly Champion</h2><p>Coming Soon</p><span>00:00 WIB</span><div class="content-card-admin"><button type="button" data-server-edit="server-1" title="Edit"><i class="fa-solid fa-pen"></i></button><button type="button" class="delete" data-server-delete="server-1" title="Hapus"><i class="fa-solid fa-trash"></i></button></div></div><div class="server-card"><div class="server-icon">⚔</div><h2>GM Invasion</h2><p>Every Day</p><span>19:00-20:00 WIB</span><div class="content-card-admin"><button type="button" data-server-edit="server-2" title="Edit"><i class="fa-solid fa-pen"></i></button><button type="button" class="delete" data-server-delete="server-2" title="Hapus"><i class="fa-solid fa-trash"></i></button></div></div><div class="server-card"><div class="server-icon">💎</div><h2>Server Rate</h2><p>Coming Soon</p><span>tester</span><div class="content-card-admin"><button type="button" data-server-edit="server-3" title="Edit"><i class="fa-solid fa-pen"></i></button><button type="button" class="delete" data-server-delete="server-3" title="Hapus"><i class="fa-solid fa-trash"></i></button></div></div><div class="server-card"><div class="server-icon">🔥</div><h2>Active Event</h2><p>Coming Soon</p><span>Special Reward Box</span><div class="content-card-admin"><button type="button" data-server-edit="server-4" title="Edit"><i class="fa-solid fa-pen"></i></button><button type="button" class="delete" data-server-delete="server-4" title="Hapus"><i class="fa-solid fa-trash"></i></button></div></div></div>
+    <div class="server-grid" id="serverInfoGrid"><div class="server-card"><div class="server-icon">⚔</div><h2>GM Invasion</h2><p>Every Day</p><span>19:00-20:00 WIB</span><div class="content-card-admin"><button type="button" data-server-edit="server-2" title="Edit"><i class="fa-solid fa-pen"></i></button><button type="button" class="delete" data-server-delete="server-2" title="Hapus"><i class="fa-solid fa-trash"></i></button></div></div><div class="server-card"><div class="server-icon">💎</div><h2>Server Rate</h2><p>Coming Soon</p><span>tester</span><div class="content-card-admin"><button type="button" data-server-edit="server-3" title="Edit"><i class="fa-solid fa-pen"></i></button><button type="button" class="delete" data-server-delete="server-3" title="Hapus"><i class="fa-solid fa-trash"></i></button></div></div><div class="server-card"><div class="server-icon">🔥</div><h2>Active Event</h2><p>Coming Soon</p><span>Special Reward Box</span><div class="content-card-admin"><button type="button" data-server-edit="server-4" title="Edit"><i class="fa-solid fa-pen"></i></button><button type="button" class="delete" data-server-delete="server-4" title="Hapus"><i class="fa-solid fa-trash"></i></button></div></div></div>
 
 </section>
 
@@ -1408,7 +1507,7 @@ The Legendary MMORPG Returns
 
    <!-- EXYNOS Security Popup -->
 <div id="exynos-popup" style="display: none;">
-    <div class="popup-box">
+    <div class="popup-box" style="transform: translate(0px, 0px);">
 
         <h2 style="margin:0;">
     🛡️ <span class="emoji">😜</span>
@@ -1424,7 +1523,7 @@ The Legendary MMORPG Returns
 
         </p>
 
-        <button id="popup-ok">OK</button>
+        <button id="popup-ok" style="left: 0px; top: 0px;">OK</button>
 
     </div>
 </div>
@@ -1483,12 +1582,34 @@ The Legendary MMORPG Returns
       <div><label>Tanggal</label><input id="newsDate" type="text" placeholder="07 AUGUST 2026"></div>
       <div><label>Judul</label><input id="newsTitle" type="text" placeholder="Patch Update"></div>
       <div class="full"><label>Gambar (path atau URL)</label><input id="newsImage" type="text" placeholder="assets/news/news1.jpg"></div>
-      <div class="full"><label>Deskripsi</label><textarea id="newsDescription" placeholder="Tulis isi berita..."></textarea></div>
-      <div class="full"><label>Link Read More</label><input id="newsUrl" type="url" placeholder="# atau https://..."></div>
+      <div class="full"><label>Deskripsi Singkat</label><textarea id="newsDescription" placeholder="Tulis deskripsi singkat yang tampil di kartu..."></textarea></div>
+      <div class="full"><label>Link Read More (opsional)</label><input id="newsUrl" type="url" placeholder="#"></div>
+      <div class="full">
+        <div class="news-event-manager-head">
+          <div>
+            <strong><i class="fa-solid fa-calendar-days"></i> Daftar Event / Isi Detail</strong>
+            <small>Event akan muncul setelah pengunjung klik <b>Read More</b>.</small>
+          </div>
+          <button type="button" class="btn-add-row" id="newsEventAdd"><i class="fa-solid fa-plus"></i> Tambah Event</button>
+        </div>
+        <div id="newsEventList" class="news-event-list"><div class="news-event-empty">Belum ada event. Klik <b>Tambah Event</b> untuk membuat menu event pertama.</div></div>
+      </div>
     </div>
     <div class="modal-actions">
       <button class="btn-cancel" id="newsEditCancel">Batal</button>
       <button class="btn-save" id="newsEditSave">Simpan</button>
+    </div>
+  </div>
+</div>
+
+<!-- LATEST NEWS EVENT CHOOSER -->
+<div class="modal-overlay content-modal-wide" id="newsEventModal">
+  <div class="modal-box news-event-chooser-box">
+    <h3><i class="fa-solid fa-calendar-days"></i> <span id="newsEventModalTitle">📢 ATLANTICA EXYNOS – DEVELOPMENT PROGRESS</span></h3>
+    <p class="news-event-chooser-sub">Pilih event berdasarkan tanggal untuk membaca detail lengkap.</p>
+    <div id="newsEventChooserList" class="news-event-chooser-list"><button type="button" class="news-event-choice"><span class="news-event-choice-date"></span><span class="news-event-choice-title">Update</span><span class="news-event-choice-desc">Klik untuk membuka detail event di tab baru →</span></button></div>
+    <div class="modal-actions">
+      <button class="btn-cancel" type="button" id="newsEventClose">Tutup</button>
     </div>
   </div>
 </div>
@@ -2115,9 +2236,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const SERVER_STORAGE_KEY = "atlantica_server_info_v1";
 
     const NEWS_DEFAULTS = [
-        { id:"news-1", date:"28 JULY 2026", title:"Grand Opening", image:"assets/news/news1.jpg", description:"Atlantica Classic V3 Exynos Official Launch.", url:"#" },
-        { id:"news-2", date:"30 JULY 2026", title:"Weekend Event", image:"assets/news/news2.jpg", description:"Coming Soon", url:"#" },
-        { id:"news-3", date:"01 AUGUST 2026", title:"Patch Notes", image:"assets/news/news3.jpg", description:"Coming Soon", url:"#" }
+        { id:"news-1", date:"28 JULY 2026", title:"Grand Opening", image:"assets/news/news1.jpg", description:"Atlantica Classic V3 Exynos Official Launch.", url:"#", events:[] },
+        { id:"news-2", date:"30 JULY 2026", title:"Weekend Event", image:"assets/news/news2.jpg", description:"Coming Soon", url:"#", events:[] },
+        { id:"news-3", date:"01 AUGUST 2026", title:"Patch Notes", image:"assets/news/news3.jpg", description:"Coming Soon", url:"#", events:[] }
     ];
 
     const SERVER_DEFAULTS = [
@@ -2132,26 +2253,45 @@ document.addEventListener("DOMContentLoaded", function () {
     let editingNewsId = null;
     let editingServerId = null;
 
+    function normalizeNewsEvents(news) {
+        if (!Array.isArray(news.events)) news.events = [];
+        return news.events;
+    }
+
     function renderNews() {
         const grid = document.getElementById("newsGrid");
         if (!grid) return;
         grid.innerHTML = "";
         newsData.forEach(function(n) {
+            normalizeNewsEvents(n);
             const item = document.createElement("div");
             item.className = "news-item";
+            const hasEvents = n.events.length > 0;
             item.innerHTML =
                 '<img src="' + escapeHtml(n.image || "") + '" alt="' + escapeHtml(n.title || "News") + '">' +
                 '<div class="news-info">' +
                   '<span>' + escapeHtml(n.date || "") + '</span>' +
                   '<h2>' + escapeHtml(n.title || "") + '</h2>' +
                   '<p>' + escapeHtml(n.description || "") + '</p>' +
-                  '<a href="' + escapeHtml(n.url || "#") + '" target="_blank" rel="noopener">Read More →</a>' +
+                  '<a href="' + escapeHtml(n.url || "#") + '" class="news-read-more" data-news-read="' + escapeHtml(n.id) + '">' +
+                    'Read More' + (hasEvents ? ' <small>(' + n.events.length + ' Event)</small>' : '') + ' →</a>' +
                 '</div>' +
                 '<div class="content-card-admin">' +
                   '<button type="button" data-news-edit="' + escapeHtml(n.id) + '" title="Edit"><i class="fa-solid fa-pen"></i></button>' +
                   '<button type="button" class="delete" data-news-delete="' + escapeHtml(n.id) + '" title="Hapus"><i class="fa-solid fa-trash"></i></button>' +
                 '</div>';
             grid.appendChild(item);
+        });
+
+        grid.querySelectorAll("[data-news-read]").forEach(btn => {
+            btn.addEventListener("click", function(e) {
+                const n = newsData.find(x => x.id === btn.dataset.newsRead);
+                if (!n) return;
+                if (Array.isArray(n.events) && n.events.length) {
+                    e.preventDefault();
+                    openNewsEventChooser(n);
+                }
+            });
         });
         grid.querySelectorAll("[data-news-edit]").forEach(btn => btn.addEventListener("click", () => openNewsEditor(btn.dataset.newsEdit)));
         grid.querySelectorAll("[data-news-delete]").forEach(btn => btn.addEventListener("click", () => deleteNews(btn.dataset.newsDelete)));
@@ -2160,34 +2300,154 @@ document.addEventListener("DOMContentLoaded", function () {
     function openNewsEditor(id) {
         const n = id ? newsData.find(x => x.id === id) : null;
         editingNewsId = id || null;
+        if (n) normalizeNewsEvents(n);
         document.getElementById("newsEditTitle").textContent = n ? "Edit Latest News" : "Tambah Latest News";
         document.getElementById("newsDate").value = n ? n.date : "";
         document.getElementById("newsTitle").value = n ? n.title : "";
         document.getElementById("newsImage").value = n ? n.image : "";
         document.getElementById("newsDescription").value = n ? n.description : "";
         document.getElementById("newsUrl").value = n ? n.url : "#";
+        renderNewsEventEditor(n ? n.events : []);
         document.getElementById("newsEditModal").classList.add("open");
     }
-    function closeNewsEditor() { document.getElementById("newsEditModal").classList.remove("open"); editingNewsId = null; }
+
+    function closeNewsEditor() {
+        document.getElementById("newsEditModal").classList.remove("open");
+        editingNewsId = null;
+    }
+
+    function renderNewsEventEditor(events) {
+        const list = document.getElementById("newsEventList");
+        if (!list) return;
+        list.innerHTML = "";
+        if (!events || !events.length) {
+            list.innerHTML = '<div class="news-event-empty">Belum ada event. Klik <b>Tambah Event</b> untuk membuat menu event pertama.</div>';
+            return;
+        }
+        events.forEach(function(ev, index) {
+            const card = document.createElement("div");
+            card.className = "news-event-admin-card";
+            card.innerHTML =
+                '<div class="news-event-admin-grid">' +
+                  '<div><label>Nama Event</label><input type="text" data-ev-title value="' + escapeHtml(ev.title || "") + '" placeholder="Double EXP"></div>' +
+                  '<div><label>Tanggal Event</label><input type="text" data-ev-date value="' + escapeHtml(ev.date || "") + '" placeholder="08 - 10 AUGUST 2026"></div>' +
+                  '<div class="event-full"><label>Detail Event</label><textarea data-ev-content placeholder="Tulis detail event yang panjang di sini...">' + escapeHtml(ev.content || "") + '</textarea></div>' +
+                '</div>' +
+                '<div class="news-event-admin-actions"><button type="button" class="news-event-delete" data-ev-delete="' + index + '"><i class="fa-solid fa-trash"></i> Hapus Event</button></div>';
+            list.appendChild(card);
+        });
+    }
+
+    function collectNewsEvents() {
+        const events = [];
+        document.querySelectorAll("#newsEventList .news-event-admin-card").forEach(function(card, index) {
+            const title = card.querySelector("[data-ev-title]").value.trim();
+            const date = card.querySelector("[data-ev-date]").value.trim();
+            const content = card.querySelector("[data-ev-content]").value.trim();
+            if (title || date || content) {
+                events.push({
+                    id: "event-" + Date.now() + "-" + index,
+                    title: title || "Event",
+                    date: date || "",
+                    content: content || ""
+                });
+            }
+        });
+        return events;
+    }
+
     function saveNews() {
         const data = {
             date: document.getElementById("newsDate").value.trim(),
             title: document.getElementById("newsTitle").value.trim(),
             image: document.getElementById("newsImage").value.trim(),
             description: document.getElementById("newsDescription").value.trim(),
-            url: document.getElementById("newsUrl").value.trim() || "#"
+            url: document.getElementById("newsUrl").value.trim() || "#",
+            events: collectNewsEvents()
         };
         if (!data.title) { alert("Judul news wajib diisi."); return; }
         if (editingNewsId) {
             const n = newsData.find(x => x.id === editingNewsId);
             if (n) Object.assign(n, data);
-        } else { data.id = uid("news"); newsData.push(data); }
-        saveJsonStorage(NEWS_STORAGE_KEY, newsData); renderNews(); closeNewsEditor();
+        } else {
+            data.id = uid("news");
+            newsData.push(data);
+        }
+        saveJsonStorage(NEWS_STORAGE_KEY, newsData);
+        renderNews();
+        closeNewsEditor();
     }
+
     function deleteNews(id) {
         const n = newsData.find(x => x.id === id); if (!n) return;
         if (!confirm('Hapus news "' + n.title + '"?')) return;
-        newsData = newsData.filter(x => x.id !== id); saveJsonStorage(NEWS_STORAGE_KEY, newsData); renderNews();
+        newsData = newsData.filter(x => x.id !== id);
+        saveJsonStorage(NEWS_STORAGE_KEY, newsData);
+        renderNews();
+    }
+
+    function openNewsEventChooser(news) {
+        const modal = document.getElementById("newsEventModal");
+        const list = document.getElementById("newsEventChooserList");
+        document.getElementById("newsEventModalTitle").textContent = news.title || "Event";
+        list.innerHTML = "";
+
+        if (!news.events || !news.events.length) {
+            list.innerHTML = '<div class="news-event-no-data">Belum ada detail event untuk news ini.</div>';
+        } else {
+            news.events.forEach(function(ev) {
+                const button = document.createElement("button");
+                button.type = "button";
+                button.className = "news-event-choice";
+                button.innerHTML =
+                    '<span class="news-event-choice-date">' + escapeHtml(ev.date || "") + '</span>' +
+                    '<span class="news-event-choice-title">' + escapeHtml(ev.title || "Event") + '</span>' +
+                    '<span class="news-event-choice-desc">Klik untuk membuka detail event di tab baru →</span>';
+                button.addEventListener("click", function() {
+                    openNewsEventDetail(news, ev);
+                });
+                list.appendChild(button);
+            });
+        }
+        modal.classList.add("open");
+    }
+
+    function closeNewsEventChooser() {
+        document.getElementById("newsEventModal").classList.remove("open");
+    }
+
+    function openNewsEventDetail(news, ev) {
+        const win = window.open("", "_blank");
+        if (!win) {
+            alert("Tab baru diblokir browser. Izinkan pop-up untuk website ini.");
+            return;
+        }
+        const safeTitle = escapeHtml(ev.title || "Event");
+        const safeDate = escapeHtml(ev.date || "");
+        const safeNews = escapeHtml(news.title || "Latest News");
+        const safeContent = escapeHtml(ev.content || "").replace(/\n/g, "<br>");
+        const safeImage = escapeHtml(news.image || "");
+        win.document.write(
+            '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">' +
+            '<meta name="viewport" content="width=device-width,initial-scale=1.0">' +
+            '<title>' + safeTitle + ' - Atlantica Classic V3 Exynos</title>' +
+            '<style>' +
+            'body{margin:0;background:#07151d;color:#e9f6f5;font-family:Inter,Arial,sans-serif;line-height:1.8}' +
+            '.wrap{max-width:900px;margin:0 auto;padding:40px 22px 80px}' +
+            '.card{background:linear-gradient(180deg,#102632,#091820);border:1px solid rgba(217,180,90,.25);border-radius:16px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.35)}' +
+            'img{display:block;width:100%;max-height:360px;object-fit:cover}' +
+            '.body{padding:30px}.date{color:#2fd0c9;font-size:13px;letter-spacing:.12em;text-transform:uppercase}' +
+            'h1{font-family:Georgia,serif;color:#f0c968;margin:8px 0 4px;font-size:clamp(28px,5vw,46px)}' +
+            '.from{color:#9eb7bd;font-size:14px;margin-bottom:24px}.content{font-size:16px;white-space:normal}' +
+            '.back{display:inline-block;margin-top:28px;padding:10px 18px;border:1px solid rgba(217,180,90,.4);border-radius:8px;color:#f0c968;text-decoration:none}' +
+            '</style></head><body><main class="wrap"><article class="card">' +
+            (safeImage ? '<img src="' + safeImage + '" alt="">' : '') +
+            '<div class="body"><div class="date">' + safeDate + '</div><h1>' + safeTitle + '</h1>' +
+            '<div class="from">Latest News • ' + safeNews + '</div><div class="content">' + safeContent + '</div>' +
+            '<a class="back" href="javascript:window.close()">← Tutup Tab</a></div></article></main></body></html>'
+        );
+        win.document.close();
+        closeNewsEventChooser();
     }
 
     function renderServerInfo() {
@@ -2244,10 +2504,34 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("newsAddBtn")?.addEventListener("click", () => openNewsEditor());
     document.getElementById("newsEditCancel")?.addEventListener("click", closeNewsEditor);
     document.getElementById("newsEditSave")?.addEventListener("click", saveNews);
+    document.getElementById("newsEventAdd")?.addEventListener("click", function() {
+        const list = document.getElementById("newsEventList");
+        const empty = list.querySelector(".news-event-empty");
+        if (empty) empty.remove();
+        const card = document.createElement("div");
+        card.className = "news-event-admin-card";
+        card.innerHTML =
+            '<div class="news-event-admin-grid">' +
+              '<div><label>Nama Event</label><input type="text" data-ev-title placeholder="Double EXP"></div>' +
+              '<div><label>Tanggal Event</label><input type="text" data-ev-date placeholder="08 - 10 AUGUST 2026"></div>' +
+              '<div class="event-full"><label>Detail Event</label><textarea data-ev-content placeholder="Tulis detail event yang panjang di sini..."></textarea></div>' +
+            '</div>' +
+            '<div class="news-event-admin-actions"><button type="button" class="news-event-delete" data-new-event-delete><i class="fa-solid fa-trash"></i> Hapus Event</button></div>';
+        list.appendChild(card);
+        card.querySelector("[data-new-event-delete]").addEventListener("click", () => card.remove());
+    });
     document.getElementById("serverAddBtn")?.addEventListener("click", () => openServerEditor());
     document.getElementById("serverEditCancel")?.addEventListener("click", closeServerEditor);
     document.getElementById("serverEditSave")?.addEventListener("click", saveServerInfo);
     document.getElementById("newsEditModal")?.addEventListener("click", e => { if (e.target.id === "newsEditModal") closeNewsEditor(); });
+    document.getElementById("newsEventClose")?.addEventListener("click", closeNewsEventChooser);
+    document.getElementById("newsEventModal")?.addEventListener("click", e => { if (e.target.id === "newsEventModal") closeNewsEventChooser(); });
+    document.getElementById("newsEventList")?.addEventListener("click", function(e) {
+        const btn = e.target.closest("[data-ev-delete]");
+        if (!btn) return;
+        const card = btn.closest(".news-event-admin-card");
+        if (card) card.remove();
+    });
     document.getElementById("serverEditModal")?.addEventListener("click", e => { if (e.target.id === "serverEditModal") closeServerEditor(); });
     renderNews();
     renderServerInfo();
