@@ -2967,4 +2967,430 @@ okBtn.addEventListener("click", closePopup);
 
 
 
+
+
+<style>
+/* ============ GM EXYNOS AI - Chat Widget ============ */
+/* Diposisikan di POJOK KIRI BAWAH agar tidak bertumpuk dengan
+   tombol admin (.admin-lock-btn) yang ada di pojok KANAN BAWAH. */
+
+.gmai-toggle {
+  position: fixed;
+  left: 18px;
+  bottom: 18px;
+  z-index: 480; /* di bawah modal (999) & di bawah admin-lock-btn (500) */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px 12px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(217, 180, 90, 0.4);
+  background: linear-gradient(135deg, var(--deep-2), var(--deep));
+  color: var(--gold-bright);
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.85rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+.gmai-toggle:hover { transform: translateY(-2px); box-shadow: 0 14px 34px rgba(0,0,0,0.55); }
+.gmai-toggle .gmai-toggle-icon {
+  position: relative;
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, var(--aqua), var(--aqua-dim));
+  display: flex; align-items: center; justify-content: center;
+  color: #052018;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+}
+.gmai-toggle .gmai-dot {
+  position: absolute; top: -2px; right: -2px;
+  width: 10px; height: 10px; border-radius: 50%;
+  background: #3ddc74; border: 2px solid var(--deep);
+  animation: gmaiPulse 1.8s infinite ease-in-out;
+}
+@keyframes gmaiPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(61,220,116,0.55); }
+  50% { box-shadow: 0 0 0 6px rgba(61,220,116,0); }
+}
+.gmai-toggle-label small { display: block; color: var(--foam-dim); font-weight: 400; font-size: 0.68rem; margin-top: 1px; }
+body.gmai-open .gmai-toggle { display: none; }
+
+.gmai-panel {
+  position: fixed;
+  left: 18px;
+  bottom: 18px;
+  z-index: 490; /* selalu di bawah admin modal (999) */
+  width: 360px;
+  max-width: calc(100vw - 32px);
+  height: 500px;
+  max-height: calc(100vh - 100px);
+  background: linear-gradient(180deg, var(--deep-2), var(--deep) 70%);
+  border: 1px solid rgba(217, 180, 90, 0.35);
+  border-radius: 16px;
+  box-shadow: 0 24px 70px rgba(0,0,0,0.55);
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  font-family: var(--font-body);
+}
+body.gmai-open .gmai-panel { display: flex; }
+
+.gmai-header {
+  display: flex; align-items: center; gap: 10px;
+  padding: 14px 14px;
+  background: rgba(7, 24, 36, 0.55);
+  border-bottom: 1px solid rgba(217, 180, 90, 0.25);
+  flex-shrink: 0;
+}
+.gmai-header-avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, var(--aqua), var(--aqua-dim));
+  display: flex; align-items: center; justify-content: center;
+  color: #052018; font-size: 1rem; flex-shrink: 0;
+}
+.gmai-header-text { flex: 1; min-width: 0; }
+.gmai-header-text strong {
+  display: block; color: var(--gold-bright); font-family: var(--font-display);
+  font-size: 0.95rem; letter-spacing: 0.02em;
+}
+.gmai-header-text span {
+  display: flex; align-items: center; gap: 5px;
+  color: #3ddc74; font-size: 0.72rem; margin-top: 2px;
+}
+.gmai-header-text span i { font-size: 0.5rem; }
+.gmai-close {
+  width: 30px; height: 30px; border-radius: 8px; border: none;
+  background: transparent; color: var(--foam-dim); cursor: pointer;
+  font-size: 0.95rem; display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.gmai-close:hover { background: rgba(228, 87, 46, 0.15); color: var(--coral); }
+
+.gmai-messages {
+  flex: 1; overflow-y: auto; padding: 16px 14px;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.gmai-messages::-webkit-scrollbar { width: 6px; }
+.gmai-messages::-webkit-scrollbar-thumb { background: rgba(217,180,90,0.3); border-radius: 6px; }
+
+.gmai-msg { max-width: 86%; font-size: 0.83rem; line-height: 1.55; }
+.gmai-msg.bot {
+  align-self: flex-start; background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(217,180,90,0.15);
+  color: var(--foam); padding: 10px 12px; border-radius: 12px 12px 12px 3px;
+}
+.gmai-msg.user {
+  align-self: flex-end; background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+  color: #241705; font-weight: 500; padding: 10px 12px; border-radius: 12px 12px 3px 12px;
+}
+.gmai-msg.bot b { color: var(--gold-bright); }
+.gmai-msg.bot a { color: var(--aqua); text-decoration: underline; }
+.gmai-msg.bot ul { margin: 6px 0 0 16px; list-style: disc; }
+.gmai-msg.bot li { margin-bottom: 3px; }
+.gmai-msg-time { display: block; margin-top: 4px; font-size: 0.62rem; opacity: 0.55; }
+
+.gmai-typing { align-self: flex-start; display: flex; gap: 4px; padding: 10px 12px; }
+.gmai-typing span {
+  width: 6px; height: 6px; border-radius: 50%; background: var(--foam-dim);
+  animation: gmaiTypingBounce 1.1s infinite ease-in-out;
+}
+.gmai-typing span:nth-child(2) { animation-delay: 0.15s; }
+.gmai-typing span:nth-child(3) { animation-delay: 0.3s; }
+@keyframes gmaiTypingBounce { 0%, 60%, 100% { transform: translateY(0); opacity: 0.5; } 30% { transform: translateY(-4px); opacity: 1; } }
+
+.gmai-quick {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  padding: 0 14px 12px;
+  flex-shrink: 0;
+}
+.gmai-chip {
+  border: 1px solid rgba(217,180,90,0.35);
+  background: rgba(217,180,90,0.08);
+  color: var(--gold-bright);
+  font-size: 0.72rem; font-weight: 500;
+  padding: 6px 11px; border-radius: 999px; cursor: pointer;
+  transition: background 0.15s ease, transform 0.15s ease;
+  white-space: nowrap;
+}
+.gmai-chip:hover { background: rgba(217,180,90,0.18); transform: translateY(-1px); }
+
+.gmai-inputrow {
+  display: flex; gap: 8px; padding: 12px;
+  border-top: 1px solid rgba(217,180,90,0.2);
+  background: rgba(7, 24, 36, 0.4);
+  flex-shrink: 0;
+}
+.gmai-inputrow input {
+  flex: 1; min-width: 0; padding: 10px 12px;
+  border-radius: 10px; border: 1px solid rgba(217,180,90,0.25);
+  background: rgba(255,255,255,0.04); color: var(--foam);
+  font-family: var(--font-body); font-size: 0.83rem;
+}
+.gmai-inputrow input:focus { outline: none; border-color: var(--gold-bright); }
+.gmai-inputrow button {
+  width: 40px; height: 40px; border-radius: 10px; border: none;
+  background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+  color: #241705; cursor: pointer; font-size: 0.95rem;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+
+@media (max-width: 640px) {
+  .gmai-toggle { left: 12px; bottom: 12px; padding: 11px 14px 11px 11px; }
+  .gmai-toggle-label span:not(small) { display: none; }
+  .gmai-panel {
+    left: 12px; right: 12px; bottom: 12px;
+    width: auto; max-width: none;
+    height: min(72vh, 560px);
+  }
+}
+</style>
+
+<button type="button" id="gmaiToggle" class="gmai-toggle" aria-label="Buka chat GM EXYNOS AI">
+  <span class="gmai-toggle-icon"><i class="fa-solid fa-robot"></i><span class="gmai-dot"></span></span>
+  <span class="gmai-toggle-label"><span>GM EXYNOS AI</span><small>Online 24 Jam</small></span>
+</button>
+
+<div class="gmai-panel" id="gmaiPanel" role="dialog" aria-label="GM EXYNOS AI Chat">
+  <div class="gmai-header">
+    <div class="gmai-header-avatar"><i class="fa-solid fa-robot"></i></div>
+    <div class="gmai-header-text">
+      <strong>GM EXYNOS AI</strong>
+      <span><i class="fa-solid fa-circle"></i> Online 24 Jam &middot; Auto-Reply</span>
+    </div>
+    <button type="button" class="gmai-close" id="gmaiClose" aria-label="Tutup chat"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+
+  <div class="gmai-messages" id="gmaiMessages"></div>
+
+  <div class="gmai-quick" id="gmaiQuick">
+    <button type="button" class="gmai-chip" data-q="cara download">Cara Download</button>
+    <button type="button" class="gmai-chip" data-q="cara main">Cara Main</button>
+    <button type="button" class="gmai-chip" data-q="leveling">Leveling</button>
+    <button type="button" class="gmai-chip" data-q="info server">Info Server</button>
+    <button type="button" class="gmai-chip" data-q="patch">Update / Patch</button>
+    <button type="button" class="gmai-chip" data-q="ranking">Ranking</button>
+    <button type="button" class="gmai-chip" data-q="media sosial">Media &amp; Sosial</button>
+    <button type="button" class="gmai-chip" data-q="kontak gm">Kontak GM</button>
+  </div>
+
+  <form class="gmai-inputrow" id="gmaiForm">
+    <input type="text" id="gmaiInput" placeholder="Tulis pertanyaanmu..." autocomplete="off" maxlength="200">
+    <button type="submit" aria-label="Kirim"><i class="fa-solid fa-paper-plane"></i></button>
+  </form>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var toggle   = document.getElementById("gmaiToggle");
+  var panel    = document.getElementById("gmaiPanel");
+  var closeBtn = document.getElementById("gmaiClose");
+  var messages = document.getElementById("gmaiMessages");
+  var quick    = document.getElementById("gmaiQuick");
+  var form     = document.getElementById("gmaiForm");
+  var input    = document.getElementById("gmaiInput");
+
+  if (!toggle || !panel) return;
+
+  function data() { return (window.SITE_DATA || {}); }
+
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>]/g, function (c) {
+      return c === "&" ? "&amp;" : c === "<" ? "&lt;" : "&gt;";
+    });
+  }
+
+  function timeNow() {
+    var d = new Date();
+    var h = d.getHours().toString().padStart(2, "0");
+    var m = d.getMinutes().toString().padStart(2, "0");
+    return h + ":" + m;
+  }
+
+  function addMessage(role, html) {
+    var el = document.createElement("div");
+    el.className = "gmai-msg " + (role === "user" ? "user" : "bot");
+    el.innerHTML = html + '<span class="gmai-msg-time">' + timeNow() + "</span>";
+    messages.appendChild(el);
+    messages.scrollTop = messages.scrollHeight;
+    return el;
+  }
+
+  function showTyping(cb) {
+    var t = document.createElement("div");
+    t.className = "gmai-typing";
+    t.innerHTML = "<span></span><span></span><span></span>";
+    messages.appendChild(t);
+    messages.scrollTop = messages.scrollHeight;
+    var delay = 450 + Math.random() * 450;
+    setTimeout(function () {
+      t.remove();
+      cb();
+    }, delay);
+  }
+
+  function reply(html) {
+    showTyping(function () { addMessage("bot", html); });
+  }
+
+  /* ---------- Knowledge base (dibaca live dari window.SITE_DATA) ---------- */
+
+  function downloadAnswer() {
+    var dl = data().downloads || [];
+    if (!dl.length) {
+      return "Link download sedang disiapkan admin. Cek Discord/WhatsApp untuk link terbaru ya.";
+    }
+    var html = "<b>Cara Download Client Atlantica Exynos:</b><ul>";
+    dl.forEach(function (d) {
+      html += "<li><b>" + esc(d.title) + "</b> (" + esc(d.version || "") + (d.size ? ", " + esc(d.size) : "") +
+        ") &mdash; <a href='" + esc(d.url || "#") + "' target='_blank' rel='noopener'>Download di sini</a></li>";
+    });
+    html += "</ul>Setelah selesai download: extract file (pakai WinRAR/7Zip), lalu jalankan launcher untuk mulai bermain. Kalau link mati, laporkan lewat Discord ya!";
+    return html;
+  }
+
+  function howToPlayAnswer() {
+    return "<b>Cara Main Atlantica Exynos:</b><ul>" +
+      "<li>Download &amp; extract client game (ketik <i>\"cara download\"</i> kalau butuh link)</li>" +
+      "<li>Buat akun / daftar sesuai instruksi di website atau Discord server</li>" +
+      "<li>Buka launcher, tunggu proses update/patch selesai</li>" +
+      "<li>Login memakai akun yang sudah didaftarkan</li>" +
+      "<li>Buat karakter, pilih job/class favoritmu</li>" +
+      "<li>Ikuti quest tutorial sampai selesai untuk mulai petualangan</li>" +
+      "</ul>Kalau ada kendala saat instalasi, tanyakan di Discord ya, GM siap bantu.";
+  }
+
+  function levelingAnswer() {
+    return "<b>Tips Leveling Cepat:</b><ul>" +
+      "<li>Selesaikan quest utama (main quest) dulu, EXP-nya paling besar</li>" +
+      "<li>Grinding di hunting spot yang sesuai level karaktermu (jangan terlalu jauh di atas level)</li>" +
+      "<li>Main bareng party/team biar dapat bonus EXP dan lebih aman</li>" +
+      "<li>Ikuti event server seperti <i>GM Invasion</i> &amp; <i>Weekly Champion</i> untuk reward tambahan</li>" +
+      "<li>Manfaatkan item/EXP card dari event kalau ada</li>" +
+      "</ul>Cek menu <i>Server Information</i> di website untuk jadwal event terbaru.";
+  }
+
+  function serverInfoAnswer() {
+    var sv = data().server || [];
+    if (!sv.length) return "Info server belum tersedia saat ini, cek lagi nanti ya.";
+    var html = "<b>Info Server Saat Ini:</b><ul>";
+    sv.forEach(function (s) {
+      html += "<li>" + (s.icon || "") + " <b>" + esc(s.title) + "</b>: " + esc(s.description || "-") +
+        (s.extra ? " (" + esc(s.extra) + ")" : "") + "</li>";
+    });
+    html += "</ul>";
+    return html;
+  }
+
+  function patchAnswer() {
+    var p = data().patches || [];
+    if (!p.length) return "Belum ada manual patch yang perlu di-download saat ini. Client kamu sudah versi terbaru.";
+    var html = "<b>Manual Patch / Update:</b><ul>";
+    p.forEach(function (x) {
+      html += "<li><b>" + esc(x.name) + "</b> (" + esc(x.version || "") + (x.size ? ", " + esc(x.size) : "") +
+        ") &mdash; <a href='" + esc(x.url || "#") + "' target='_blank' rel='noopener'>Download</a></li>";
+    });
+    html += "</ul>Install patch secara berurutan sesuai nomornya ya.";
+    return html;
+  }
+
+  function rankingAnswer() {
+    var r = (data().ranking || {}).topPlayer || [];
+    if (!r.length) return "Data ranking belum tersedia saat ini.";
+    var html = "<b>Top 5 Player Saat Ini:</b><ol>";
+    r.slice(0, 5).forEach(function (row) {
+      html += "<li>" + esc(row[0]) + " &mdash; Level " + esc(row[1]) + "</li>";
+    });
+    html += "</ol>Cek section <i>Ranking</i> di halaman utama untuk daftar lengkap &amp; ranking guild.";
+    return html;
+  }
+
+  function mediaAnswer() {
+    return "<b>Media &amp; Sosial Resmi Atlantica Exynos:</b><ul>" +
+      "<li><i class='fa-brands fa-discord'></i> Discord: <a href='https://discord.gg/BxaH7dsDQM' target='_blank' rel='noopener'>Join Discord</a></li>" +
+      "<li><i class='fa-brands fa-whatsapp'></i> WhatsApp Grup: <a href='https://chat.whatsapp.com/HdmiMmTAYK0INQkH6Dl2T2' target='_blank' rel='noopener'>Gabung Grup</a></li>" +
+      "<li><i class='fa-brands fa-facebook-f'></i> Facebook: <a href='https://www.facebook.com/profile.php?id=100065644143073' target='_blank' rel='noopener'>Kunjungi Halaman</a></li>" +
+      "</ul>Follow biar nggak ketinggalan info event &amp; update terbaru!";
+  }
+
+  function contactGmAnswer() {
+    return "Butuh bantuan langsung dari GM (Game Master)? Silakan chat di " +
+      "<a href='https://discord.gg/BxaH7dsDQM' target='_blank' rel='noopener'>Discord</a> atau " +
+      "<a href='https://chat.whatsapp.com/HdmiMmTAYK0INQkH6Dl2T2' target='_blank' rel='noopener'>WhatsApp</a> kami. " +
+      "Tim GM biasanya standby untuk bantu masalah akun, bug, atau laporan cheat.";
+  }
+
+  function fallbackAnswer() {
+    return "Maaf, GM EXYNOS AI belum paham pertanyaan itu 🙏. Coba pakai salah satu tombol topik di bawah, " +
+      "atau tanya soal: <b>download</b>, <b>cara main</b>, <b>leveling</b>, <b>info server</b>, <b>patch</b>, <b>ranking</b>, " +
+      "atau <b>media sosial</b>. Untuk pertanyaan lain, hubungi GM langsung lewat Discord ya.";
+  }
+
+  var rules = [
+    { kw: ["download", "unduh", "dl client", "instal", "install"], fn: downloadAnswer },
+    { kw: ["cara main", "cara bermain", "main gimana", "mulai main", "gimana cara maen", "tutorial"], fn: howToPlayAnswer },
+    { kw: ["leveling", "level up", "naik level", "grinding", "exp"], fn: levelingAnswer },
+    { kw: ["patch", "update", "manual update"], fn: patchAnswer },
+    { kw: ["ranking", "rank", "peringkat", "top player"], fn: rankingAnswer },
+    { kw: ["server", "rate server", "info server", "event"], fn: serverInfoAnswer },
+    { kw: ["media", "sosial", "discord", "whatsapp", "facebook", "sosmed"], fn: mediaAnswer },
+    { kw: ["gm", "admin", "kontak", "bantuan", "help", "cs"], fn: contactGmAnswer }
+  ];
+
+  function findAnswer(text) {
+    var q = text.toLowerCase();
+    for (var i = 0; i < rules.length; i++) {
+      var kws = rules[i].kw;
+      for (var j = 0; j < kws.length; j++) {
+        if (q.indexOf(kws[j]) !== -1) return rules[i].fn();
+      }
+    }
+    return fallbackAnswer();
+  }
+
+  function handleQuestion(text) {
+    text = (text || "").trim();
+    if (!text) return;
+    addMessage("user", esc(text));
+    reply(findAnswer(text));
+  }
+
+  var greeted = false;
+  function openPanel() {
+    document.body.classList.add("gmai-open");
+    if (!greeted) {
+      greeted = true;
+      addMessage("bot", "Halo, Petualang! 👋 Aku <b>GM EXYNOS AI</b>, siap bantu 24 jam soal Atlantica Classic V3 Exynos. " +
+        "Mau tanya soal apa? Pilih topik di bawah atau ketik langsung.");
+    }
+    setTimeout(function () { input && input.focus(); }, 150);
+  }
+  function closePanel() { document.body.classList.remove("gmai-open"); }
+
+  toggle.addEventListener("click", openPanel);
+  closeBtn.addEventListener("click", closePanel);
+
+  quick.addEventListener("click", function (e) {
+    var btn = e.target.closest(".gmai-chip");
+    if (!btn) return;
+    handleQuestion(btn.getAttribute("data-q"));
+  });
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var v = input.value;
+    input.value = "";
+    handleQuestion(v);
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && document.body.classList.contains("gmai-open")) closePanel();
+  });
+})();
+</script>
+
 </body></html>
