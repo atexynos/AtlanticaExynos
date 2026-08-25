@@ -2970,7 +2970,7 @@ okBtn.addEventListener("click", closePopup);
 
 
 <style>
-/* ============ GM EXYNOS AI - Chat Widget ============ */
+/* ============ GM EXYNOS BOT - Chat Widget ============ */
 /* Diposisikan di POJOK KIRI BAWAH agar tidak bertumpuk dengan
    tombol admin (.admin-lock-btn) yang ada di pojok KANAN BAWAH. */
 
@@ -3148,16 +3148,16 @@ body.gmai-open .gmai-panel { display: flex; }
 }
 </style>
 
-<button type="button" id="gmaiToggle" class="gmai-toggle" aria-label="Buka chat GM EXYNOS AI">
+<button type="button" id="gmaiToggle" class="gmai-toggle" aria-label="Buka chat GM EXYNOS BOT">
   <span class="gmai-toggle-icon"><i class="fa-solid fa-robot"></i><span class="gmai-dot"></span></span>
-  <span class="gmai-toggle-label"><span>GM EXYNOS AI</span><small>Online 24 Jam</small></span>
+  <span class="gmai-toggle-label"><span>GM EXYNOS BOT</span><small>Online 24 Jam</small></span>
 </button>
 
-<div class="gmai-panel" id="gmaiPanel" role="dialog" aria-label="GM EXYNOS AI Chat">
+<div class="gmai-panel" id="gmaiPanel" role="dialog" aria-label="GM EXYNOS BOT Chat">
   <div class="gmai-header">
     <div class="gmai-header-avatar"><i class="fa-solid fa-robot"></i></div>
     <div class="gmai-header-text">
-      <strong>GM EXYNOS AI</strong>
+      <strong>GM EXYNOS BOT</strong>
       <span><i class="fa-solid fa-circle"></i> Online 24 Jam &middot; Auto-Reply</span>
     </div>
     <button type="button" class="gmai-close" id="gmaiClose" aria-label="Tutup chat"><i class="fa-solid fa-xmark"></i></button>
@@ -3325,7 +3325,7 @@ body.gmai-open .gmai-panel { display: flex; }
   }
 
   function fallbackAnswer() {
-    return "Maaf, GM EXYNOS AI belum paham pertanyaan itu 🙏. Coba pakai salah satu tombol topik di bawah, " +
+    return "Maaf, GM EXYNOS BOT belum paham pertanyaan itu 🙏. Coba pakai salah satu tombol topik di bawah, " +
       "atau tanya soal: <b>download</b>, <b>cara main</b>, <b>leveling</b>, <b>info server</b>, <b>patch</b>, <b>ranking</b>, " +
       "atau <b>media sosial</b>. Untuk pertanyaan lain, hubungi GM langsung lewat Discord ya.";
   }
@@ -3364,7 +3364,7 @@ body.gmai-open .gmai-panel { display: flex; }
     document.body.classList.add("gmai-open");
     if (!greeted) {
       greeted = true;
-      addMessage("bot", "Halo, Petualang! 👋 Aku <b>GM EXYNOS AI</b>, siap bantu 24 jam soal Atlantica Classic V3 Exynos. " +
+      addMessage("bot", "Halo, Petualang! 👋 Aku <b>GM EXYNOS BOT</b>, siap bantu 24 jam soal Atlantica Classic V3 Exynos. " +
         "Mau tanya soal apa? Pilih topik di bawah atau ketik langsung.");
     }
     setTimeout(function () { input && input.focus(); }, 150);
