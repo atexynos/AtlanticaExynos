@@ -1,0 +1,3451 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Atlantica Classic V3 Exynos</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+
+<style>
+
+
+:root {
+  /* Color */
+  --abyss:        #071824;   /* deepest background */
+  --deep:         #0e2d3d;   /* panel / section alt */
+  --deep-2:       #123b4f;   /* card surface */
+  --stone:        #1c4256;   /* border / divider */
+  --aqua:         #2fd0c9;   /* bioluminescent accent */
+  --aqua-dim:     #1a8f8a;
+  --gold:         #d9b45a;   /* treasure gold */
+  --gold-bright:  #f3d98a;
+  --coral:        #e4572e;   /* warm alert accent, used sparingly */
+  --foam:         #eaf4f2;   /* light text */
+  --foam-dim:     #a9c4c3;   /* secondary text */
+
+  /* Type */
+  --font-display: 'Cinzel', serif;
+  --font-body: 'Inter', sans-serif;
+
+  /* Layout */
+  --container-w: 1180px;
+  --radius: 10px;
+  --header-h: 96px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; scroll-padding-top: var(--header-h); }
+
+body {
+  background: var(--abyss);
+  color: var(--foam);
+  font-family: var(--font-body);
+  font-weight: 400;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+img { max-width: 100%; display: block; }
+
+a { color: inherit; text-decoration: none; }
+
+ul { list-style: none; }
+
+.container {
+  width: 100%;
+  max-width: var(--container-w);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+::selection { background: var(--aqua); color: var(--abyss); }
+
+:focus-visible {
+  outline: 2px solid var(--gold-bright);
+  outline-offset: 3px;
+}
+
+
+
+body {
+  background-image:
+    radial-gradient(ellipse 60% 40% at 15% 0%, rgba(47, 208, 201, 0.10), transparent 60%),
+    radial-gradient(ellipse 50% 30% at 85% 10%, rgba(217, 180, 90, 0.07), transparent 60%);
+  background-repeat: no-repeat;
+}
+
+
+
+header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  background: rgba(7, 24, 36, 0.72);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(217, 180, 90, 0.18);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.logo img { height: 80px; width: auto; }
+
+nav#mainNav {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex-wrap: wrap;
+}
+
+.nav-links a {
+  display: flex;
+  align-items: center;
+  padding: 9px 14px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--foam-dim);
+  border-radius: 6px;
+  transition: color 0.2s ease, background 0.2s ease;
+  white-space: nowrap;
+}
+
+.nav-links a:hover {
+  color: var(--gold-bright);
+  background: rgba(217, 180, 90, 0.08);
+}
+
+.nav-social {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-left: 22px;
+  border-left: 1px solid rgba(217, 180, 90, 0.18);
+}
+
+.social-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  font-size: 0.95rem;
+  color: var(--foam-dim);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(234, 244, 242, 0.12);
+  transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.social-icon:hover { transform: translateY(-2px); }
+
+.social-discord:hover { background: #5865f2; border-color: #5865f2; color: #fff; }
+.social-whatsapp:hover { background: #25d366; border-color: #25d366; color: #0b1b12; }
+.social-facebook:hover { background: #1877f2; border-color: #1877f2; color: #fff; }
+
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: 1px solid rgba(217, 180, 90, 0.3);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.nav-toggle span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  margin: 0 auto;
+  background: var(--gold-bright);
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+
+
+.hero {
+  position: relative;
+  min-height: 92vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: calc(var(--header-h) + 40px) 24px 80px;
+  text-align: center;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, rgba(7,24,36,0.15) 0%, rgba(7,24,36,0.3) 55%, rgba(7,24,36,0.6) 85%, var(--abyss) 100%),
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(22,65,79,0.32) 0%, rgba(12,38,52,0.45) 55%, var(--abyss) 100%),
+    url('assets/hero-bg.jpg');
+  background-size: cover, cover, cover;
+  background-position: center, center, center;
+}
+
+.hero .overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(100deg, rgba(47,208,201,0.05) 0px, transparent 2px, transparent 90px);
+  pointer-events: none;
+}
+
+.hero-bubbles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.hero-bubbles span {
+  position: absolute;
+  bottom: -60px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.9), rgba(47,208,201,0.15) 70%);
+  animation: rise linear infinite;
+  opacity: 0.5;
+}
+
+.hero-bubbles span:nth-child(1) { left: 8%;  width: 8px;  height: 8px;  animation-duration: 11s; animation-delay: 0s; }
+.hero-bubbles span:nth-child(2) { left: 22%; width: 14px; height: 14px; animation-duration: 14s; animation-delay: 2s; }
+.hero-bubbles span:nth-child(3) { left: 40%; width: 6px;  height: 6px;  animation-duration: 9s;  animation-delay: 1s; }
+.hero-bubbles span:nth-child(4) { left: 58%; width: 12px; height: 12px; animation-duration: 16s; animation-delay: 4s; }
+.hero-bubbles span:nth-child(5) { left: 76%; width: 9px;  height: 9px;  animation-duration: 12s; animation-delay: 3s; }
+.hero-bubbles span:nth-child(6) { left: 90%; width: 15px; height: 15px; animation-duration: 18s; animation-delay: 5s; }
+
+@keyframes rise {
+  to { transform: translateY(-115vh) translateX(12px); opacity: 0; }
+}
+
+.hero-content { position: relative; z-index: 2; max-width: 760px; }
+
+.hero-eyebrow {
+  display: inline-block;
+  font-size: 0.8rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold-bright);
+  border: 1px solid rgba(217, 180, 90, 0.4);
+  border-radius: 999px;
+  padding: 6px 16px;
+  margin-bottom: 22px;
+}
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.2rem, 6vw, 4rem);
+  letter-spacing: 0.02em;
+  line-height: 1.15;
+  color: var(--foam);
+  text-shadow: 0 0 40px rgba(47, 208, 201, 0.35);
+}
+
+.hero h1 span {
+  display: block;
+  color: var(--gold-bright);
+  font-size: 0.55em;
+  letter-spacing: 0.15em;
+  margin-top: 6px;
+}
+
+.hero-sub {
+  margin: 24px auto 36px;
+  max-width: 560px;
+  color: var(--foam-dim);
+  font-size: 1.02rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-bubbles span { animation: none; display: none; }
+  html { scroll-behavior: auto; }
+}
+
+
+
+section:not(.hero) {
+  max-width: var(--container-w);
+  margin: 0 auto;
+  padding: 90px 24px;
+}
+
+section:nth-of-type(even):not(.hero) {
+  background: linear-gradient(180deg, transparent, rgba(18,59,79,0.35), transparent);
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 3vw, 2.1rem);
+  text-align: center;
+  color: var(--foam);
+  letter-spacing: 0.03em;
+  position: relative;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+.section-title::after {
+  content: "";
+  position: absolute;
+  bottom: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 72px;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+.section-sub {
+  text-align: center;
+  color: var(--foam-dim);
+  max-width: 520px;
+  margin: 0 auto 48px;
+}
+
+
+
+.news-grid,
+.download-grid,
+.server-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 26px;
+  margin-top: 48px;
+}
+
+.news-item,
+.download-box,
+.server-card {
+  background: linear-gradient(180deg, var(--deep-2), var(--deep));
+  border: 1px solid var(--stone);
+  border-radius: var(--radius);
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.news-item::before,
+.download-box::before,
+.server-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.news-item:hover,
+.download-box:hover,
+.server-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(217, 180, 90, 0.45);
+  box-shadow: 0 16px 32px rgba(0,0,0,0.35);
+}
+
+.news-item:hover::before,
+.download-box:hover::before,
+.server-card:hover::before { opacity: 1; }
+
+/* --- News --- */
+
+.news-item img { width: 100%; height: 190px; object-fit: cover; }
+
+.news-info { padding: 22px 22px 26px; }
+
+.news-info span {
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: var(--aqua);
+  text-transform: uppercase;
+}
+
+.news-info h2 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  margin: 10px 0 8px;
+  color: var(--foam);
+}
+
+.news-info p { color: var(--foam-dim); font-size: 0.92rem; margin-bottom: 14px; }
+
+.news-info a {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--gold-bright);
+}
+
+/* --- Download --- */
+
+.download-box {
+  text-align: center;
+  padding: 36px 26px;
+}
+
+.download-box h2 {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  color: var(--foam);
+}
+
+.download-box p { color: var(--aqua); font-size: 0.85rem; margin-top: 8px; }
+
+.download-box span {
+  display: block;
+  color: var(--foam-dim);
+  font-size: 0.82rem;
+  margin: 6px 0 22px;
+}
+
+.download-box a {
+  display: inline-block;
+  padding: 11px 28px;
+  border-radius: 7px;
+  background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+  color: #241705;
+  font-weight: 600;
+  font-size: 0.88rem;
+  transition: transform 0.2s ease;
+}
+
+.download-box a:hover { transform: translateY(-2px); }
+
+
+
+.server-card {
+  text-align: center;
+  padding: 34px 20px;
+}
+
+.server-icon { font-size: 2rem; margin-bottom: 12px; }
+
+.server-card h2 {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  color: var(--foam);
+  margin-bottom: 8px;
+}
+
+.server-card p { color: var(--foam-dim); font-size: 0.9rem; }
+
+.server-card span {
+  display: inline-block;
+  margin-top: 12px;
+  font-size: 0.78rem;
+  color: var(--aqua);
+  border: 1px solid rgba(47, 208, 201, 0.35);
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+
+/* =========================================================
+   RANKING
+   ========================================================= */
+
+.ranking-wrap {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 26px;
+  margin-top: 48px;
+  align-items: stretch;
+}
+
+.ranking-box {
+  background: linear-gradient(180deg, var(--deep-2), var(--deep));
+  border: 1px solid var(--stone);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.ranking-header {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  letter-spacing: 0.03em;
+  text-align: center;
+  padding: 16px 50px;
+  color: var(--gold-bright);
+  background: rgba(217, 180, 90, 0.08);
+  border-bottom: 1px solid var(--stone);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ranking-toolbar {
+  display: flex;
+  justify-content: center;
+  margin: -16px 0 40px;
+}
+
+.ranking-download-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 24px;
+  border-radius: 999px;
+  border: none;
+  background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+  color: #241705;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ranking-download-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba(217, 180, 90, 0.3);
+}
+
+.ranking-edit-btn {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  border: 1px solid rgba(217, 180, 90, 0.3);
+  background: transparent;
+  color: var(--foam-dim);
+  font-size: 0.8rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.ranking-edit-btn:hover {
+  color: var(--gold-bright);
+  border-color: var(--gold-bright);
+  transform: translateY(-50%) translateY(-2px);
+}
+
+
+
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: rgba(7, 24, 36, 0.82);
+  backdrop-filter: blur(4px);
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal-overlay.open { display: flex; }
+
+.modal-box {
+  width: 100%;
+  max-width: 440px;
+  max-height: 86vh;
+  overflow-y: auto;
+  background: linear-gradient(180deg, var(--deep-2), var(--deep));
+  border: 1px solid rgba(217, 180, 90, 0.4);
+  border-radius: 14px;
+  padding: 26px 24px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+
+.modal-box h3 {
+  font-family: var(--font-display);
+  color: var(--gold-bright);
+  font-size: 1.05rem;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.rank-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.rank-row .rank-label {
+  flex: none;
+  width: 56px;
+  font-size: 0.76rem;
+  color: var(--foam-dim);
+  text-align: center;
+}
+
+.rank-row input {
+  flex: 1;
+  min-width: 0;
+  padding: 9px 10px;
+  border-radius: 7px;
+  border: 1px solid var(--stone);
+  background: rgba(7, 24, 36, 0.6);
+  color: var(--foam);
+  font-size: 0.85rem;
+  font-family: inherit;
+}
+
+.rank-row input:focus { outline: none; border-color: var(--aqua); }
+
+.rank-row .rank-remove {
+  flex: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  border: 1px solid rgba(228, 87, 46, 0.35);
+  background: transparent;
+  color: var(--foam-dim);
+  font-size: 0.78rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.rank-row .rank-remove:hover {
+  color: var(--coral);
+  border-color: var(--coral);
+  background: rgba(228, 87, 46, 0.08);
+}
+
+.btn-add-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  margin-top: 4px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px dashed rgba(47, 208, 201, 0.4);
+  background: rgba(47, 208, 201, 0.06);
+  color: var(--aqua);
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.btn-add-row:hover {
+  background: rgba(47, 208, 201, 0.12);
+  border-color: var(--aqua);
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.modal-actions button {
+  flex: 1;
+  padding: 11px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.modal-actions button:hover { transform: translateY(-2px); }
+
+.btn-save {
+  background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+  color: #241705;
+}
+
+.btn-cancel {
+  background: rgba(255,255,255,0.06);
+  color: var(--foam-dim);
+  border: 1px solid var(--stone) !important;
+}
+
+.ranking-table-scroll {
+  height: 268px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.ranking-table-scroll::-webkit-scrollbar { width: 6px; }
+.ranking-table-scroll::-webkit-scrollbar-track { background: transparent; }
+.ranking-table-scroll::-webkit-scrollbar-thumb {
+  background: var(--stone);
+  border-radius: 999px;
+}
+.ranking-table-scroll { scrollbar-width: thin; scrollbar-color: var(--stone) transparent; }
+
+table { width: 100%; border-collapse: collapse; }
+
+thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  text-align: left;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--aqua);
+  padding: 12px 16px;
+  background: var(--deep-2);
+  border-bottom: 1px solid var(--stone);
+}
+
+tbody td {
+  padding: 11px 16px;
+  font-size: 0.9rem;
+  color: var(--foam-dim);
+  border-bottom: 1px solid rgba(28, 66, 86, 0.6);
+}
+
+tbody tr:hover td { color: var(--foam); background: rgba(47, 208, 201, 0.04); }
+
+tbody tr:first-child td { color: var(--gold-bright); }
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+footer {
+  border-top: 1px solid rgba(217, 180, 90, 0.15);
+  background: linear-gradient(180deg, transparent, rgba(14, 45, 61, 0.6));
+  padding: 60px 24px 36px;
+}
+
+.footer-content { max-width: var(--container-w); margin: 0 auto; text-align: center; }
+
+.footer-logo { height: 48px; width: auto; margin: 0 auto 18px; }
+
+.footer-content h2 {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  color: var(--foam);
+}
+
+.footer-content > p {
+  color: var(--foam-dim);
+  font-size: 0.88rem;
+  margin-top: 6px;
+}
+
+.footer-menu {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 22px;
+  margin: 28px 0 26px;
+}
+
+.footer-menu a {
+  font-size: 0.88rem;
+  color: var(--foam-dim);
+  transition: color 0.2s ease;
+}
+
+.footer-menu a:hover { color: var(--gold-bright); }
+
+.copyright {
+  font-size: 0.78rem;
+  color: rgba(169, 196, 195, 0.5);
+  padding-top: 22px;
+  border-top: 1px solid rgba(217, 180, 90, 0.1);
+}
+
+
+
+#exynos-popup {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: rgba(7, 24, 36, 0.82);
+  backdrop-filter: blur(4px);
+  align-items: center;
+  justify-content: center;
+}
+
+.popup-box {
+  background: linear-gradient(180deg, var(--deep-2), var(--deep));
+  border: 1px solid rgba(217, 180, 90, 0.4);
+  border-radius: 14px;
+  padding: 34px 40px;
+  text-align: center;
+  max-width: 340px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  transition: transform 0.15s ease;
+}
+
+.popup-box p { color: var(--foam-dim); margin: 14px 0 22px; font-size: 0.92rem; }
+
+.popup-box button {
+  position: relative;
+  padding: 10px 26px;
+  border-radius: 8px;
+  border: none;
+  background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+  color: #241705;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+
+
+@media (max-width: 980px) {
+  .news-grid,
+  .download-grid,
+  .server-grid,
+  .ranking-wrap {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 860px) {
+  .nav-toggle { display: flex; }
+
+  nav#mainNav {
+    position: fixed;
+    top: var(--header-h);
+    left: 0; right: 0;
+    max-height: calc(100svh - var(--header-h));
+    overflow-y: auto;
+    background: rgba(7, 24, 36, 0.97);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(217, 180, 90, 0.18);
+    transform: translateY(-8px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+  }
+
+  nav#mainNav.open {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  nav#mainNav {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  nav#mainNav ul {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 2px;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 12px 20px 8px;
+    gap: 2px;
+  }
+
+  .nav-links a {
+    padding: 14px 6px;
+    border-bottom: 1px solid rgba(28, 66, 86, 0.6);
+    border-radius: 0;
+  }
+
+  .nav-social {
+    justify-content: center;
+    padding: 18px 20px 24px;
+    border-left: none;
+    border-top: 1px solid rgba(217, 180, 90, 0.18);
+    margin-top: 4px;
+  }
+}
+
+@media (max-width: 640px) {
+  :root { --header-h: 68px; }
+
+  .container { padding: 0 18px; }
+
+  .logo img { height: 34px; }
+
+  section:not(.hero) { padding: 64px 18px; }
+
+  .news-grid,
+  .download-grid,
+  .server-grid,
+  .ranking-wrap {
+    grid-template-columns: 1fr;
+  }
+
+  .hero { padding: calc(var(--header-h) + 24px) 18px 60px; }
+
+  .ranking-table-scroll { height: 244px; }
+
+  thead th, tbody td { padding: 10px 10px; font-size: 0.82rem; }
+}
+
+
+
+.admin-only { display: none !important; }
+
+body.admin-unlocked .ranking-edit-btn.admin-only { display: flex !important; }
+body.admin-unlocked .ranking-toolbar.admin-only { display: flex !important; }
+body.admin-unlocked p.section-sub.admin-only { display: block !important; }
+
+.admin-lock-btn {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 500;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid rgba(217, 180, 90, 0.3);
+  background: rgba(7, 24, 36, 0.7);
+  backdrop-filter: blur(6px);
+  color: var(--foam-dim);
+  opacity: 0.45;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: opacity 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.admin-lock-btn:hover {
+  opacity: 1;
+  color: var(--gold-bright);
+  border-color: var(--gold-bright);
+  transform: translateY(-2px);
+}
+
+body.admin-unlocked .admin-lock-btn {
+  opacity: 0.85;
+  color: var(--aqua);
+  border-color: rgba(47, 208, 201, 0.5);
+}
+
+#adminModal .modal-box { max-width: 320px; text-align: center; }
+#adminModal h3 { justify-content: center; }
+#adminModal p { color: var(--foam-dim); font-size: 0.85rem; margin-bottom: 16px; }
+
+#adminPinInput {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 7px;
+  border: 1px solid var(--stone);
+  background: rgba(7, 24, 36, 0.6);
+  color: var(--foam);
+  font-size: 0.95rem;
+  font-family: inherit;
+  text-align: center;
+  letter-spacing: 0.25em;
+  margin-bottom: 4px;
+}
+
+#adminPinInput:focus { outline: none; border-color: var(--aqua); }
+
+.github-publish-box { max-width: 680px; }
+.github-publish-box h3 { justify-content: center; }
+.github-help { color: var(--foam-dim); font-size: .82rem; margin-bottom: 16px; }
+.github-status { min-height: 20px; margin-top: 12px; color: var(--foam-dim); font-size: .82rem; text-align: center; }
+.github-status.success { color: var(--aqua); }
+.github-status.error { color: #ff8a72; }
+#githubModal input { width: 100%; }
+
+
+
+/* ========================= DOWNLOAD ADMIN ========================= */
+.download-box { position: relative; }
+.download-admin-actions {
+  display: none;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 14px;
+}
+body.admin-unlocked .download-admin-actions { display: flex; }
+.download-edit-btn,
+.download-manage-btn {
+  border: 1px solid rgba(217,180,90,.35);
+  background: rgba(7,24,36,.55);
+  color: var(--foam-dim);
+  border-radius: 999px;
+  padding: 7px 12px;
+  cursor: pointer;
+  font-size: .78rem;
+  transition: .2s ease;
+}
+.download-edit-btn:hover,
+.download-manage-btn:hover {
+  color: var(--gold-bright);
+  border-color: var(--gold-bright);
+  transform: translateY(-1px);
+}
+.download-manage-btn { color: var(--aqua); border-color: rgba(47,208,201,.35); }
+
+.download-patch-list {
+  display: grid;
+  gap: 10px;
+  margin: 18px 0 20px;
+  text-align: left;
+}
+.patch-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 14px;
+  border: 1px solid rgba(28,66,86,.9);
+  border-radius: 8px;
+  background: rgba(7,24,36,.35);
+}
+.patch-info strong { display:block; color:var(--foam); font-size:.88rem; }
+.patch-info small { color:var(--foam-dim); font-size:.76rem; }
+.patch-actions { display:flex; gap:6px; }
+.patch-actions button {
+  width: 32px; height: 32px; border-radius: 7px; cursor:pointer;
+  border:1px solid var(--stone); background:rgba(7,24,36,.65);
+  color:var(--foam-dim);
+}
+.patch-actions button:hover { color:var(--gold-bright); border-color:var(--gold-bright); }
+.patch-actions .patch-delete:hover { color:#ff8c7a; border-color:#ff8c7a; }
+
+.download-admin-note {
+  display:none;
+  text-align:center;
+  color:var(--aqua);
+  font-size:.78rem;
+  margin: 8px auto 0;
+}
+body.admin-unlocked .download-admin-note { display:block; }
+
+.download-modal-wide .modal-box { max-width: 620px; }
+.download-form-grid {
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+}
+.download-form-grid .full { grid-column:1 / -1; }
+.download-form-grid label {
+  display:block; color:var(--foam-dim); font-size:.75rem; margin-bottom:5px;
+}
+.download-form-grid input {
+  width:100%; padding:10px 11px; border-radius:7px;
+  border:1px solid var(--stone); background:rgba(7,24,36,.6);
+  color:var(--foam); font-family:inherit;
+}
+.download-form-grid input:focus { outline:none; border-color:var(--aqua); }
+.download-list-table { width:100%; border-collapse:collapse; margin-top:12px; }
+.download-list-table th,.download-list-table td {
+  padding:10px 8px; border-bottom:1px solid rgba(28,66,86,.7);
+  text-align:left; font-size:.78rem;
+}
+.download-list-table th { color:var(--gold-bright); }
+.download-list-table td { color:var(--foam-dim); }
+.download-list-table .actions { white-space:nowrap; text-align:right; }
+.download-list-table button {
+  border:1px solid var(--stone); background:transparent; color:var(--foam-dim);
+  border-radius:6px; padding:6px 8px; cursor:pointer; margin-left:4px;
+}
+.download-list-table button:hover { color:var(--gold-bright); border-color:var(--gold-bright); }
+.download-list-table .delete:hover { color:#ff8c7a; border-color:#ff8c7a; }
+body:not(.admin-unlocked) .patch-admin-control { display:none !important; }
+
+/* ========================= NEWS + SERVER INFO ADMIN ========================= */
+.content-admin-toolbar {
+  display:none; justify-content:center; gap:8px; margin:-18px auto 28px;
+}
+body.admin-unlocked .content-admin-toolbar { display:flex; }
+.content-admin-btn {
+  border:1px solid rgba(217,180,90,.35); background:rgba(7,24,36,.55);
+  color:var(--foam-dim); border-radius:999px; padding:7px 12px; cursor:pointer;
+  font-size:.78rem; transition:.2s ease;
+}
+.content-admin-btn:hover { color:var(--gold-bright); border-color:var(--gold-bright); transform:translateY(-1px); }
+.news-item, .server-card { position:relative; }
+.content-card-admin {
+  display:none; position:absolute; top:12px; right:12px; z-index:5; gap:6px;
+}
+body.admin-unlocked .content-card-admin { display:flex; }
+.content-card-admin button {
+  width:32px; height:32px; border-radius:7px; cursor:pointer;
+  border:1px solid var(--stone); background:rgba(7,24,36,.78); color:var(--foam-dim);
+}
+.content-card-admin button:hover { color:var(--gold-bright); border-color:var(--gold-bright); }
+.content-card-admin .delete:hover { color:#ff8c7a; border-color:#ff8c7a; }
+.content-form-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.content-form-grid .full { grid-column:1 / -1; }
+.content-form-grid label { display:block; color:var(--foam-dim); font-size:.75rem; margin-bottom:5px; }
+.content-form-grid input, .content-form-grid textarea {
+  width:100%; padding:10px 11px; border-radius:7px; border:1px solid var(--stone);
+  background:rgba(7,24,36,.6); color:var(--foam); font-family:inherit;
+}
+.content-form-grid textarea { min-height:90px; resize:vertical; }
+.content-form-grid input:focus, .content-form-grid textarea:focus { outline:none; border-color:var(--aqua); }
+.content-modal-wide .modal-box { max-width:680px; }
+@media (max-width:640px) { .content-form-grid { grid-template-columns:1fr; } .content-form-grid .full { grid-column:auto; } }
+
+@media (max-width:640px) {
+  .download-form-grid { grid-template-columns:1fr; }
+  .download-form-grid .full { grid-column:auto; }
+  .patch-item { grid-template-columns:1fr; }
+}
+
+/* =========================================================
+   LATEST NEWS EVENT DETAIL
+   ========================================================= */
+.news-event-manager-head {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  margin-bottom:12px;
+  padding:14px 16px;
+  border:1px solid var(--stone);
+  border-radius:10px;
+  background:rgba(255,255,255,.025);
+}
+.news-event-manager-head strong { color:var(--foam); display:block; }
+.news-event-manager-head small { color:var(--foam-dim); display:block; margin-top:5px; }
+.btn-add-row {
+  border:1px solid rgba(47,208,201,.35);
+  background:rgba(47,208,201,.08);
+  color:var(--aqua);
+  border-radius:7px;
+  padding:9px 13px;
+  cursor:pointer;
+  font-weight:600;
+}
+.news-event-list { display:grid; gap:12px; }
+.news-event-admin-card {
+  border:1px solid var(--stone);
+  border-radius:10px;
+  padding:14px;
+  background:linear-gradient(180deg,var(--deep-2),var(--deep));
+}
+.news-event-admin-grid {
+  display:grid;
+  grid-template-columns:1fr 190px;
+  gap:10px;
+}
+.news-event-admin-card textarea { min-height:110px; resize:vertical; }
+.news-event-admin-card .event-full { grid-column:1 / -1; }
+.news-event-admin-actions { display:flex; justify-content:flex-end; margin-top:9px; }
+.news-event-delete {
+  border:1px solid rgba(220,80,80,.35);
+  background:rgba(220,80,80,.08);
+  color:#ffb0b0;
+  border-radius:6px;
+  padding:7px 10px;
+  cursor:pointer;
+}
+.news-event-empty {
+  text-align:center;
+  padding:20px;
+  color:var(--foam-dim);
+  border:1px dashed var(--stone);
+  border-radius:10px;
+}
+.news-event-chooser-box { max-width:720px; }
+.news-event-chooser-sub { color:var(--foam-dim); margin:-6px 0 18px; }
+.news-event-chooser-list { display:grid; gap:12px; max-height:55vh; overflow:auto; }
+.news-event-choice {
+  width:100%;
+  text-align:left;
+  border:1px solid var(--stone);
+  border-radius:10px;
+  background:linear-gradient(180deg,var(--deep-2),var(--deep));
+  color:var(--foam);
+  padding:16px;
+  cursor:pointer;
+  transition:.2s ease;
+}
+.news-event-choice:hover {
+  transform:translateY(-2px);
+  border-color:rgba(217,180,90,.55);
+  box-shadow:0 10px 24px rgba(0,0,0,.25);
+}
+.news-event-choice-date {
+  color:var(--aqua);
+  font-size:.75rem;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.news-event-choice-title {
+  display:block;
+  font-family:var(--font-display);
+  color:var(--gold-bright);
+  font-size:1.05rem;
+  margin:6px 0;
+}
+.news-event-choice-desc {
+  display:block;
+  color:var(--foam-dim);
+  font-size:.88rem;
+}
+.news-event-no-data { color:var(--foam-dim); text-align:center; padding:24px; }
+@media (max-width:700px) {
+  .news-event-manager-head { align-items:flex-start; flex-direction:column; }
+  .news-event-admin-grid { grid-template-columns:1fr; }
+}
+</style>
+
+</head>
+
+<body class="admin-unlocked">
+
+<header id="siteHeader">
+
+<div class="container header-inner">
+
+<a class="logo" href="#home">
+
+<img src="assets/logo.png" alt="Atlantica Classic V3 Exynos">
+
+</a>
+
+<button id="navToggle" class="nav-toggle" aria-label="Buka menu" aria-expanded="false" aria-controls="mainNav">
+    <span></span>
+    <span></span>
+    <span></span>
+</button>
+
+<nav id="mainNav">
+    <ul class="nav-links">
+
+        <li><a href="#home">Home</a></li>
+
+        <li><a href="#download">Download</a></li>
+
+        <li><a href="#news">News</a></li>
+
+        <li><a href="#server-info">Event</a></li>
+
+        <li><a href="#ranking">Ranking</a></li>
+
+        <li><a href="streamer.html" target="_blank" rel="noopener">Streamer</a></li>
+        <li><a href="shop.html" target="_blank" rel="noopener">Shop</a></li>
+
+    </ul>
+
+    <ul class="nav-social">
+
+        <li>
+            <a href="https://discord.gg/BxaH7dsDQM" target="_blank" class="social-icon social-discord" aria-label="Discord">
+                <i class="fa-brands fa-discord"></i>
+            </a>
+        </li>
+
+        <li>
+            <a href="https://chat.whatsapp.com/HdmiMmTAYK0INQkH6Dl2T2" target="_blank" class="social-icon social-whatsapp" aria-label="WhatsApp">
+                <i class="fa-brands fa-whatsapp"></i>
+            </a>
+        </li>
+
+        <li>
+            <a href="https://www.facebook.com/profile.php?id=100065644143073&amp;locale=pa_IN" target="_blank" class="social-icon social-facebook" aria-label="Facebook">
+                <i class="fa-brands fa-facebook-f"></i>
+            </a>
+        </li>
+
+    </ul>
+</nav>
+
+</div>
+
+</header>
+
+<section class="hero" id="home">
+    <div class="overlay"></div>
+    <div class="hero-bubbles" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+
+    <div class="hero-content">
+
+        <p class="hero-eyebrow">GRAND OPENING 28-07-26</p>
+
+        <h1>Atlantica Classic <span>V3 Exynos</span></h1>
+
+        <p class="hero-sub">Kembali Berpetualang Di Dunia Atlantis. taklukkan Lawan Anda, dan jadi lah Sang juara mingguan.</p>
+
+    </div>
+
+</section>
+
+<section id="news">
+
+<div class="section-title">Latest News</div>
+
+<div class="content-admin-toolbar">
+  <button type="button" class="content-admin-btn" id="newsAddBtn"><i class="fa-solid fa-plus"></i> Tambah News</button>
+</div>
+
+<div class="news-grid" id="newsGrid"><div class="news-item"><img src="assets/news/news1.jpg" alt="🔥 GRAND OPENING RELEASE 🔥 ATLANTICA EXYNOS"><div class="news-info"><span>⚔️ THE WAIT IS OVER! ⚔️</span><h2>🔥 GRAND OPENING RELEASE 🔥 ATLANTICA EXYNOS</h2><p>Setelah perjalanan panjang, akhirnya saat yang ditunggu telah tiba!
+
+📅 28 JULY 2026
+🕗 20.00 WIB</p><a href="#" class="news-read-more" data-news-read="news-1">Read More →</a></div><div class="content-card-admin"><button type="button" data-news-edit="news-1" title="Edit"><i class="fa-solid fa-pen"></i></button><button type="button" class="delete" data-news-delete="news-1" title="Hapus"><i class="fa-solid fa-trash"></i></button></div></div><div class="news-item"><img src="assets/news/news2.jpg" alt="Weekly Event"><div class="news-info"><span>30 JULY 2026</span><h2>Weekly Event</h2><p></p><a href="#" class="news-read-more" data-news-read="news-2">Read More <small>(1 Event)</small> →</a></div><div class="content-card-admin"><button type="button" data-news-edit="news-2" title="Edit"><i class="fa-solid fa-pen"></i></button><button type="button" class="delete" data-news-delete="news-2" title="Hapus"><i class="fa-solid fa-trash"></i></button></div></div><div class="news-item"><img src="assets/news/news3.jpg" alt="📢 NEWS UPDATE ATLANTICA EXYNOS"><div class="news-info"><span>28.08.2026</span><h2>📢 NEWS UPDATE ATLANTICA EXYNOS</h2><p>🎯 UPDATE LEVEL
+• Level maksimal ditingkatkan dari Lv.150 → Lv.170</p><a href="#" class="news-read-more" data-news-read="news-3">Read More <small>(3 Event)</small> →</a></div><div class="content-card-admin"><button type="button" data-news-edit="news-3" title="Edit"><i class="fa-solid fa-pen"></i></button><button type="button" class="delete" data-news-delete="news-3" title="Hapus"><i class="fa-solid fa-trash"></i></button></div></div></div>
+
+</section>
+
+<section id="download">
+
+<div class="section-title">Download Center</div>
+
+<p class="download-admin-note">
+  <i class="fa-solid fa-pen-to-square"></i> Mode Admin aktif — klik Edit untuk mengubah download/patch.
+</p>
+
+<div class="download-grid" id="downloadGrid"><div class="download-box"><h2>Full Client</h2><p>Version 3.0</p><span>Size : 6.27 GB</span><a href="https://www.mediafire.com/file/sx8m9ruimcaofc5/AOEX_ClintFix.rar/file" target="_blank" rel="noopener">Download</a><div class="download-admin-actions"><button type="button" class="download-edit-btn" data-edit="client"><i class="fa-solid fa-pen"></i> Edit</button><button type="button" class="download-edit-btn download-delete-btn" data-delete="client"><i class="fa-solid fa-trash"></i> Hapus</button></div></div><div class="download-box"><h2>Launcher</h2><p>Latest Version</p><span>Size : 0 MB</span><a href="#" target="_blank" rel="noopener">Download</a><div class="download-admin-actions"><button type="button" class="download-edit-btn" data-edit="launcher"><i class="fa-solid fa-pen"></i> Edit</button><button type="button" class="download-edit-btn download-delete-btn" data-delete="launcher"><i class="fa-solid fa-trash"></i> Hapus</button></div></div><div class="download-box"><h2>Manual Patch</h2><p>Patch Update</p><span>1 Patch Tersedia</span><button type="button" class="download-manage-btn" data-action="patches"><i class="fa-solid fa-download"></i> Pilih Patch</button><div class="download-admin-actions"><button type="button" class="download-edit-btn" data-action="patches"><i class="fa-solid fa-pen"></i> Kelola</button></div></div></div>
+
+</section>
+
+<section id="server-info">
+
+    <div class="section-title">⭐ Server Information ⭐</div>
+
+    <div class="content-admin-toolbar">
+      <button type="button" class="content-admin-btn" id="serverAddBtn"><i class="fa-solid fa-plus"></i> Tambah Information</button>
+    </div>
+
+    <div class="server-grid" id="serverInfoGrid"><div class="server-card"><div class="server-icon">🏆</div><h2>Weekly Champion</h2><p>Coming Soon</p><span>00:00 WIB</span><div class="content-card-admin"><button type="button" data-server-edit="server-1" title="Edit"><i class="fa-solid fa-pen"></i></button><button type="button" class="delete" data-server-delete="server-1" title="Hapus"><i class="fa-solid fa-trash"></i></button></div></div><div class="server-card"><div class="server-icon">⚔</div><h2>GM Invasion</h2><p>⚠️ INVASI HARIAN TELAH DIMULAI! ⚠️</p><span>🔥 PERSIAPKAN DIRIMU, ATLANTIAN EXYNOS! 🔥</span><div class="content-card-admin"><button type="button" data-server-edit="server-2" title="Edit"><i class="fa-solid fa-pen"></i></button><button type="button" class="delete" data-server-delete="server-2" title="Hapus"><i class="fa-solid fa-trash"></i></button></div></div><div class="server-card"><div class="server-icon">⭐</div><h2>Active Event</h2><p>Every Day</p><span>All Time</span><div class="content-card-admin"><button type="button" data-server-edit="server-4" title="Edit"><i class="fa-solid fa-pen"></i></button><button type="button" class="delete" data-server-delete="server-4" title="Hapus"><i class="fa-solid fa-trash"></i></button></div></div></div>
+
+</section>
+
+
+
+<!-- =========================
+RANKING
+========================= -->
+
+<section id="ranking">
+
+<div class="section-title">
+
+Ranking
+
+</div>
+
+<p class="section-sub admin-only">Mode admin aktif. Edit Ranking, Latest News, Server Information, Download Client, dan Manual Patch. Klik <b>Download index.html</b>, lalu upload satu file itu ke GitHub.</p>
+
+<div class="ranking-toolbar admin-only">
+    <button id="publishSiteBtn" class="ranking-download-btn" type="button">
+        <i class="fa-solid fa-file-arrow-down"></i> Download index.html
+    </button>
+    <button id="downloadRankingBtn" class="ranking-download-btn" type="button">
+        <i class="fa-solid fa-download"></i> Download index.html
+    </button>
+</div>
+
+<div class="ranking-wrap">
+
+    <!-- Top Player -->
+    <div class="ranking-box">
+
+        <div class="ranking-header">
+            🏆 Top Player
+            <button class="ranking-edit-btn admin-only" data-target="topPlayer" title="Edit Top Player"><i class="fa-solid fa-pen"></i></button>
+        </div>
+
+        <div class="ranking-table-scroll">
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Character</th>
+                    <th>Level</th>
+                </tr>
+            </thead>
+
+            <tbody id="topPlayerBody"><tr><td>1</td><td>[MR]Ev</td><td>170</td></tr><tr><td>2</td><td>GitarisWali</td><td>170</td></tr><tr><td>3</td><td>MrRex</td><td>170</td></tr><tr><td>4</td><td>Kyndra</td><td>170</td></tr><tr><td>5</td><td>ZEN</td><td>170</td></tr><tr><td>6</td><td>IGNORED</td><td>167</td></tr><tr><td>7</td><td>DoelZ</td><td>163</td></tr><tr><td>8</td><td>[IG]N0</td><td>160</td></tr><tr><td>9</td><td>Aisy</td><td>160</td></tr><tr><td>10</td><td>PvssyHunter</td><td>160</td></tr></tbody>
+        </table>
+        </div>
+
+    </div>
+
+    <!-- Top Guild -->
+    <div class="ranking-box">
+
+        <div class="ranking-header">
+            ⚔ Top Guild
+            <button class="ranking-edit-btn admin-only" data-target="topGuild" title="Edit Top Guild"><i class="fa-solid fa-pen"></i></button>
+        </div>
+
+        <div class="ranking-table-scroll">
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Guild</th>
+                    <th>Members</th>
+                </tr>
+            </thead>
+
+            <tbody id="topGuildBody"><tr><td>1</td><td>OverDrive</td><td>40</td></tr><tr><td>2</td><td>MERCENARIES</td><td>17</td></tr><tr><td>3</td><td>MONARCH</td><td>4</td></tr><tr><td>4</td><td>ATLANTIS</td><td>2</td></tr><tr><td>5</td><td>Macedon</td><td>2</td></tr></tbody>
+        </table>
+        </div>
+
+    </div>
+
+    <!-- Weekly Champion -->
+    <div class="ranking-box">
+
+    <div class="ranking-header">
+        🏆 Weekly Champion Winner
+        <button class="ranking-edit-btn admin-only" data-target="weekly" title="Edit Weekly Champion"><i class="fa-solid fa-pen"></i></button>
+    </div>
+
+    <!-- TAMBAH DI SINI -->
+    <div class="ranking-table-scroll">
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Champion</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+
+            <tbody id="weeklyBody"><tr><td>1st 🏆</td><td>GitarisWali</td><td>06.09.26</td></tr><tr><td>2nd 🏆</td><td>[MR]Ev</td><td>06.09.26</td></tr><tr><td>1st 🏆</td><td>GitarisWali</td><td>30.08.26</td></tr><tr><td>2nd 🏆</td><td>DoelZ</td><td>30.08.26</td></tr><tr><td>1st 🏆</td><td>DoelZ</td><td>29.08.26</td></tr><tr><td>2nd 🏆</td><td>Aisy</td><td>29.08.26</td></tr><tr><td>1st 🏆</td><td>DoelZ</td><td>25.08.26</td></tr><tr><td>2nd 🏆</td><td>KangCepot</td><td>25.08.26</td></tr><tr><td>1st 🏆</td><td>[X]Nda</td><td>22.08.26</td></tr><tr><td>2nd 🏆</td><td>VioletSenja</td><td>22.08.26</td></tr></tbody>
+        </table>
+
+    </div>
+
+</div>
+
+</div>
+
+</section>
+
+<footer>
+
+<div class="footer-content">
+
+<img src="assets/logo.png" class="footer-logo">
+
+<h2>
+
+Atlantica Classic V3 Exynos
+
+</h2>
+
+<p>
+
+The Legendary MMORPG Returns
+
+</p>
+
+<div class="footer-menu">
+
+<a href="#home">Home</a>
+
+<a href="#download">Download</a>
+
+<a href="#news">News</a>
+
+<a href="#ranking">Ranking</a>
+
+<a href="streamer.html" target="_blank" rel="noopener">Streamer</a>
+
+<a href="shop.html" target="_blank" rel="noopener">Shop</a>
+
+<a href="https://www.facebook.com/profile.php?id=100065644143073&amp;locale=pa_IN" target="_blank">Facebook</a>
+
+</div>
+
+<div class="copyright">
+
+©Mr 2026 Atlantica Classic V3 Exynos
+
+</div>
+
+</div>
+
+</footer>
+
+   <!-- Ranking Edit Modal -->
+<div class="modal-overlay" id="rankModal">
+    <div class="modal-box">
+        <h3><i class="fa-solid fa-pen"></i> <span id="rankModalTitle">Edit Top Player</span></h3>
+        <div id="rankModalFields"><div class="rank-row"><span class="rank-label">1</span><input type="text" placeholder="Character" value="[MR]Ev"><input type="text" placeholder="Level" value="150"><button type="button" class="rank-remove" title="Hapus baris"><i class="fa-solid fa-trash"></i></button></div><div class="rank-row"><span class="rank-label">2</span><input type="text" placeholder="Character" value="GitarisWali"><input type="text" placeholder="Level" value="150"><button type="button" class="rank-remove" title="Hapus baris"><i class="fa-solid fa-trash"></i></button></div><div class="rank-row"><span class="rank-label">3</span><input type="text" placeholder="Character" value="DoelZ"><input type="text" placeholder="Level" value="150"><button type="button" class="rank-remove" title="Hapus baris"><i class="fa-solid fa-trash"></i></button></div><div class="rank-row"><span class="rank-label">4</span><input type="text" placeholder="Character" value="Kyndra"><input type="text" placeholder="Level" value="149"><button type="button" class="rank-remove" title="Hapus baris"><i class="fa-solid fa-trash"></i></button></div><div class="rank-row"><span class="rank-label">5</span><input type="text" placeholder="Character" value="IGNORED"><input type="text" placeholder="Level" value="148"><button type="button" class="rank-remove" title="Hapus baris"><i class="fa-solid fa-trash"></i></button></div><div class="rank-row"><span class="rank-label">6</span><input type="text" placeholder="Character" value="MrRex"><input type="text" placeholder="Level" value="148"><button type="button" class="rank-remove" title="Hapus baris"><i class="fa-solid fa-trash"></i></button></div><div class="rank-row"><span class="rank-label">7</span><input type="text" placeholder="Character" value="[IG]NO"><input type="text" placeholder="Level" value="148"><button type="button" class="rank-remove" title="Hapus baris"><i class="fa-solid fa-trash"></i></button></div><div class="rank-row"><span class="rank-label">8</span><input type="text" placeholder="Character" value="GARUDA"><input type="text" placeholder="Level" value="144"><button type="button" class="rank-remove" title="Hapus baris"><i class="fa-solid fa-trash"></i></button></div><div class="rank-row"><span class="rank-label">9</span><input type="text" placeholder="Character" value="LOKI"><input type="text" placeholder="Level" value="144"><button type="button" class="rank-remove" title="Hapus baris"><i class="fa-solid fa-trash"></i></button></div><div class="rank-row"><span class="rank-label">10</span><input type="text" placeholder="Character" value="ZEN"><input type="text" placeholder="Level" value="144"><button type="button" class="rank-remove" title="Hapus baris"><i class="fa-solid fa-trash"></i></button></div></div>
+        <button type="button" class="btn-add-row" id="rankBtnAddRow"><i class="fa-solid fa-plus"></i> Tambah Baris</button>
+        <div class="modal-actions">
+            <button class="btn-cancel" id="rankBtnCancel">Batal</button>
+            <button class="btn-save" id="rankBtnSave">Simpan</button>
+        </div>
+    </div>
+</div>
+
+   <!-- EXYNOS Security Popup -->
+<div id="exynos-popup" style="display: none;">
+    <div class="popup-box" style="transform: translate(0px, 0px);">
+
+        <h2 style="margin:0;">
+    🛡️ <span class="emoji">😜</span>
+</h2>
+
+        <h3 style="color:#FFD700;">
+            EXYNOS SECURITY
+        </h3>
+
+        <p>
+            Mau Ngapain Bro? 😜<br>
+            Jangan Nakal Ya.<br>No No Ya.<br>
+
+        </p>
+
+        <button id="popup-ok" style="left: 0px; top: 0px;">OK</button>
+
+    </div>
+</div>
+
+
+<!-- DOWNLOAD EDIT MODALS -->
+<div class="modal-overlay download-modal-wide" id="downloadEditModal">
+  <div class="modal-box">
+    <h3><i class="fa-solid fa-pen-to-square"></i> <span id="downloadEditTitle">Edit Download</span></h3>
+    <div class="download-form-grid">
+      <div><label>Judul</label><input id="dlTitle" type="text" placeholder="Full Client"></div>
+      <div><label>Versi</label><input id="dlVersion" type="text" placeholder="Version 3.0"></div>
+      <div><label>Ukuran</label><input id="dlSize" type="text" placeholder="6.27 GB"></div>
+      <div><label>Teks Tombol</label><input id="dlButton" type="text" placeholder="Download"></div>
+      <div class="full"><label>Link Download</label><input id="dlUrl" type="url" placeholder="https://..."></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" id="dlCancel">Batal</button>
+      <button class="btn-save" id="dlSave">Simpan</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay download-modal-wide" id="patchModal">
+  <div class="modal-box">
+    <h3><i class="fa-solid fa-file-zipper"></i> Kelola Manual Patch</h3>
+    <div id="patchList"><table class="download-list-table"><thead><tr><th>Patch</th><th>Versi</th><th>Size</th><th>Aksi</th></tr></thead><tbody><tr><td>New Update no new.rar</td><td>V3</td><td>21.9</td><td class="actions"><a href="https://www.mediafire.com/file/6uxzgqvm0pmn42o/New_Update_no_new.rar/file" target="_blank" rel="noopener" class="download-edit-btn" style="display:inline-block">Download</a><button class="patch-admin-control" data-pedit="patch-1788634236828-620as"><i class="fa-solid fa-pen"></i></button><button class="delete patch-admin-control" data-pdelete="patch-1788634236828-620as"><i class="fa-solid fa-trash"></i></button></td></tr></tbody></table></div>
+    <button type="button" class="btn-add-row patch-admin-control" id="patchAdd"><i class="fa-solid fa-plus"></i> Tambah Patch</button>
+    <div class="modal-actions">
+      <button class="btn-cancel" id="patchClose">Tutup</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay download-modal-wide" id="patchEditModal">
+  <div class="modal-box">
+    <h3><i class="fa-solid fa-pen"></i> <span id="patchEditTitle">Tambah Manual Patch</span></h3>
+    <div class="download-form-grid">
+      <div><label>Nama Patch</label><input id="patchName" type="text" placeholder="Manual Update 1"></div>
+      <div><label>Versi</label><input id="patchVersion" type="text" placeholder="v1.1"></div>
+      <div><label>Ukuran</label><input id="patchSize" type="text" placeholder="21.6 MB"></div>
+      <div class="full"><label>Link Download</label><input id="patchUrl" type="url" placeholder="https://..."></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" id="patchEditCancel">Batal</button>
+      <button class="btn-save" id="patchEditSave">Simpan</button>
+    </div>
+  </div>
+</div>
+
+<!-- NEWS + SERVER INFORMATION EDIT MODALS -->
+<div class="modal-overlay content-modal-wide" id="newsEditModal">
+  <div class="modal-box">
+    <h3><i class="fa-solid fa-newspaper"></i> <span id="newsEditTitle">Edit Latest News</span></h3>
+    <div class="content-form-grid">
+      <div><label>Tanggal</label><input id="newsDate" type="text" placeholder="07 AUGUST 2026"></div>
+      <div><label>Judul</label><input id="newsTitle" type="text" placeholder="Patch Update"></div>
+      <div class="full"><label>Gambar (path atau URL)</label><input id="newsImage" type="text" placeholder="assets/news/news1.jpg"></div>
+      <div class="full"><label>Deskripsi Singkat</label><textarea id="newsDescription" placeholder="Tulis deskripsi singkat yang tampil di kartu..."></textarea></div>
+      <div class="full"><label>Link Read More (opsional)</label><input id="newsUrl" type="url" placeholder="#"></div>
+      <div class="full">
+        <div class="news-event-manager-head">
+          <div>
+            <strong><i class="fa-solid fa-calendar-days"></i> Daftar Event / Isi Detail</strong>
+            <small>Event akan muncul setelah pengunjung klik <b>Read More</b>.</small>
+          </div>
+          <button type="button" class="btn-add-row" id="newsEventAdd"><i class="fa-solid fa-plus"></i> Tambah Event</button>
+        </div>
+        <div id="newsEventList" class="news-event-list"><div class="news-event-admin-card"><div class="news-event-admin-grid"><div><label>Nama Event</label><input type="text" data-ev-title="" placeholder="Double EXP"></div><div><label>Tanggal Event</label><input type="text" data-ev-date="" placeholder="08 - 10 AUGUST 2026"></div><div class="event-full"><label>Detail Event</label><textarea data-ev-content="" placeholder="Tulis detail event yang panjang di sini..."></textarea></div></div><div class="news-event-admin-actions"><button type="button" class="news-event-delete" data-new-event-delete=""><i class="fa-solid fa-trash"></i> Hapus Event</button></div></div></div>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" id="newsEditCancel">Batal</button>
+      <button class="btn-save" id="newsEditSave">Simpan</button>
+    </div>
+  </div>
+</div>
+
+<!-- LATEST NEWS EVENT CHOOSER -->
+<div class="modal-overlay content-modal-wide" id="newsEventModal">
+  <div class="modal-box news-event-chooser-box">
+    <h3><i class="fa-solid fa-calendar-days"></i> <span id="newsEventModalTitle">Weekly Event</span></h3>
+    <p class="news-event-chooser-sub">Pilih event berdasarkan tanggal untuk membaca detail lengkap.</p>
+    <div id="newsEventChooserList" class="news-event-chooser-list"><button type="button" class="news-event-choice"><span class="news-event-choice-date">Event mingguan telah dijadwalkan sebagai berikut:</span><span class="news-event-choice-title">🎉 EXYNOS WEEKLY EVENT</span><span class="news-event-choice-desc">Klik untuk membuka detail event di tab baru →</span></button></div>
+    <div class="modal-actions">
+      <button class="btn-cancel" type="button" id="newsEventClose">Tutup</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay content-modal-wide" id="serverEditModal">
+  <div class="modal-box">
+    <h3><i class="fa-solid fa-server"></i> <span id="serverEditTitle">Edit Server Information</span></h3>
+    <div class="content-form-grid">
+      <div><label>Icon</label><input id="serverIcon" type="text" placeholder="🔥"></div>
+      <div><label>Judul</label><input id="serverTitle" type="text" placeholder="Active Event"></div>
+      <div class="full"><label>Informasi Utama</label><input id="serverDescription" type="text" placeholder="Coming Soon"></div>
+      <div class="full"><label>Info Tambahan</label><input id="serverExtra" type="text" placeholder="Special Reward Box"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" id="serverEditCancel">Batal</button>
+      <button class="btn-save" id="serverEditSave">Simpan</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN ACCESS -->
+<button id="adminLockBtn" class="admin-lock-btn" title="Admin aktif — klik untuk keluar"><i class="fa-solid fa-lock-open"></i></button>
+
+<div class="modal-overlay" id="adminModal">
+    <div class="modal-box">
+        <h3><i class="fa-solid fa-lock"></i> Admin Login</h3>
+        <p>Masukkan PIN admin untuk mengaktifkan mode edit di browser ini.</p>
+        <input type="password" id="adminPinInput" placeholder="PIN Admin" maxlength="30">
+        <div class="modal-actions">
+            <button class="btn-cancel" id="adminCancelBtn">Batal</button>
+            <button class="btn-save" id="adminSubmitBtn">Masuk</button>
+        </div>
+    </div>
+</div>
+
+<script id="embedded-site-data">
+/* EMBEDDED_SITE_DATA_START */
+window.SITE_DATA = {
+  "version": 1,
+  "buildId": "2026-09-06-integrated-1",
+  "ranking": {
+    "topPlayer": [
+      [
+        "[MR]Ev",
+        "170"
+      ],
+      [
+        "GitarisWali",
+        "170"
+      ],
+      [
+        "MrRex",
+        "170"
+      ],
+      [
+        "Kyndra",
+        "170"
+      ],
+      [
+        "ZEN",
+        "170"
+      ],
+      [
+        "IGNORED",
+        "167"
+      ],
+      [
+        "DoelZ",
+        "163"
+      ],
+      [
+        "[IG]N0",
+        "160"
+      ],
+      [
+        "Aisy",
+        "160"
+      ],
+      [
+        "PvssyHunter",
+        "160"
+      ]
+    ],
+    "topGuild": [
+      [
+        "OverDrive",
+        "40"
+      ],
+      [
+        "MERCENARIES",
+        "17"
+      ],
+      [
+        "MONARCH",
+        "4"
+      ],
+      [
+        "ATLANTIS",
+        "2"
+      ],
+      [
+        "Macedon",
+        "2"
+      ]
+    ],
+    "weekly": [
+      [
+        "GitarisWali",
+        "06.09.26"
+      ],
+      [
+        "[MR]Ev",
+        "06.09.26"
+      ],
+      [
+        "GitarisWali",
+        "30.08.26"
+      ],
+      [
+        "DoelZ",
+        "30.08.26"
+      ],
+      [
+        "DoelZ",
+        "29.08.26"
+      ],
+      [
+        "Aisy",
+        "29.08.26"
+      ],
+      [
+        "DoelZ",
+        "25.08.26"
+      ],
+      [
+        "KangCepot",
+        "25.08.26"
+      ],
+      [
+        "[X]Nda",
+        "22.08.26"
+      ],
+      [
+        "VioletSenja",
+        "22.08.26"
+      ]
+    ]
+  },
+  "news": [
+    {
+      "id": "news-1",
+      "date": "⚔️ THE WAIT IS OVER! ⚔️",
+      "title": "🔥 GRAND OPENING RELEASE 🔥 ATLANTICA EXYNOS",
+      "image": "assets/news/news1.jpg",
+      "description": "Setelah perjalanan panjang, akhirnya saat yang ditunggu telah tiba!\n\n📅 28 JULY 2026\n🕗 20.00 WIB",
+      "url": "#",
+      "events": []
+    },
+    {
+      "id": "news-2",
+      "date": "30 JULY 2026",
+      "title": "Weekly Event",
+      "image": "assets/news/news2.jpg",
+      "description": "",
+      "url": "#",
+      "events": [
+        {
+          "title": "🎉 EXYNOS WEEKLY EVENT",
+          "date": "Event mingguan telah dijadwalkan sebagai berikut:",
+          "content": "Event mingguan Atlantica Exynos. Detail event dapat diperbarui melalui Admin Panel."
+        }
+      ]
+    },
+    {
+      "id": "news-3",
+      "date": "28.08.2026",
+      "title": "📢 NEWS UPDATE ATLANTICA EXYNOS",
+      "image": "assets/news/news3.jpg",
+      "description": "🎯 UPDATE LEVEL\n• Level maksimal ditingkatkan dari Lv.150 → Lv.170",
+      "url": "#",
+      "events": []
+    }
+  ],
+  "server": [
+    {
+      "id": "server-1",
+      "icon": "🏆",
+      "title": "Weekly Champion",
+      "description": "Coming Soon",
+      "extra": "00:00 WIB"
+    },
+    {
+      "id": "server-2",
+      "icon": "⚔",
+      "title": "GM Invasion",
+      "description": "⚠️ INVASI HARIAN TELAH DIMULAI! ⚠️",
+      "extra": "🔥 PERSIAPKAN DIRIMU, ATLANTIAN EXYNOS! 🔥"
+    },
+    {
+      "id": "server-4",
+      "icon": "⭐",
+      "title": "Active Event",
+      "description": "Every Day",
+      "extra": "All Time"
+    }
+  ],
+  "downloads": [
+    {
+      "id": "client",
+      "title": "Full Client",
+      "version": "Version 3.0",
+      "size": "6.27 GB",
+      "url": "https://www.mediafire.com/file/sx8m9ruimcaofc5/AOEX_ClintFix.rar/file",
+      "button": "Download",
+      "type": "client"
+    },
+    {
+      "id": "launcher",
+      "title": "Launcher",
+      "version": "Latest Version",
+      "size": "0 MB",
+      "url": "#",
+      "button": "Download",
+      "type": "launcher"
+    }
+  ],
+  "patches": [
+    {
+      "id": "patch-1788634236828-620as",
+      "name": "New Update no new.rar",
+      "version": "V3",
+      "size": "21.9",
+      "url": "https://www.mediafire.com/file/6uxzgqvm0pmn42o/New_Update_no_new.rar/file"
+    }
+  ]
+};
+/* EMBEDDED_SITE_DATA_END */
+</script>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    
+    (function () {
+        const ADMIN_PIN = "EXYNOS3288";
+        const ADMIN_KEY = "atlantica_admin_unlocked_v1";
+
+        const adminLockBtn = document.getElementById("adminLockBtn");
+        const adminModal = document.getElementById("adminModal");
+        const adminPinInput = document.getElementById("adminPinInput");
+        const adminCancelBtn = document.getElementById("adminCancelBtn");
+        const adminSubmitBtn = document.getElementById("adminSubmitBtn");
+
+        if (!adminLockBtn || !adminModal) return;
+
+        function isAdminUnlocked() {
+            return localStorage.getItem(ADMIN_KEY) === "1";
+        }
+
+        function applyAdminState() {
+            if (isAdminUnlocked()) {
+                document.body.classList.add("admin-unlocked");
+                adminLockBtn.innerHTML = '<i class="fa-solid fa-lock-open"></i>';
+                adminLockBtn.title = "Admin aktif — klik untuk keluar";
+            } else {
+                document.body.classList.remove("admin-unlocked");
+                adminLockBtn.innerHTML = '<i class="fa-solid fa-lock"></i>';
+                adminLockBtn.title = "Admin";
+            }
+        }
+
+        adminLockBtn.addEventListener("click", function () {
+            if (isAdminUnlocked()) {
+                if (confirm("Keluar dari mode admin di browser ini?")) {
+                    localStorage.removeItem(ADMIN_KEY);
+                    applyAdminState();
+                }
+            } else {
+                adminPinInput.value = "";
+                adminModal.classList.add("open");
+                adminPinInput.focus();
+            }
+        });
+
+        adminCancelBtn.addEventListener("click", function () {
+            adminModal.classList.remove("open");
+        });
+
+        adminModal.addEventListener("click", function (e) {
+            if (e.target === adminModal) adminModal.classList.remove("open");
+        });
+
+        adminSubmitBtn.addEventListener("click", function () {
+            if (adminPinInput.value === ADMIN_PIN) {
+                localStorage.setItem(ADMIN_KEY, "1");
+                adminModal.classList.remove("open");
+                applyAdminState();
+            } else {
+                alert("PIN salah.");
+            }
+        });
+
+        adminPinInput.addEventListener("keydown", function (e) {
+            if (e.key === "Enter") adminSubmitBtn.click();
+        });
+
+        document.addEventListener("keydown", function (e) {
+            if (e.key === "Escape" && adminModal.classList.contains("open")) {
+                adminModal.classList.remove("open");
+            }
+        });
+
+        applyAdminState();
+    })();
+
+    
+    const navToggle = document.getElementById("navToggle");
+    const mainNav = document.getElementById("mainNav");
+
+    if (navToggle && mainNav) {
+        function closeNav() {
+            mainNav.classList.remove("open");
+            navToggle.setAttribute("aria-expanded", "false");
+        }
+        function openNav() {
+            mainNav.classList.add("open");
+            navToggle.setAttribute("aria-expanded", "true");
+        }
+        navToggle.addEventListener("click", function () {
+            if (mainNav.classList.contains("open")) closeNav(); else openNav();
+        });
+        mainNav.querySelectorAll("a").forEach(function (link) {
+            link.addEventListener("click", closeNav);
+        });
+        window.addEventListener("resize", function () {
+            if (window.innerWidth > 860) closeNav();
+        });
+    }
+
+    
+
+    const RANK_STORAGE_KEY = "atlantica_ranking_v1";
+
+    
+    const RANK_CONFIG = {
+        topPlayer: {
+            bodyId: "topPlayerBody",
+            title: "Edit Top Player",
+            labelType: "numeric",
+            cols: ["Character", "Level"],
+            defaults: [["[MR]Ev", "170"], ["GitarisWali", "170"], ["MrRex", "170"], ["Kyndra", "170"], ["ZEN", "170"], ["IGNORED", "167"], ["DoelZ", "163"], ["[IG]N0", "160"], ["Aisy", "160"], ["PvssyHunter", "160"]]
+        },
+        topGuild: {
+            bodyId: "topGuildBody",
+            title: "Edit Top Guild",
+            labelType: "numeric",
+            cols: ["Guild", "Members"],
+            defaults: [["OverDrive", "40"], ["MERCENARIES", "17"], ["MONARCH", "4"], ["ATLANTIS", "2"], ["Macedon", "2"]]
+        },
+        weekly: {
+            bodyId: "weeklyBody",
+            title: "Edit Weekly Champion",
+            labelType: "twoPlace",
+            cols: ["Champion", "Time"],
+            defaults: [["GitarisWali", "06.09.26"], ["[MR]Ev", "06.09.26"], ["GitarisWali", "30.08.26"], ["DoelZ", "30.08.26"], ["DoelZ", "29.08.26"], ["Aisy", "29.08.26"], ["DoelZ", "25.08.26"], ["KangCepot", "25.08.26"], ["[X]Nda", "22.08.26"], ["VioletSenja", "22.08.26"]]
+        }
+    };
+
+    function ordinal(n) {
+        const s = ["th", "st", "nd", "rd"];
+        const v = n % 100;
+        return n + (s[(v - 20) % 10] || s[v] || s[0]);
+    }
+
+    function rankRowLabel(key, index) {
+        const cfg = RANK_CONFIG[key];
+        if (cfg.labelType === "trophy") return ordinal(index + 1) + " 🏆";
+        if (cfg.labelType === "twoPlace") return (index % 2 === 0 ? "1st" : "2nd") + " 🏆";
+        return String(index + 1);
+    }
+
+    function loadRankData() {
+        try {
+            if (localStorage.getItem(RANK_STORAGE_KEY + "_dirty") === "1") {
+                const local = localStorage.getItem(RANK_STORAGE_KEY);
+                if (local) return JSON.parse(local);
+            }
+        } catch (e) {}
+        try {
+            if (window.SITE_DATA && window.SITE_DATA.ranking) {
+                const remote = JSON.parse(JSON.stringify(window.SITE_DATA.ranking));
+                localStorage.setItem(RANK_STORAGE_KEY, JSON.stringify(remote));
+                localStorage.removeItem(RANK_STORAGE_KEY + "_dirty");
+                return remote;
+            }
+        } catch (e) {}
+        return null;
+    }
+
+    function saveRankData(data) {
+        try {
+            localStorage.setItem(RANK_STORAGE_KEY, JSON.stringify(data));
+            localStorage.setItem(RANK_STORAGE_KEY + "_dirty", "1");
+        } catch (e) {
+            console.warn("Gagal menyimpan data ranking:", e);
+        }
+    }
+
+    let rankData = loadRankData();
+    if (!rankData) {
+        rankData = {};
+        Object.keys(RANK_CONFIG).forEach(function (key) {
+            rankData[key] = RANK_CONFIG[key].defaults.map(function (row) { return row.slice(); });
+        });
+    } else {
+        
+        Object.keys(RANK_CONFIG).forEach(function (key) {
+            if (!rankData[key] || !rankData[key].length) {
+                rankData[key] = RANK_CONFIG[key].defaults.map(function (row) { return row.slice(); });
+            }
+        });
+    }
+
+    
+    Object.keys(RANK_CONFIG).forEach(function (key) {
+        const cfg = RANK_CONFIG[key];
+        if (cfg.maxRows && rankData[key].length > cfg.maxRows) {
+            rankData[key] = rankData[key].slice(0, cfg.maxRows);
+            saveRankData(rankData);
+        }
+    });
+
+    function escapeHtml(str) {
+        const div = document.createElement("div");
+        div.textContent = str;
+        return div.innerHTML;
+    }
+
+    function renderRankTable(key) {
+        const cfg = RANK_CONFIG[key];
+        const tbody = document.getElementById(cfg.bodyId);
+        if (!tbody) return;
+
+        tbody.innerHTML = "";
+
+        rankData[key].forEach(function (rowData, i) {
+            const tr = document.createElement("tr");
+            tr.innerHTML =
+                "<td>" + rankRowLabel(key, i) + "</td>" +
+                "<td>" + escapeHtml(rowData[0]) + "</td>" +
+                "<td>" + escapeHtml(rowData[1]) + "</td>";
+            tbody.appendChild(tr);
+        });
+    }
+
+    function renderAllRankTables() {
+        Object.keys(RANK_CONFIG).forEach(renderRankTable);
+    }
+
+    
+    const rankModal = document.getElementById("rankModal");
+    const rankModalTitle = document.getElementById("rankModalTitle");
+    const rankModalFields = document.getElementById("rankModalFields");
+    const rankBtnAddRow = document.getElementById("rankBtnAddRow");
+    let editingRankKey = null;
+    let editingRows = [];
+
+    function syncEditingRowsFromInputs() {
+        rankModalFields.querySelectorAll(".rank-row").forEach(function (wrap, i) {
+            const inputs = wrap.querySelectorAll("input");
+            if (!editingRows[i]) editingRows[i] = ["", ""];
+            editingRows[i][0] = inputs[0].value;
+            editingRows[i][1] = inputs[1].value;
+        });
+    }
+
+    function renderModalFields() {
+        rankModalFields.innerHTML = "";
+
+        editingRows.forEach(function (rowData, i) {
+            const cfg = RANK_CONFIG[editingRankKey];
+            const wrap = document.createElement("div");
+            wrap.className = "rank-row";
+            wrap.innerHTML =
+                '<span class="rank-label">' + rankRowLabel(editingRankKey, i) + '</span>' +
+                '<input type="text" placeholder="' + cfg.cols[0] + '" value="' + escapeHtml(rowData[0]) + '">' +
+                '<input type="text" placeholder="' + cfg.cols[1] + '" value="' + escapeHtml(rowData[1]) + '">' +
+                '<button type="button" class="rank-remove" title="Hapus baris"><i class="fa-solid fa-trash"></i></button>';
+
+            wrap.querySelector(".rank-remove").addEventListener("click", function () {
+                syncEditingRowsFromInputs();
+                editingRows.splice(i, 1);
+                renderModalFields();
+            });
+
+            rankModalFields.appendChild(wrap);
+        });
+    }
+
+    function openRankModal(key) {
+        const cfg = RANK_CONFIG[key];
+        if (!cfg) return;
+
+        editingRankKey = key;
+        rankModalTitle.textContent = cfg.title;
+        editingRows = rankData[key].map(function (row) { return row.slice(); });
+        renderModalFields();
+
+        rankModal.classList.add("open");
+    }
+
+    function closeRankModal() {
+        rankModal.classList.remove("open");
+        editingRankKey = null;
+        editingRows = [];
+    }
+
+    document.querySelectorAll(".ranking-edit-btn").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+            openRankModal(btn.dataset.target);
+        });
+    });
+
+    rankBtnAddRow.addEventListener("click", function () {
+        if (!editingRankKey) return;
+        syncEditingRowsFromInputs();
+        editingRows.push(["", ""]);
+        renderModalFields();
+
+        
+        const rows = rankModalFields.querySelectorAll(".rank-row");
+        const lastRow = rows[rows.length - 1];
+        if (lastRow) {
+            lastRow.scrollIntoView({ block: "nearest" });
+            const firstInput = lastRow.querySelector("input");
+            if (firstInput) firstInput.focus();
+        }
+    });
+
+    document.getElementById("rankBtnCancel").addEventListener("click", closeRankModal);
+
+    rankModal.addEventListener("click", function (e) {
+        if (e.target === rankModal) closeRankModal();
+    });
+
+    document.getElementById("rankBtnSave").addEventListener("click", function () {
+        if (!editingRankKey) return;
+
+        syncEditingRowsFromInputs();
+
+        rankData[editingRankKey] = editingRows
+            .map(function (row) { return [row[0].trim(), row[1].trim()]; });
+
+        saveRankData(rankData);
+        renderRankTable(editingRankKey);
+        closeRankModal();
+    });
+
+    document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && rankModal.classList.contains("open")) closeRankModal();
+    });
+
+    renderAllRankTables();
+
+    
+    /* ========================= EXPORT INDEX ========================= */
+    const publishSiteBtn = document.getElementById("publishSiteBtn");
+
+    function exportIndexHtml() {
+        try {
+            closeRankModal();
+            if (mainNav) mainNav.classList.remove("open");
+            if (navToggle) navToggle.setAttribute("aria-expanded", "false");
+            const securityPopup = document.getElementById("exynos-popup");
+            if (securityPopup) securityPopup.style.display = "none";
+
+            // Build one self-contained data object from the current admin state.
+            const exportData = {
+                version: 1,
+                buildId: "2026-09-06-integrated-1",
+                updatedAt: new Date().toISOString(),
+                ranking: {
+                    topPlayer: rankData.topPlayer.map(row => [String(row[0] || ""), String(row[1] || "")]),
+                    topGuild: rankData.topGuild.map(row => [String(row[0] || ""), String(row[1] || "")]),
+                    weekly: rankData.weekly.map(row => [String(row[0] || ""), String(row[1] || "")])
+                },
+                news: newsData.map(x => ({...x})),
+                server: serverData.map(x => ({...x})),
+                downloads: downloadData.map(x => ({...x})),
+                patches: patchData.map(x => ({...x}))
+            };
+
+            // Keep browser storage synchronized with what is exported.
+            saveRankData(exportData.ranking);
+            saveJsonStorage(NEWS_STORAGE_KEY, exportData.news);
+            saveJsonStorage(SERVER_STORAGE_KEY, exportData.server);
+            saveJsonStorage(DOWNLOAD_STORAGE_KEY, exportData.downloads);
+            saveJsonStorage("atlantica_patches_v1", exportData.patches);
+
+            let htmlContent = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+            const safeJson = JSON.stringify(exportData, null, 2).replace(/<\/script/gi, "<\\/script");
+            const dataScript = '<script id="embedded-site-data">\n/* EMBEDDED_SITE_DATA_START */\nwindow.SITE_DATA = ' +
+                safeJson + ';\n/* EMBEDDED_SITE_DATA_END */\n<\/script>';
+
+            htmlContent = htmlContent.replace(
+                /<script id="embedded-site-data">[\\s\\S]*?<\/script>/,
+                dataScript
+            );
+
+            // Also update the JS fallback defaults so the file remains self-contained
+            // even if browser storage is empty.
+            function replaceConst(name, value) {
+                const safe = JSON.stringify(value, null, 8).replace(/<\/script/gi, "<\\/script");
+                const re = new RegExp("const " + name + " = \\[\\s\\S]*?\\n    \\];");
+                htmlContent = htmlContent.replace(re, "const " + name + " = " + safe + ";");
+            }
+            replaceConst("NEWS_DEFAULTS", exportData.news);
+            replaceConst("SERVER_DEFAULTS", exportData.server);
+            replaceConst("DOWNLOAD_DEFAULTS", exportData.downloads);
+            replaceConst("PATCH_DEFAULTS", exportData.patches);
+
+            // Ranking fallback defaults live inside RANK_CONFIG.
+            const rankConfig = {
+                topPlayer: exportData.ranking.topPlayer,
+                topGuild: exportData.ranking.topGuild,
+                weekly: exportData.ranking.weekly
+            };
+            ["topPlayer","topGuild","weekly"].forEach(function(key) {
+                const rows = JSON.stringify(rankConfig[key]);
+                const re = new RegExp("(const RANK_CONFIG = \\{[\\s\\S]*?" + key + ": \\{[\\s\\S]*?defaults: )\\[[\\s\\S]*?\\]");
+                htmlContent = htmlContent.replace(re, "$1" + rows);
+            });
+
+            const blob = new Blob([htmlContent], {type:"text/html"});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "index.html";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            setTimeout(() => URL.revokeObjectURL(url), 1000);
+
+            alert("index.html berhasil dibuat dengan semua data terbaru. Upload file ini ke GitHub untuk membuat perubahan live.");
+        } catch (e) {
+            console.error(e);
+            alert("Gagal membuat index.html: " + (e.message || e));
+        }
+    }
+
+    if (publishSiteBtn) publishSiteBtn.addEventListener("click", exportIndexHtml);
+    /* ========================= LATEST NEWS + SERVER INFORMATION EDITOR ========================= */
+    const NEWS_STORAGE_KEY = "atlantica_news_v1";
+    const SERVER_STORAGE_KEY = "atlantica_server_info_v1";
+
+    const NEWS_DEFAULTS = [
+        {
+                "id": "news-1",
+                "date": "⚔️ THE WAIT IS OVER! ⚔️",
+                "title": "🔥 GRAND OPENING RELEASE 🔥 ATLANTICA EXYNOS",
+                "image": "assets/news/news1.jpg",
+                "description": "Setelah perjalanan panjang, akhirnya saat yang ditunggu telah tiba!\n\n📅 28 JULY 2026\n🕗 20.00 WIB",
+                "url": "#",
+                "events": []
+        },
+        {
+                "id": "news-2",
+                "date": "30 JULY 2026",
+                "title": "Weekly Event",
+                "image": "assets/news/news2.jpg",
+                "description": "",
+                "url": "#",
+                "events": [
+                        {
+                                "title": "🎉 EXYNOS WEEKLY EVENT",
+                                "date": "Event mingguan telah dijadwalkan sebagai berikut:",
+                                "content": "Event mingguan Atlantica Exynos. Detail event dapat diperbarui melalui Admin Panel."
+                        }
+                ]
+        },
+        {
+                "id": "news-3",
+                "date": "28.08.2026",
+                "title": "📢 NEWS UPDATE ATLANTICA EXYNOS",
+                "image": "assets/news/news3.jpg",
+                "description": "🎯 UPDATE LEVEL\n• Level maksimal ditingkatkan dari Lv.150 → Lv.170",
+                "url": "#",
+                "events": []
+        }
+];
+
+    const SERVER_DEFAULTS = [
+        {
+                "id": "server-1",
+                "icon": "🏆",
+                "title": "Weekly Champion",
+                "description": "Coming Soon",
+                "extra": "00:00 WIB"
+        },
+        {
+                "id": "server-2",
+                "icon": "⚔",
+                "title": "GM Invasion",
+                "description": "⚠️ INVASI HARIAN TELAH DIMULAI! ⚠️",
+                "extra": "🔥 PERSIAPKAN DIRIMU, ATLANTIAN EXYNOS! 🔥"
+        },
+        {
+                "id": "server-4",
+                "icon": "⭐",
+                "title": "Active Event",
+                "description": "Every Day",
+                "extra": "All Time"
+        }
+];
+
+    let newsData = loadJsonStorage(NEWS_STORAGE_KEY, NEWS_DEFAULTS);
+    let serverData = loadJsonStorage(SERVER_STORAGE_KEY, SERVER_DEFAULTS);
+    let editingNewsId = null;
+    let editingServerId = null;
+
+    function normalizeNewsEvents(news) {
+        if (!Array.isArray(news.events)) news.events = [];
+        return news.events;
+    }
+
+    function renderNews() {
+        const grid = document.getElementById("newsGrid");
+        if (!grid) return;
+        grid.innerHTML = "";
+        newsData.forEach(function(n) {
+            normalizeNewsEvents(n);
+            const item = document.createElement("div");
+            item.className = "news-item";
+            const hasEvents = n.events.length > 0;
+            item.innerHTML =
+                '<img src="' + escapeHtml(n.image || "") + '" alt="' + escapeHtml(n.title || "News") + '">' +
+                '<div class="news-info">' +
+                  '<span>' + escapeHtml(n.date || "") + '</span>' +
+                  '<h2>' + escapeHtml(n.title || "") + '</h2>' +
+                  '<p>' + escapeHtml(n.description || "") + '</p>' +
+                  '<a href="' + escapeHtml(n.url || "#") + '" class="news-read-more" data-news-read="' + escapeHtml(n.id) + '">' +
+                    'Read More' + (hasEvents ? ' <small>(' + n.events.length + ' Event)</small>' : '') + ' →</a>' +
+                '</div>' +
+                '<div class="content-card-admin">' +
+                  '<button type="button" data-news-edit="' + escapeHtml(n.id) + '" title="Edit"><i class="fa-solid fa-pen"></i></button>' +
+                  '<button type="button" class="delete" data-news-delete="' + escapeHtml(n.id) + '" title="Hapus"><i class="fa-solid fa-trash"></i></button>' +
+                '</div>';
+            grid.appendChild(item);
+        });
+
+        grid.querySelectorAll("[data-news-read]").forEach(btn => {
+            btn.addEventListener("click", function(e) {
+                const n = newsData.find(x => x.id === btn.dataset.newsRead);
+                if (!n) return;
+                if (Array.isArray(n.events) && n.events.length) {
+                    e.preventDefault();
+                    openNewsEventChooser(n);
+                }
+            });
+        });
+        grid.querySelectorAll("[data-news-edit]").forEach(btn => btn.addEventListener("click", () => openNewsEditor(btn.dataset.newsEdit)));
+        grid.querySelectorAll("[data-news-delete]").forEach(btn => btn.addEventListener("click", () => deleteNews(btn.dataset.newsDelete)));
+    }
+
+    function openNewsEditor(id) {
+        const n = id ? newsData.find(x => x.id === id) : null;
+        editingNewsId = id || null;
+        if (n) normalizeNewsEvents(n);
+        document.getElementById("newsEditTitle").textContent = n ? "Edit Latest News" : "Tambah Latest News";
+        document.getElementById("newsDate").value = n ? n.date : "";
+        document.getElementById("newsTitle").value = n ? n.title : "";
+        document.getElementById("newsImage").value = n ? n.image : "";
+        document.getElementById("newsDescription").value = n ? n.description : "";
+        document.getElementById("newsUrl").value = n ? n.url : "#";
+        renderNewsEventEditor(n ? n.events : []);
+        document.getElementById("newsEditModal").classList.add("open");
+    }
+
+    function closeNewsEditor() {
+        document.getElementById("newsEditModal").classList.remove("open");
+        editingNewsId = null;
+    }
+
+    function renderNewsEventEditor(events) {
+        const list = document.getElementById("newsEventList");
+        if (!list) return;
+        list.innerHTML = "";
+        if (!events || !events.length) {
+            list.innerHTML = '<div class="news-event-empty">Belum ada event. Klik <b>Tambah Event</b> untuk membuat menu event pertama.</div>';
+            return;
+        }
+        events.forEach(function(ev, index) {
+            const card = document.createElement("div");
+            card.className = "news-event-admin-card";
+            card.innerHTML =
+                '<div class="news-event-admin-grid">' +
+                  '<div><label>Nama Event</label><input type="text" data-ev-title value="' + escapeHtml(ev.title || "") + '" placeholder="Double EXP"></div>' +
+                  '<div><label>Tanggal Event</label><input type="text" data-ev-date value="' + escapeHtml(ev.date || "") + '" placeholder="08 - 10 AUGUST 2026"></div>' +
+                  '<div class="event-full"><label>Detail Event</label><textarea data-ev-content placeholder="Tulis detail event yang panjang di sini...">' + escapeHtml(ev.content || "") + '</textarea></div>' +
+                '</div>' +
+                '<div class="news-event-admin-actions"><button type="button" class="news-event-delete" data-ev-delete="' + index + '"><i class="fa-solid fa-trash"></i> Hapus Event</button></div>';
+            list.appendChild(card);
+        });
+    }
+
+    function collectNewsEvents() {
+        const events = [];
+        document.querySelectorAll("#newsEventList .news-event-admin-card").forEach(function(card, index) {
+            const title = card.querySelector("[data-ev-title]").value.trim();
+            const date = card.querySelector("[data-ev-date]").value.trim();
+            const content = card.querySelector("[data-ev-content]").value.trim();
+            if (title || date || content) {
+                events.push({
+                    id: "event-" + Date.now() + "-" + index,
+                    title: title || "Event",
+                    date: date || "",
+                    content: content || ""
+                });
+            }
+        });
+        return events;
+    }
+
+    function saveNews() {
+        const data = {
+            date: document.getElementById("newsDate").value.trim(),
+            title: document.getElementById("newsTitle").value.trim(),
+            image: document.getElementById("newsImage").value.trim(),
+            description: document.getElementById("newsDescription").value.trim(),
+            url: document.getElementById("newsUrl").value.trim() || "#",
+            events: collectNewsEvents()
+        };
+        if (!data.title) { alert("Judul news wajib diisi."); return; }
+        if (editingNewsId) {
+            const n = newsData.find(x => x.id === editingNewsId);
+            if (n) Object.assign(n, data);
+        } else {
+            data.id = uid("news");
+            newsData.push(data);
+        }
+        saveJsonStorage(NEWS_STORAGE_KEY, newsData);
+        renderNews();
+        closeNewsEditor();
+    }
+
+    function deleteNews(id) {
+        const n = newsData.find(x => x.id === id); if (!n) return;
+        if (!confirm('Hapus news "' + n.title + '"?')) return;
+        newsData = newsData.filter(x => x.id !== id);
+        saveJsonStorage(NEWS_STORAGE_KEY, newsData);
+        renderNews();
+    }
+
+    function openNewsEventChooser(news) {
+        const modal = document.getElementById("newsEventModal");
+        const list = document.getElementById("newsEventChooserList");
+        document.getElementById("newsEventModalTitle").textContent = news.title || "Event";
+        list.innerHTML = "";
+
+        if (!news.events || !news.events.length) {
+            list.innerHTML = '<div class="news-event-no-data">Belum ada detail event untuk news ini.</div>';
+        } else {
+            news.events.forEach(function(ev) {
+                const button = document.createElement("button");
+                button.type = "button";
+                button.className = "news-event-choice";
+                button.innerHTML =
+                    '<span class="news-event-choice-date">' + escapeHtml(ev.date || "") + '</span>' +
+                    '<span class="news-event-choice-title">' + escapeHtml(ev.title || "Event") + '</span>' +
+                    '<span class="news-event-choice-desc">Klik untuk membuka detail event di tab baru →</span>';
+                button.addEventListener("click", function() {
+                    openNewsEventDetail(news, ev);
+                });
+                list.appendChild(button);
+            });
+        }
+        modal.classList.add("open");
+    }
+
+    function closeNewsEventChooser() {
+        document.getElementById("newsEventModal").classList.remove("open");
+    }
+
+    function openNewsEventDetail(news, ev) {
+        const win = window.open("", "_blank");
+        if (!win) {
+            alert("Tab baru diblokir browser. Izinkan pop-up untuk website ini.");
+            return;
+        }
+        const safeTitle = escapeHtml(ev.title || "Event");
+        const safeDate = escapeHtml(ev.date || "");
+        const safeNews = escapeHtml(news.title || "Latest News");
+        const safeContent = escapeHtml(ev.content || "").replace(/\n/g, "<br>");
+        const safeImage = escapeHtml(news.image || "");
+        win.document.write(
+            '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">' +
+            '<meta name="viewport" content="width=device-width,initial-scale=1.0">' +
+            '<title>' + safeTitle + ' - Atlantica Classic V3 Exynos</title>' +
+            '<style>' +
+            'body{margin:0;background:#07151d;color:#e9f6f5;font-family:Inter,Arial,sans-serif;line-height:1.8}' +
+            '.wrap{max-width:900px;margin:0 auto;padding:40px 22px 80px}' +
+            '.card{background:linear-gradient(180deg,#102632,#091820);border:1px solid rgba(217,180,90,.25);border-radius:16px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.35)}' +
+            'img{display:block;width:100%;max-height:360px;object-fit:cover}' +
+            '.body{padding:30px}.date{color:#2fd0c9;font-size:13px;letter-spacing:.12em;text-transform:uppercase}' +
+            'h1{font-family:Georgia,serif;color:#f0c968;margin:8px 0 4px;font-size:clamp(28px,5vw,46px)}' +
+            '.from{color:#9eb7bd;font-size:14px;margin-bottom:24px}.content{font-size:16px;white-space:normal}' +
+            '.back{display:inline-block;margin-top:28px;padding:10px 18px;border:1px solid rgba(217,180,90,.4);border-radius:8px;color:#f0c968;text-decoration:none}' +
+            '</style></head><body><main class="wrap"><article class="card">' +
+            (safeImage ? '<img src="' + safeImage + '" alt="">' : '') +
+            '<div class="body"><div class="date">' + safeDate + '</div><h1>' + safeTitle + '</h1>' +
+            '<div class="from">Latest News • ' + safeNews + '</div><div class="content">' + safeContent + '</div>' +
+            '<a class="back" href="javascript:window.close()">← Tutup Tab</a></div></article></main></body></html>'
+        );
+        win.document.close();
+        closeNewsEventChooser();
+    }
+
+    function renderServerInfo() {
+        const grid = document.getElementById("serverInfoGrid");
+        if (!grid) return;
+        grid.innerHTML = "";
+        serverData.forEach(function(s) {
+            const card = document.createElement("div");
+            card.className = "server-card";
+            card.innerHTML =
+                '<div class="server-icon">' + escapeHtml(s.icon || "⭐") + '</div>' +
+                '<h2>' + escapeHtml(s.title || "") + '</h2>' +
+                '<p>' + escapeHtml(s.description || "") + '</p>' +
+                '<span>' + escapeHtml(s.extra || "") + '</span>' +
+                '<div class="content-card-admin">' +
+                  '<button type="button" data-server-edit="' + escapeHtml(s.id) + '" title="Edit"><i class="fa-solid fa-pen"></i></button>' +
+                  '<button type="button" class="delete" data-server-delete="' + escapeHtml(s.id) + '" title="Hapus"><i class="fa-solid fa-trash"></i></button>' +
+                '</div>';
+            grid.appendChild(card);
+        });
+        grid.querySelectorAll("[data-server-edit]").forEach(btn => btn.addEventListener("click", () => openServerEditor(btn.dataset.serverEdit)));
+        grid.querySelectorAll("[data-server-delete]").forEach(btn => btn.addEventListener("click", () => deleteServerInfo(btn.dataset.serverDelete)));
+    }
+    function openServerEditor(id) {
+        const x = id ? serverData.find(s => s.id === id) : null;
+        editingServerId = id || null;
+        document.getElementById("serverEditTitle").textContent = x ? "Edit Server Information" : "Tambah Server Information";
+        document.getElementById("serverIcon").value = x ? x.icon : "";
+        document.getElementById("serverTitle").value = x ? x.title : "";
+        document.getElementById("serverDescription").value = x ? x.description : "";
+        document.getElementById("serverExtra").value = x ? x.extra : "";
+        document.getElementById("serverEditModal").classList.add("open");
+    }
+    function closeServerEditor() { document.getElementById("serverEditModal").classList.remove("open"); editingServerId = null; }
+    function saveServerInfo() {
+        const data = {
+            icon: document.getElementById("serverIcon").value.trim() || "⭐",
+            title: document.getElementById("serverTitle").value.trim(),
+            description: document.getElementById("serverDescription").value.trim(),
+            extra: document.getElementById("serverExtra").value.trim()
+        };
+        if (!data.title) { alert("Judul information wajib diisi."); return; }
+        if (editingServerId) {
+            const x = serverData.find(s => s.id === editingServerId); if (x) Object.assign(x, data);
+        } else { data.id = uid("server"); serverData.push(data); }
+        saveJsonStorage(SERVER_STORAGE_KEY, serverData); renderServerInfo(); closeServerEditor();
+    }
+    function deleteServerInfo(id) {
+        const x = serverData.find(s => s.id === id); if (!x) return;
+        if (!confirm('Hapus "' + x.title + '" dari Server Information?')) return;
+        serverData = serverData.filter(s => s.id !== id); saveJsonStorage(SERVER_STORAGE_KEY, serverData); renderServerInfo();
+    }
+
+    document.getElementById("newsAddBtn")?.addEventListener("click", () => openNewsEditor());
+    document.getElementById("newsEditCancel")?.addEventListener("click", closeNewsEditor);
+    document.getElementById("newsEditSave")?.addEventListener("click", saveNews);
+    document.getElementById("newsEventAdd")?.addEventListener("click", function() {
+        const list = document.getElementById("newsEventList");
+        const empty = list.querySelector(".news-event-empty");
+        if (empty) empty.remove();
+        const card = document.createElement("div");
+        card.className = "news-event-admin-card";
+        card.innerHTML =
+            '<div class="news-event-admin-grid">' +
+              '<div><label>Nama Event</label><input type="text" data-ev-title placeholder="Double EXP"></div>' +
+              '<div><label>Tanggal Event</label><input type="text" data-ev-date placeholder="08 - 10 AUGUST 2026"></div>' +
+              '<div class="event-full"><label>Detail Event</label><textarea data-ev-content placeholder="Tulis detail event yang panjang di sini..."></textarea></div>' +
+            '</div>' +
+            '<div class="news-event-admin-actions"><button type="button" class="news-event-delete" data-new-event-delete><i class="fa-solid fa-trash"></i> Hapus Event</button></div>';
+        list.appendChild(card);
+        card.querySelector("[data-new-event-delete]").addEventListener("click", () => card.remove());
+    });
+    document.getElementById("serverAddBtn")?.addEventListener("click", () => openServerEditor());
+    document.getElementById("serverEditCancel")?.addEventListener("click", closeServerEditor);
+    document.getElementById("serverEditSave")?.addEventListener("click", saveServerInfo);
+    document.getElementById("newsEditModal")?.addEventListener("click", e => { if (e.target.id === "newsEditModal") closeNewsEditor(); });
+    document.getElementById("newsEventClose")?.addEventListener("click", closeNewsEventChooser);
+    document.getElementById("newsEventModal")?.addEventListener("click", e => { if (e.target.id === "newsEventModal") closeNewsEventChooser(); });
+    document.getElementById("newsEventList")?.addEventListener("click", function(e) {
+        const btn = e.target.closest("[data-ev-delete]");
+        if (!btn) return;
+        const card = btn.closest(".news-event-admin-card");
+        if (card) card.remove();
+    });
+    document.getElementById("serverEditModal")?.addEventListener("click", e => { if (e.target.id === "serverEditModal") closeServerEditor(); });
+    renderNews();
+    renderServerInfo();
+
+    /* ========================= DOWNLOAD CENTER EDITOR ========================= */
+    const DOWNLOAD_STORAGE_KEY = "atlantica_downloads_v1";
+
+    const DOWNLOAD_DEFAULTS = [
+        {
+                "id": "client",
+                "title": "Full Client",
+                "version": "Version 3.0",
+                "size": "6.27 GB",
+                "url": "https://www.mediafire.com/file/sx8m9ruimcaofc5/AOEX_ClintFix.rar/file",
+                "button": "Download",
+                "type": "client"
+        },
+        {
+                "id": "launcher",
+                "title": "Launcher",
+                "version": "Latest Version",
+                "size": "0 MB",
+                "url": "#",
+                "button": "Download",
+                "type": "launcher"
+        }
+];
+
+    const PATCH_DEFAULTS = [
+        {
+                "id": "patch-1788634236828-620as",
+                "name": "New Update no new.rar",
+                "version": "V3",
+                "size": "21.9",
+                "url": "https://www.mediafire.com/file/6uxzgqvm0pmn42o/New_Update_no_new.rar/file"
+        }
+];
+
+    function loadJsonStorage(key, fallback) {
+        // Data is embedded in this index.html. Browser edits are kept only while
+        // this exact embedded build is active, so an old browser cache cannot
+        // overwrite a newly uploaded index.html.
+        try {
+            const build = (window.SITE_DATA && window.SITE_DATA.buildId) || "no-build";
+            const knownBuild = localStorage.getItem("atlantica_embedded_build_v1");
+            if (knownBuild !== build) {
+                ["atlantica_ranking_v1","atlantica_news_v1","atlantica_server_info_v1",
+                 "atlantica_downloads_v1","atlantica_patches_v1"].forEach(function(k) {
+                    localStorage.removeItem(k);
+                    localStorage.removeItem(k + "_dirty");
+                });
+                localStorage.setItem("atlantica_embedded_build_v1", build);
+            }
+        } catch (e) {}
+
+        try {
+            if (localStorage.getItem(key + "_dirty") === "1") {
+                const local = localStorage.getItem(key);
+                if (local) return JSON.parse(local);
+            }
+        } catch (e) {}
+
+        try {
+            const published = window.SITE_DATA || {};
+            const sourceMap = {
+                "atlantica_news_v1": published.news,
+                "atlantica_server_info_v1": published.server,
+                "atlantica_downloads_v1": published.downloads,
+                "atlantica_patches_v1": published.patches
+            };
+            const remote = sourceMap[key];
+            if (Array.isArray(remote)) {
+                const fresh = JSON.parse(JSON.stringify(remote));
+                localStorage.setItem(key, JSON.stringify(fresh));
+                localStorage.removeItem(key + "_dirty");
+                return fresh;
+            }
+        } catch (e) {}
+
+        try {
+            const fresh = fallback.map(x => ({...x}));
+            localStorage.setItem(key, JSON.stringify(fresh));
+            return fresh;
+        } catch (e) {
+            return fallback.map(x => ({...x}));
+        }
+    }
+
+    function saveJsonStorage(key, data) {
+        // Every admin edit is persisted immediately to browser storage.
+        // Dirty flag prevents the next page refresh from overwriting the edit
+        // with the older published copy until the admin clicks Publish.
+        localStorage.setItem(key, JSON.stringify(data));
+        localStorage.setItem(key + "_dirty", "1");
+    }
+
+    let downloadData = loadJsonStorage(DOWNLOAD_STORAGE_KEY, DOWNLOAD_DEFAULTS);
+    let patchData = loadJsonStorage("atlantica_patches_v1", PATCH_DEFAULTS);
+    let editingDownloadId = null;
+    let editingPatchId = null;
+
+    function uid(prefix) {
+        return prefix + "-" + Date.now() + "-" + Math.random().toString(36).slice(2, 7);
+    }
+
+    function renderDownloadCenter() {
+        const grid = document.getElementById("downloadGrid");
+        if (!grid) return;
+        grid.innerHTML = "";
+
+        downloadData.forEach(function (item) {
+            const box = document.createElement("div");
+            box.className = "download-box";
+
+            let actionHtml = "";
+            if (item.type === "patches") {
+                actionHtml = '<button type="button" class="download-manage-btn" data-action="patches"><i class="fa-solid fa-list"></i> Kelola Patch</button>';
+            } else {
+                actionHtml = '<a href="' + escapeHtml(item.url || "#") + '" target="_blank" rel="noopener">' +
+                    escapeHtml(item.button || "Download") + '</a>';
+            }
+
+            box.innerHTML =
+                "<h2>" + escapeHtml(item.title) + "</h2>" +
+                "<p>" + escapeHtml(item.version) + "</p>" +
+                "<span>Size : " + escapeHtml(item.size) + "</span>" +
+                actionHtml +
+                '<div class="download-admin-actions">' +
+                    '<button type="button" class="download-edit-btn" data-edit="' + escapeHtml(item.id) + '">' +
+                    '<i class="fa-solid fa-pen"></i> Edit</button>' +
+                    (item.type === "patches" ? "" :
+                    '<button type="button" class="download-edit-btn download-delete-btn" data-delete="' + escapeHtml(item.id) + '">' +
+                    '<i class="fa-solid fa-trash"></i> Hapus</button>') +
+                "</div>";
+
+            grid.appendChild(box);
+        });
+
+        // Manual Patch card is always available.
+        const patchBox = document.createElement("div");
+        patchBox.className = "download-box";
+        patchBox.innerHTML =
+            '<h2>Manual Patch</h2>' +
+            '<p>Patch Update</p>' +
+            '<span>' + patchData.length + ' Patch Tersedia</span>' +
+            '<button type="button" class="download-manage-btn" data-action="patches">' +
+            '<i class="fa-solid fa-download"></i> Pilih Patch</button>' +
+            '<div class="download-admin-actions">' +
+              '<button type="button" class="download-edit-btn" data-action="patches">' +
+              '<i class="fa-solid fa-pen"></i> Kelola</button>' +
+            '</div>';
+        grid.appendChild(patchBox);
+
+        grid.querySelectorAll('[data-action="patches"]').forEach(btn => {
+            btn.addEventListener("click", openPatchModal);
+        });
+        grid.querySelectorAll("[data-edit]").forEach(btn => {
+            btn.addEventListener("click", () => openDownloadEditor(btn.dataset.edit));
+        });
+        grid.querySelectorAll("[data-delete]").forEach(btn => {
+            btn.addEventListener("click", () => deleteDownload(btn.dataset.delete));
+        });
+    }
+
+    function openDownloadEditor(id) {
+        const item = downloadData.find(x => x.id === id);
+        if (!item) return;
+        editingDownloadId = id;
+        document.getElementById("downloadEditTitle").textContent = "Edit " + item.title;
+        document.getElementById("dlTitle").value = item.title || "";
+        document.getElementById("dlVersion").value = item.version || "";
+        document.getElementById("dlSize").value = item.size || "";
+        document.getElementById("dlButton").value = item.button || "Download";
+        document.getElementById("dlUrl").value = item.url || "";
+        document.getElementById("downloadEditModal").classList.add("open");
+    }
+
+    function closeDownloadEditor() {
+        document.getElementById("downloadEditModal").classList.remove("open");
+        editingDownloadId = null;
+    }
+
+    document.getElementById("dlCancel").addEventListener("click", closeDownloadEditor);
+    document.getElementById("dlSave").addEventListener("click", function () {
+        const item = downloadData.find(x => x.id === editingDownloadId);
+        if (!item) return;
+        item.title = document.getElementById("dlTitle").value.trim();
+        item.version = document.getElementById("dlVersion").value.trim();
+        item.size = document.getElementById("dlSize").value.trim();
+        item.button = document.getElementById("dlButton").value.trim() || "Download";
+        item.url = document.getElementById("dlUrl").value.trim() || "#";
+        saveJsonStorage(DOWNLOAD_STORAGE_KEY, downloadData);
+        renderDownloadCenter();
+        closeDownloadEditor();
+    });
+
+    function deleteDownload(id) {
+        const item = downloadData.find(x => x.id === id);
+        if (!item) return;
+        if (!confirm('Hapus "' + item.title + '" dari Download Center?')) return;
+        downloadData = downloadData.filter(x => x.id !== id);
+        saveJsonStorage(DOWNLOAD_STORAGE_KEY, downloadData);
+        renderDownloadCenter();
+    }
+
+    function openPatchModal() {
+        renderPatchList();
+        document.getElementById("patchModal").classList.add("open");
+    }
+
+    function closePatchModal() {
+        document.getElementById("patchModal").classList.remove("open");
+        editingPatchId = null;
+    }
+
+    function renderPatchList() {
+        const list = document.getElementById("patchList");
+        list.innerHTML = "";
+
+        if (!patchData.length) {
+            list.innerHTML = '<p style="color:var(--foam-dim);text-align:center;padding:20px">Belum ada manual patch.</p>';
+            return;
+        }
+
+        const table = document.createElement("table");
+        table.className = "download-list-table";
+        table.innerHTML = "<thead><tr><th>Patch</th><th>Versi</th><th>Size</th><th>Aksi</th></tr></thead>";
+        const tbody = document.createElement("tbody");
+
+        patchData.forEach(function (p) {
+            const tr = document.createElement("tr");
+            tr.innerHTML =
+                "<td>" + escapeHtml(p.name) + "</td>" +
+                "<td>" + escapeHtml(p.version) + "</td>" +
+                "<td>" + escapeHtml(p.size) + "</td>" +
+                '<td class="actions">' +
+                  '<a href="' + escapeHtml(p.url || "#") + '" target="_blank" rel="noopener" class="download-edit-btn" style="display:inline-block">Download</a>' +
+                  '<button class="patch-admin-control" data-pedit="' + escapeHtml(p.id) + '"><i class="fa-solid fa-pen"></i></button>' +
+                  '<button class="delete patch-admin-control" data-pdelete="' + escapeHtml(p.id) + '"><i class="fa-solid fa-trash"></i></button>' +
+                "</td>";
+            tbody.appendChild(tr);
+        });
+
+        table.appendChild(tbody);
+        list.appendChild(table);
+
+        list.querySelectorAll("[data-pedit]").forEach(btn => {
+            btn.addEventListener("click", () => openPatchEditor(btn.dataset.pedit));
+        });
+        list.querySelectorAll("[data-pdelete]").forEach(btn => {
+            btn.addEventListener("click", () => deletePatch(btn.dataset.pdelete));
+        });
+    }
+
+    function openPatchEditor(id) {
+        const p = id ? patchData.find(x => x.id === id) : null;
+        editingPatchId = id || null;
+        document.getElementById("patchEditTitle").textContent = p ? "Edit Manual Patch" : "Tambah Manual Patch";
+        document.getElementById("patchName").value = p ? p.name : "";
+        document.getElementById("patchVersion").value = p ? p.version : "";
+        document.getElementById("patchSize").value = p ? p.size : "";
+        document.getElementById("patchUrl").value = p ? p.url : "";
+        document.getElementById("patchEditModal").classList.add("open");
+    }
+
+    function closePatchEditor() {
+        document.getElementById("patchEditModal").classList.remove("open");
+        editingPatchId = null;
+    }
+
+    document.getElementById("patchAdd").addEventListener("click", () => openPatchEditor());
+    document.getElementById("patchClose").addEventListener("click", closePatchModal);
+    document.getElementById("patchEditCancel").addEventListener("click", closePatchEditor);
+
+    document.getElementById("patchEditSave").addEventListener("click", function () {
+        const data = {
+            name: document.getElementById("patchName").value.trim(),
+            version: document.getElementById("patchVersion").value.trim(),
+            size: document.getElementById("patchSize").value.trim(),
+            url: document.getElementById("patchUrl").value.trim() || "#"
+        };
+        if (!data.name) {
+            alert("Nama patch wajib diisi.");
+            return;
+        }
+
+        if (editingPatchId) {
+            const p = patchData.find(x => x.id === editingPatchId);
+            if (p) Object.assign(p, data);
+        } else {
+            data.id = uid("patch");
+            patchData.push(data);
+        }
+
+        saveJsonStorage("atlantica_patches_v1", patchData);
+        closePatchEditor();
+        renderPatchList();
+        renderDownloadCenter();
+    });
+
+    function deletePatch(id) {
+        const p = patchData.find(x => x.id === id);
+        if (!p) return;
+        if (!confirm('Hapus "' + p.name + '"?')) return;
+        patchData = patchData.filter(x => x.id !== id);
+        saveJsonStorage("atlantica_patches_v1", patchData);
+        renderPatchList();
+        renderDownloadCenter();
+    }
+
+    document.getElementById("downloadEditModal").addEventListener("click", e => {
+        if (e.target.id === "downloadEditModal") closeDownloadEditor();
+    });
+    document.getElementById("patchModal").addEventListener("click", e => {
+        if (e.target.id === "patchModal") closePatchModal();
+    });
+    document.getElementById("patchEditModal").addEventListener("click", e => {
+        if (e.target.id === "patchEditModal") closePatchEditor();
+    });
+
+    renderDownloadCenter();
+
+    const popup = document.getElementById("exynos-popup");
+    const okBtn = document.getElementById("popup-ok");
+
+    const popupBox = document.querySelector(".popup-box");
+
+     let moveCount = 0;
+
+
+
+    function showPopup() {
+        popup.style.display = "flex";
+    }
+
+function closePopup() {
+    popup.style.display = "none";
+
+    moveCount = 0;
+
+    popupBox.style.transform = "translate(0,0)";
+
+    okBtn.innerText = "OK";
+    okBtn.style.left = "0px";
+    okBtn.style.top = "0px";
+}
+
+okBtn.addEventListener("mouseenter", function(){
+
+    if(moveCount < 6){
+
+        const x = Math.random()*300 - 150;
+        const y = Math.random()*180 - 90;
+
+        popupBox.style.transform = `translate(${x}px, ${y}px)`;
+
+        const text = [
+            "🤣 WKWKWK",
+            "😜 Kejar Lagi",
+            "😂 Hampir",
+            "🤭 Hayooo",
+            "😏 Dikit Lagi",
+            "😅 Yaudah..."
+        ];
+
+        okBtn.innerText = text[moveCount];
+
+        moveCount++;
+
+    }else{
+
+        popupBox.style.transform = "translate(0,0)";
+        okBtn.innerText = "OK";
+
+    }
+
+});
+
+okBtn.addEventListener("click", closePopup);
+
+    
+    document.addEventListener("contextmenu", function(e){
+        e.preventDefault();
+        showPopup();
+    });
+
+    
+    document.addEventListener("keydown", function(e){
+
+        const key = e.key.toUpperCase();
+        const tag = (e.target && e.target.tagName) || "";
+        const isFormField = tag === "INPUT" || tag === "TEXTAREA";
+
+        if(
+            e.key === "F12" ||
+            (e.ctrlKey && e.shiftKey && ["I","J","C"].includes(key)) ||
+            (!isFormField && e.ctrlKey && ["U","S","A","C","X","V"].includes(key))
+        ){
+            e.preventDefault();
+            showPopup();
+        }
+
+    });
+
+});
+</script>
+
+
+
+
+
+<style>
+/* ============ GM EXYNOS BOT - Chat Widget ============ */
+/* Diposisikan di POJOK KIRI BAWAH agar tidak bertumpuk dengan
+   tombol admin (.admin-lock-btn) yang ada di pojok KANAN BAWAH. */
+
+.gmai-toggle {
+  position: fixed;
+  left: 18px;
+  bottom: 18px;
+  z-index: 480; /* di bawah modal (999) & di bawah admin-lock-btn (500) */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px 12px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(217, 180, 90, 0.4);
+  background: linear-gradient(135deg, var(--deep-2), var(--deep));
+  color: var(--gold-bright);
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.85rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+.gmai-toggle:hover { transform: translateY(-2px); box-shadow: 0 14px 34px rgba(0,0,0,0.55); }
+.gmai-toggle .gmai-toggle-icon {
+  position: relative;
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, var(--aqua), var(--aqua-dim));
+  display: flex; align-items: center; justify-content: center;
+  color: #052018;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+}
+.gmai-toggle .gmai-dot {
+  position: absolute; top: -2px; right: -2px;
+  width: 10px; height: 10px; border-radius: 50%;
+  background: #3ddc74; border: 2px solid var(--deep);
+  animation: gmaiPulse 1.8s infinite ease-in-out;
+}
+@keyframes gmaiPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(61,220,116,0.55); }
+  50% { box-shadow: 0 0 0 6px rgba(61,220,116,0); }
+}
+.gmai-toggle-label small { display: block; color: var(--foam-dim); font-weight: 400; font-size: 0.68rem; margin-top: 1px; }
+body.gmai-open .gmai-toggle { display: none; }
+
+.gmai-panel {
+  position: fixed;
+  left: 18px;
+  bottom: 18px;
+  z-index: 490; /* selalu di bawah admin modal (999) */
+  width: 360px;
+  max-width: calc(100vw - 32px);
+  height: 500px;
+  max-height: calc(100vh - 100px);
+  background: linear-gradient(180deg, var(--deep-2), var(--deep) 70%);
+  border: 1px solid rgba(217, 180, 90, 0.35);
+  border-radius: 16px;
+  box-shadow: 0 24px 70px rgba(0,0,0,0.55);
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  font-family: var(--font-body);
+}
+body.gmai-open .gmai-panel { display: flex; }
+
+.gmai-header {
+  display: flex; align-items: center; gap: 10px;
+  padding: 14px 14px;
+  background: rgba(7, 24, 36, 0.55);
+  border-bottom: 1px solid rgba(217, 180, 90, 0.25);
+  flex-shrink: 0;
+}
+.gmai-header-avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, var(--aqua), var(--aqua-dim));
+  display: flex; align-items: center; justify-content: center;
+  color: #052018; font-size: 1rem; flex-shrink: 0;
+}
+.gmai-header-text { flex: 1; min-width: 0; }
+.gmai-header-text strong {
+  display: block; color: var(--gold-bright); font-family: var(--font-display);
+  font-size: 0.95rem; letter-spacing: 0.02em;
+}
+.gmai-header-text span {
+  display: flex; align-items: center; gap: 5px;
+  color: #3ddc74; font-size: 0.72rem; margin-top: 2px;
+}
+.gmai-header-text span i { font-size: 0.5rem; }
+.gmai-close {
+  width: 30px; height: 30px; border-radius: 8px; border: none;
+  background: transparent; color: var(--foam-dim); cursor: pointer;
+  font-size: 0.95rem; display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.gmai-close:hover { background: rgba(228, 87, 46, 0.15); color: var(--coral); }
+
+.gmai-messages {
+  flex: 1; overflow-y: auto; padding: 16px 14px;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.gmai-messages::-webkit-scrollbar { width: 6px; }
+.gmai-messages::-webkit-scrollbar-thumb { background: rgba(217,180,90,0.3); border-radius: 6px; }
+
+.gmai-msg { max-width: 86%; font-size: 0.83rem; line-height: 1.55; }
+.gmai-msg.bot {
+  align-self: flex-start; background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(217,180,90,0.15);
+  color: var(--foam); padding: 10px 12px; border-radius: 12px 12px 12px 3px;
+}
+.gmai-msg.user {
+  align-self: flex-end; background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+  color: #241705; font-weight: 500; padding: 10px 12px; border-radius: 12px 12px 3px 12px;
+}
+.gmai-msg.bot b { color: var(--gold-bright); }
+.gmai-msg.bot a { color: var(--aqua); text-decoration: underline; }
+.gmai-msg.bot ul { margin: 6px 0 0 16px; list-style: disc; }
+.gmai-msg.bot li { margin-bottom: 3px; }
+.gmai-msg-time { display: block; margin-top: 4px; font-size: 0.62rem; opacity: 0.55; }
+
+.gmai-typing { align-self: flex-start; display: flex; gap: 4px; padding: 10px 12px; }
+.gmai-typing span {
+  width: 6px; height: 6px; border-radius: 50%; background: var(--foam-dim);
+  animation: gmaiTypingBounce 1.1s infinite ease-in-out;
+}
+.gmai-typing span:nth-child(2) { animation-delay: 0.15s; }
+.gmai-typing span:nth-child(3) { animation-delay: 0.3s; }
+@keyframes gmaiTypingBounce { 0%, 60%, 100% { transform: translateY(0); opacity: 0.5; } 30% { transform: translateY(-4px); opacity: 1; } }
+
+.gmai-quick {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  padding: 0 14px 12px;
+  flex-shrink: 0;
+}
+.gmai-chip {
+  border: 1px solid rgba(217,180,90,0.35);
+  background: rgba(217,180,90,0.08);
+  color: var(--gold-bright);
+  font-size: 0.72rem; font-weight: 500;
+  padding: 6px 11px; border-radius: 999px; cursor: pointer;
+  transition: background 0.15s ease, transform 0.15s ease;
+  white-space: nowrap;
+}
+.gmai-chip:hover { background: rgba(217,180,90,0.18); transform: translateY(-1px); }
+
+.gmai-inputrow {
+  display: flex; gap: 8px; padding: 12px;
+  border-top: 1px solid rgba(217,180,90,0.2);
+  background: rgba(7, 24, 36, 0.4);
+  flex-shrink: 0;
+}
+.gmai-inputrow input {
+  flex: 1; min-width: 0; padding: 10px 12px;
+  border-radius: 10px; border: 1px solid rgba(217,180,90,0.25);
+  background: rgba(255,255,255,0.04); color: var(--foam);
+  font-family: var(--font-body); font-size: 0.83rem;
+}
+.gmai-inputrow input:focus { outline: none; border-color: var(--gold-bright); }
+.gmai-inputrow button {
+  width: 40px; height: 40px; border-radius: 10px; border: none;
+  background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+  color: #241705; cursor: pointer; font-size: 0.95rem;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+
+@media (max-width: 640px) {
+  .gmai-toggle { left: 12px; bottom: 12px; padding: 11px 14px 11px 11px; }
+  .gmai-toggle-label span:not(small) { display: none; }
+  .gmai-panel {
+    left: 12px; right: 12px; bottom: 12px;
+    width: auto; max-width: none;
+    height: min(72vh, 560px);
+  }
+}
+</style>
+
+<button type="button" id="gmaiToggle" class="gmai-toggle" aria-label="Buka chat GM EXYNOS BOT">
+  <span class="gmai-toggle-icon"><i class="fa-solid fa-robot"></i><span class="gmai-dot"></span></span>
+  <span class="gmai-toggle-label"><span>GM EXYNOS BOT</span><small>Online 24 Jam</small></span>
+</button>
+
+<div class="gmai-panel" id="gmaiPanel" role="dialog" aria-label="GM EXYNOS BOT Chat">
+  <div class="gmai-header">
+    <div class="gmai-header-avatar"><i class="fa-solid fa-robot"></i></div>
+    <div class="gmai-header-text">
+      <strong>GM EXYNOS BOT</strong>
+      <span><i class="fa-solid fa-circle"></i> Online 24 Jam · Auto-Reply</span>
+    </div>
+    <button type="button" class="gmai-close" id="gmaiClose" aria-label="Tutup chat"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+
+  <div class="gmai-messages" id="gmaiMessages"></div>
+
+  <div class="gmai-quick" id="gmaiQuick">
+    <button type="button" class="gmai-chip" data-q="cara download">Cara Download</button>
+    <button type="button" class="gmai-chip" data-q="cara main">Cara Main</button>
+    <button type="button" class="gmai-chip" data-q="leveling">Leveling</button>
+    <button type="button" class="gmai-chip" data-q="info server">Info Server</button>
+    <button type="button" class="gmai-chip" data-q="patch">Update / Patch</button>
+    <button type="button" class="gmai-chip" data-q="ranking">Ranking</button>
+    <button type="button" class="gmai-chip" data-q="media sosial">Media &amp; Sosial</button>
+    <button type="button" class="gmai-chip" data-q="kontak gm">Kontak GM</button>
+  </div>
+
+  <form class="gmai-inputrow" id="gmaiForm">
+    <input type="text" id="gmaiInput" placeholder="Tulis pertanyaanmu..." autocomplete="off" maxlength="200">
+    <button type="submit" aria-label="Kirim"><i class="fa-solid fa-paper-plane"></i></button>
+  </form>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var toggle   = document.getElementById("gmaiToggle");
+  var panel    = document.getElementById("gmaiPanel");
+  var closeBtn = document.getElementById("gmaiClose");
+  var messages = document.getElementById("gmaiMessages");
+  var quick    = document.getElementById("gmaiQuick");
+  var form     = document.getElementById("gmaiForm");
+  var input    = document.getElementById("gmaiInput");
+
+  if (!toggle || !panel) return;
+
+  function data() { return (window.SITE_DATA || {}); }
+
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>]/g, function (c) {
+      return c === "&" ? "&amp;" : c === "<" ? "&lt;" : "&gt;";
+    });
+  }
+
+  function timeNow() {
+    var d = new Date();
+    var h = d.getHours().toString().padStart(2, "0");
+    var m = d.getMinutes().toString().padStart(2, "0");
+    return h + ":" + m;
+  }
+
+  function addMessage(role, html) {
+    var el = document.createElement("div");
+    el.className = "gmai-msg " + (role === "user" ? "user" : "bot");
+    el.innerHTML = html + '<span class="gmai-msg-time">' + timeNow() + "</span>";
+    messages.appendChild(el);
+    messages.scrollTop = messages.scrollHeight;
+    return el;
+  }
+
+  function showTyping(cb) {
+    var t = document.createElement("div");
+    t.className = "gmai-typing";
+    t.innerHTML = "<span></span><span></span><span></span>";
+    messages.appendChild(t);
+    messages.scrollTop = messages.scrollHeight;
+    var delay = 450 + Math.random() * 450;
+    setTimeout(function () {
+      t.remove();
+      cb();
+    }, delay);
+  }
+
+  function reply(html) {
+    showTyping(function () { addMessage("bot", html); });
+  }
+
+  /* ---------- Knowledge base (dibaca live dari window.SITE_DATA) ---------- */
+
+  function downloadAnswer() {
+    var dl = data().downloads || [];
+    if (!dl.length) {
+      return "Link download sedang disiapkan admin. Cek Discord/WhatsApp untuk link terbaru ya.";
+    }
+    var html = "<b>Cara Download Client Atlantica Exynos:</b><ul>";
+    dl.forEach(function (d) {
+      html += "<li><b>" + esc(d.title) + "</b> (" + esc(d.version || "") + (d.size ? ", " + esc(d.size) : "") +
+        ") &mdash; <a href='" + esc(d.url || "#") + "' target='_blank' rel='noopener'>Download di sini</a></li>";
+    });
+    html += "</ul>Setelah selesai download: extract file (pakai WinRAR/7Zip), lalu jalankan launcher untuk mulai bermain. Kalau link mati, laporkan lewat Discord ya!";
+    return html;
+  }
+
+  function howToPlayAnswer() {
+    return "<b>Cara Main Atlantica Exynos:</b><ul>" +
+      "<li>Download &amp; extract client game (ketik <i>\"cara download\"</i> kalau butuh link)</li>" +
+      "<li>Buat akun / daftar sesuai instruksi di website atau Discord server</li>" +
+      "<li>Buka launcher, tunggu proses update/patch selesai</li>" +
+      "<li>Login memakai akun yang sudah didaftarkan</li>" +
+      "<li>Buat karakter, pilih job/class favoritmu</li>" +
+      "<li>Ikuti quest tutorial sampai selesai untuk mulai petualangan</li>" +
+      "</ul>Kalau ada kendala saat instalasi, tanyakan di Discord ya, GM siap bantu.";
+  }
+
+  function levelingAnswer() {
+    return "<b>Tips Leveling Cepat:</b><ul>" +
+      "<li>Selesaikan quest utama (main quest) dulu, EXP-nya paling besar</li>" +
+      "<li>Grinding di hunting spot yang sesuai level karaktermu (jangan terlalu jauh di atas level)</li>" +
+      "<li>Main bareng party/team biar dapat bonus EXP dan lebih aman</li>" +
+      "<li>Ikuti event server seperti <i>GM Invasion</i> &amp; <i>Weekly Champion</i> untuk reward tambahan</li>" +
+      "<li>Manfaatkan item/EXP card dari event kalau ada</li>" +
+      "</ul>Cek menu <i>Server Information</i> di website untuk jadwal event terbaru.";
+  }
+
+  function serverInfoAnswer() {
+    var sv = data().server || [];
+    if (!sv.length) return "Info server belum tersedia saat ini, cek lagi nanti ya.";
+    var html = "<b>Info Server Saat Ini:</b><ul>";
+    sv.forEach(function (s) {
+      html += "<li>" + (s.icon || "") + " <b>" + esc(s.title) + "</b>: " + esc(s.description || "-") +
+        (s.extra ? " (" + esc(s.extra) + ")" : "") + "</li>";
+    });
+    html += "</ul>";
+    return html;
+  }
+
+  function patchAnswer() {
+    var p = data().patches || [];
+    if (!p.length) return "Belum ada manual patch yang perlu di-download saat ini. Client kamu sudah versi terbaru.";
+    var html = "<b>Manual Patch / Update:</b><ul>";
+    p.forEach(function (x) {
+      html += "<li><b>" + esc(x.name) + "</b> (" + esc(x.version || "") + (x.size ? ", " + esc(x.size) : "") +
+        ") &mdash; <a href='" + esc(x.url || "#") + "' target='_blank' rel='noopener'>Download</a></li>";
+    });
+    html += "</ul>Install patch secara berurutan sesuai nomornya ya.";
+    return html;
+  }
+
+  function rankingAnswer() {
+    var r = (data().ranking || {}).topPlayer || [];
+    if (!r.length) return "Data ranking belum tersedia saat ini.";
+    var html = "<b>Top 5 Player Saat Ini:</b><ol>";
+    r.slice(0, 5).forEach(function (row) {
+      html += "<li>" + esc(row[0]) + " &mdash; Level " + esc(row[1]) + "</li>";
+    });
+    html += "</ol>Cek section <i>Ranking</i> di halaman utama untuk daftar lengkap &amp; ranking guild.";
+    return html;
+  }
+
+  function mediaAnswer() {
+    return "<b>Media &amp; Sosial Resmi Atlantica Exynos:</b><ul>" +
+      "<li><i class='fa-brands fa-discord'></i> Discord: <a href='https://discord.gg/BxaH7dsDQM' target='_blank' rel='noopener'>Join Discord</a></li>" +
+      "<li><i class='fa-brands fa-whatsapp'></i> WhatsApp Grup: <a href='https://chat.whatsapp.com/HdmiMmTAYK0INQkH6Dl2T2' target='_blank' rel='noopener'>Gabung Grup</a></li>" +
+      "<li><i class='fa-brands fa-facebook-f'></i> Facebook: <a href='https://www.facebook.com/profile.php?id=100065644143073' target='_blank' rel='noopener'>Kunjungi Halaman</a></li>" +
+      "</ul>Follow biar nggak ketinggalan info event &amp; update terbaru!";
+  }
+
+  function contactGmAnswer() {
+    return "Butuh bantuan langsung dari GM (Game Master)? Silakan chat di " +
+      "<a href='https://discord.gg/BxaH7dsDQM' target='_blank' rel='noopener'>Discord</a> atau " +
+      "<a href='https://chat.whatsapp.com/HdmiMmTAYK0INQkH6Dl2T2' target='_blank' rel='noopener'>WhatsApp</a> kami. " +
+      "Tim GM biasanya standby untuk bantu masalah akun, bug, atau laporan cheat.";
+  }
+
+  function fallbackAnswer() {
+    return "Maaf, GM EXYNOS BOT belum paham pertanyaan itu 🙏. Coba pakai salah satu tombol topik di bawah, " +
+      "atau tanya soal: <b>download</b>, <b>cara main</b>, <b>leveling</b>, <b>info server</b>, <b>patch</b>, <b>ranking</b>, " +
+      "atau <b>media sosial</b>. Untuk pertanyaan lain, hubungi GM langsung lewat Discord ya.";
+  }
+
+  var rules = [
+    { kw: ["download", "unduh", "dl client", "instal", "install"], fn: downloadAnswer },
+    { kw: ["cara main", "cara bermain", "main gimana", "mulai main", "gimana cara maen", "tutorial"], fn: howToPlayAnswer },
+    { kw: ["leveling", "level up", "naik level", "grinding", "exp"], fn: levelingAnswer },
+    { kw: ["patch", "update", "manual update"], fn: patchAnswer },
+    { kw: ["ranking", "rank", "peringkat", "top player"], fn: rankingAnswer },
+    { kw: ["server", "rate server", "info server", "event"], fn: serverInfoAnswer },
+    { kw: ["media", "sosial", "discord", "whatsapp", "facebook", "sosmed"], fn: mediaAnswer },
+    { kw: ["gm", "admin", "kontak", "bantuan", "help", "cs"], fn: contactGmAnswer }
+  ];
+
+  function findAnswer(text) {
+    var q = text.toLowerCase();
+    for (var i = 0; i < rules.length; i++) {
+      var kws = rules[i].kw;
+      for (var j = 0; j < kws.length; j++) {
+        if (q.indexOf(kws[j]) !== -1) return rules[i].fn();
+      }
+    }
+    return fallbackAnswer();
+  }
+
+  function handleQuestion(text) {
+    text = (text || "").trim();
+    if (!text) return;
+    addMessage("user", esc(text));
+    reply(findAnswer(text));
+  }
+
+  var greeted = false;
+  function openPanel() {
+    document.body.classList.add("gmai-open");
+    if (!greeted) {
+      greeted = true;
+      addMessage("bot", "Halo, Petualang! 👋 Aku <b>GM EXYNOS BOT</b>, siap bantu 24 jam soal Atlantica Classic V3 Exynos. " +
+        "Mau tanya soal apa? Pilih topik di bawah atau ketik langsung.");
+    }
+    setTimeout(function () { input && input.focus(); }, 150);
+  }
+  function closePanel() { document.body.classList.remove("gmai-open"); }
+
+  toggle.addEventListener("click", openPanel);
+  closeBtn.addEventListener("click", closePanel);
+
+  quick.addEventListener("click", function (e) {
+    var btn = e.target.closest(".gmai-chip");
+    if (!btn) return;
+    handleQuestion(btn.getAttribute("data-q"));
+  });
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var v = input.value;
+    input.value = "";
+    handleQuestion(v);
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && document.body.classList.contains("gmai-open")) closePanel();
+  });
+})();
+</script>
+
+</body></html>
