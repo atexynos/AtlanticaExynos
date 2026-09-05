@@ -1,0 +1,1546 @@
+<!DOCTYPE html>
+<html lang="id"><head>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Shop — Atlantica Classic V3 Exynos</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+
+<style>
+
+
+:root {
+  --abyss:        #071824;
+  --deep:         #0e2d3d;
+  --deep-2:       #123b4f;
+  --stone:        #1c4256;
+  --aqua:         #2fd0c9;
+  --aqua-dim:     #1a8f8a;
+  --gold:         #d9b45a;
+  --gold-bright:  #f3d98a;
+  --coral:        #e4572e;
+  --foam:         #eaf4f2;
+  --foam-dim:     #a9c4c3;
+
+  --font-display: 'Cinzel', serif;
+  --font-body: 'Inter', sans-serif;
+
+  --container-w: 1180px;
+  --radius: 10px;
+  --header-h: 96px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; scroll-padding-top: var(--header-h); }
+
+body {
+  background: var(--abyss);
+  color: var(--foam);
+  font-family: var(--font-body);
+  font-weight: 400;
+  line-height: 1.6;
+  overflow-x: hidden;
+  background-image:
+    radial-gradient(ellipse 60% 40% at 15% 0%, rgba(47, 208, 201, 0.10), transparent 60%),
+    radial-gradient(ellipse 50% 30% at 85% 10%, rgba(217, 180, 90, 0.07), transparent 60%);
+  background-repeat: no-repeat;
+}
+
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; }
+button { font-family: inherit; }
+
+.container {
+  width: 100%;
+  max-width: var(--container-w);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+::selection { background: var(--aqua); color: var(--abyss); }
+
+:focus-visible {
+  outline: 2px solid var(--gold-bright);
+  outline-offset: 3px;
+}
+
+
+
+header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  background: rgba(7, 24, 36, 0.72);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(217, 180, 90, 0.18);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.logo img { height: 80px; width: auto; }
+
+nav#mainNav {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex-wrap: wrap;
+}
+
+.nav-links a {
+  display: flex;
+  align-items: center;
+  padding: 9px 14px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--foam-dim);
+  border-radius: 6px;
+  transition: color 0.2s ease, background 0.2s ease;
+  white-space: nowrap;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--gold-bright);
+  background: rgba(217, 180, 90, 0.08);
+}
+
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: 1px solid rgba(217, 180, 90, 0.3);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.nav-toggle span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  margin: 0 auto;
+  background: var(--gold-bright);
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+@media (max-width: 860px) {
+  .nav-toggle { display: flex; }
+
+  nav#mainNav {
+    position: fixed;
+    top: var(--header-h);
+    left: 0; right: 0;
+    max-height: calc(100svh - var(--header-h));
+    overflow-y: auto;
+    background: rgba(7, 24, 36, 0.97);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(217, 180, 90, 0.18);
+    transform: translateY(-8px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  nav#mainNav.open {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 12px 20px 16px;
+    gap: 2px;
+  }
+
+  .nav-links a {
+    padding: 14px 6px;
+    border-bottom: 1px solid rgba(28, 66, 86, 0.6);
+    border-radius: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  :root { --header-h: 68px; }
+  .container { padding: 0 18px; }
+  .logo img { height: 34px; }
+}
+
+
+
+.page-banner {
+  position: relative;
+  padding: calc(var(--header-h) + 64px) 24px 70px;
+  text-align: center;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, rgba(7,24,36,0.15) 0%, rgba(7,24,36,0.3) 55%, rgba(7,24,36,0.65) 88%, var(--abyss) 100%),
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(22,65,79,0.32) 0%, rgba(12,38,52,0.45) 55%, var(--abyss) 100%),
+    url('assets/hero-bg.jpg');
+  background-size: cover, cover, cover;
+  background-position: center, center, center;
+}
+
+.page-banner-inner { position: relative; z-index: 2; max-width: 760px; margin: 0 auto; }
+
+.page-eyebrow {
+  display: inline-block;
+  font-size: 0.8rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold-bright);
+  border: 1px solid rgba(217, 180, 90, 0.4);
+  border-radius: 999px;
+  padding: 6px 16px;
+  margin-bottom: 22px;
+}
+
+.page-banner h1 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.9rem, 5vw, 3rem);
+  letter-spacing: 0.02em;
+  line-height: 1.15;
+  color: var(--foam);
+  text-shadow: 0 0 40px rgba(47, 208, 201, 0.35);
+}
+
+.page-banner p.sub {
+  margin: 18px auto 0;
+  max-width: 560px;
+  color: var(--foam-dim);
+  font-size: 1.02rem;
+}
+
+
+
+main { max-width: var(--container-w); margin: 0 auto; padding: 70px 24px 100px; }
+
+.hint-text {
+  text-align: center;
+  color: var(--foam-dim);
+  max-width: 620px;
+  margin: 0 auto 22px;
+  font-size: 0.92rem;
+}
+
+.hint-text b { color: var(--gold-bright); }
+
+.shop-toolbar {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin: 0 0 44px;
+}
+
+.shop-toolbar button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 24px;
+  border-radius: 999px;
+  border: none;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.shop-toolbar button:hover { transform: translateY(-2px); }
+
+.shop-download-btn {
+  background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+  color: #241705;
+}
+
+.shop-download-btn:hover { box-shadow: 0 10px 26px rgba(217, 180, 90, 0.3); }
+
+.shop-add-btn {
+  background: rgba(47, 208, 201, 0.1);
+  color: var(--aqua);
+  border: 1px dashed rgba(47, 208, 201, 0.5) !important;
+}
+
+.shop-add-btn:hover { box-shadow: 0 10px 26px rgba(47, 208, 201, 0.18); }
+
+.shop-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 26px;
+}
+
+.shop-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(180deg, var(--deep-2), var(--deep));
+  border: 1px solid var(--stone);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.shop-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  z-index: 2;
+}
+
+.shop-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(217, 180, 90, 0.45);
+  box-shadow: 0 16px 32px rgba(0,0,0,0.35);
+}
+
+.shop-card:hover::before { opacity: 1; }
+
+.shop-thumb {
+  position: relative;
+  width: 100%;
+  height: 170px;
+  background: var(--stone);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.shop-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.shop-thumb .placeholder-icon { color: var(--foam-dim); font-size: 2.2rem; }
+
+.shop-category-badge {
+  position: absolute;
+  top: 12px; left: 12px;
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--abyss);
+  background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+  padding: 4px 11px;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.btn-edit-item {
+  position: absolute;
+  top: 10px; right: 10px;
+  width: 34px; height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid rgba(217, 180, 90, 0.4);
+  background: rgba(7, 24, 36, 0.65);
+  backdrop-filter: blur(4px);
+  color: var(--foam);
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.btn-edit-item:hover { color: var(--gold-bright); border-color: var(--gold-bright); transform: translateY(-2px); }
+
+.shop-body { padding: 20px 20px 22px; flex: 1; display: flex; flex-direction: column; }
+
+.shop-body h2 {
+  font-family: var(--font-display);
+  font-size: 1.08rem;
+  color: var(--foam);
+  margin-bottom: 6px;
+}
+
+.shop-body .shop-desc {
+  color: var(--foam-dim);
+  font-size: 0.86rem;
+  margin-bottom: 14px;
+  flex: 1;
+}
+
+.shop-price-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: auto;
+}
+
+.shop-price {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  color: var(--gold-bright);
+  font-weight: 700;
+}
+
+.btn-buy {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+  color: #241705;
+  font-weight: 700;
+  font-size: 0.82rem;
+  transition: transform 0.2s ease;
+}
+
+.btn-buy:hover { transform: translateY(-2px); }
+
+.shop-card.is-empty .shop-body h2 { color: var(--foam-dim); font-weight: 500; }
+.shop-card.is-empty .btn-buy { opacity: 0.35; pointer-events: none; }
+
+.shop-empty-state {
+  text-align: center;
+  color: var(--foam-dim);
+  padding: 60px 20px;
+  border: 1px dashed rgba(217, 180, 90, 0.3);
+  border-radius: var(--radius);
+}
+
+
+
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: rgba(7, 24, 36, 0.82);
+  backdrop-filter: blur(4px);
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.modal-overlay.open { display: flex; }
+
+.modal-box {
+  width: 100%;
+  max-width: 420px;
+  background: linear-gradient(180deg, var(--deep-2), var(--deep));
+  border: 1px solid rgba(217, 180, 90, 0.4);
+  border-radius: 14px;
+  padding: 28px 26px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  margin: auto;
+}
+
+.modal-box h3 {
+  font-family: var(--font-display);
+  color: var(--gold-bright);
+  font-size: 1.1rem;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.field { margin-bottom: 16px; }
+
+.field label {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--foam-dim);
+  margin-bottom: 6px;
+  letter-spacing: 0.02em;
+}
+
+.field input[type="text"],
+.field input[type="url"],
+.field textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 7px;
+  border: 1px solid var(--stone);
+  background: rgba(7, 24, 36, 0.6);
+  color: var(--foam);
+  font-size: 0.9rem;
+  font-family: inherit;
+  resize: vertical;
+}
+
+.field input[type="text"]:focus,
+.field input[type="url"]:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--aqua);
+}
+
+.field-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+.field-photo-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.field-photo-preview {
+  width: 56px;
+  height: 56px;
+  border-radius: 10px;
+  overflow: hidden;
+  flex: none;
+  background: var(--stone);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(217, 180, 90, 0.4);
+}
+
+.field-photo-preview img { width: 100%; height: 100%; object-fit: cover; }
+
+.field-photo-row input[type="file"] {
+  flex: 1;
+  font-size: 0.78rem;
+  color: var(--foam-dim);
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.modal-actions button {
+  flex: 1;
+  padding: 11px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.modal-actions button:hover { transform: translateY(-2px); }
+
+.btn-save {
+  background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+  color: #241705;
+}
+
+.btn-cancel {
+  background: rgba(255,255,255,0.06);
+  color: var(--foam-dim);
+  border: 1px solid var(--stone) !important;
+}
+
+.btn-clear {
+  margin-top: 10px;
+  width: 100%;
+  background: transparent;
+  border: none;
+  color: var(--foam-dim);
+  font-size: 0.78rem;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.btn-clear:hover { color: var(--coral); }
+
+
+
+footer {
+  border-top: 1px solid rgba(217, 180, 90, 0.15);
+  background: linear-gradient(180deg, transparent, rgba(14, 45, 61, 0.6));
+  padding: 60px 24px 36px;
+}
+
+.footer-content { max-width: var(--container-w); margin: 0 auto; text-align: center; }
+.footer-logo { height: 48px; width: auto; margin: 0 auto 18px; }
+
+.footer-content h2 {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  color: var(--foam);
+}
+
+.footer-content > p { color: var(--foam-dim); font-size: 0.88rem; margin-top: 6px; }
+
+.footer-menu {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 22px;
+  margin: 28px 0 26px;
+}
+
+.footer-menu a { font-size: 0.88rem; color: var(--foam-dim); transition: color 0.2s ease; }
+.footer-menu a:hover { color: var(--gold-bright); }
+
+.copyright {
+  font-size: 0.78rem;
+  color: rgba(169, 196, 195, 0.5);
+  padding-top: 22px;
+  border-top: 1px solid rgba(217, 180, 90, 0.1);
+}
+
+
+
+@media (max-width: 980px) {
+  .shop-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 640px) {
+  main { padding: 50px 18px 70px; }
+  .page-banner { padding: calc(var(--header-h) + 40px) 18px 50px; }
+  .shop-grid { grid-template-columns: 1fr; }
+  .field-row-2 { grid-template-columns: 1fr; }
+}
+
+
+
+#exynos-popup {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(7, 24, 36, 0.82);
+  backdrop-filter: blur(4px);
+  align-items: center;
+  justify-content: center;
+}
+
+.popup-box {
+  background: linear-gradient(180deg, var(--deep-2), var(--deep));
+  border: 1px solid rgba(217, 180, 90, 0.4);
+  border-radius: 14px;
+  padding: 34px 40px;
+  text-align: center;
+  max-width: 340px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  transition: transform 0.15s ease;
+}
+
+.popup-box p { color: var(--foam-dim); margin: 14px 0 22px; font-size: 0.92rem; }
+
+.popup-box button {
+  position: relative;
+  padding: 10px 26px;
+  border-radius: 8px;
+  border: none;
+  background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+  color: #241705;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+
+.admin-only { display: none !important; }
+
+body.admin-unlocked .hint-text.admin-only { display: block !important; }
+body.admin-unlocked .shop-toolbar.admin-only { display: flex !important; }
+body.admin-unlocked .btn-edit-item.admin-only { display: flex !important; }
+
+.admin-lock-btn {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 500;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid rgba(217, 180, 90, 0.3);
+  background: rgba(7, 24, 36, 0.7);
+  backdrop-filter: blur(6px);
+  color: var(--foam-dim);
+  opacity: 0.45;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: opacity 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.admin-lock-btn:hover {
+  opacity: 1;
+  color: var(--gold-bright);
+  border-color: var(--gold-bright);
+  transform: translateY(-2px);
+}
+
+body.admin-unlocked .admin-lock-btn {
+  opacity: 0.85;
+  color: var(--aqua);
+  border-color: rgba(47, 208, 201, 0.5);
+}
+
+#adminModal .modal-box { max-width: 320px; text-align: center; }
+#adminModal h3 { justify-content: center; }
+#adminModal p { color: var(--foam-dim); font-size: 0.85rem; margin-bottom: 16px; }
+
+#adminPinInput {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 7px;
+  border: 1px solid var(--stone);
+  background: rgba(7, 24, 36, 0.6);
+  color: var(--foam);
+  font-size: 0.95rem;
+  font-family: inherit;
+  text-align: center;
+  letter-spacing: 0.25em;
+  margin-bottom: 4px;
+}
+
+#adminPinInput:focus { outline: none; border-color: var(--aqua); }
+
+</style>
+
+</head>
+
+<body class="admin-unlocked">
+
+<header id="siteHeader">
+
+<div class="container header-inner">
+
+<a class="logo" href="index.html">
+    <img src="assets/logo.png" alt="Atlantica Classic V3 Exynos">
+</a>
+
+<button id="navToggle" class="nav-toggle" aria-label="Buka menu" aria-expanded="false" aria-controls="mainNav">
+    <span></span>
+    <span></span>
+    <span></span>
+</button>
+
+<nav id="mainNav">
+    <ul class="nav-links">
+        <li><a href="index.html#home">Home</a></li>
+        <li><a href="index.html#download">Download</a></li>
+        <li><a href="index.html#news">News</a></li>
+        <li><a href="index.html#server-info">Event</a></li>
+        <li><a href="index.html#ranking">Ranking</a></li>
+        <li><a href="streamer.html">Streamer</a></li>
+        <li><a href="shop.html" class="active">Shop</a></li>
+    </ul>
+</nav>
+
+</div>
+
+</header>
+
+<section class="page-banner">
+    <div class="page-banner-inner">
+        <p class="page-eyebrow">Item Shop Atlantica Classic V3 Exynos</p>
+        <h1>🛒 Shop</h1>
+        <p class="sub">Top up donasi, item langka, dan paket spesial untuk mendukung server Atlantica Classic V3 Exynos.</p>
+    </div>
+</section>
+
+<main>
+
+<p class="hint-text admin-only">Klik ikon <b>✎ pensil</b> di pojok kanan atas tiap kartu untuk mengubah nama, harga, foto, kategori, atau link order. Pemain klik tombol <b>Pesan</b> untuk order lewat admin.</p>
+
+<p class="hint-text admin-only">Foto default tiap slot diambil dari folder <b>assets/shop/</b> (terpisah dari folder <b>assets/news/</b> milik halaman utama) — cukup taruh gambar dengan nama <b>item1.jpg</b>, <b>item2.jpg</b>, <b>item3.jpg</b>, dst di sana sesuai urutan slot. Atau upload langsung lewat form edit, tanpa perlu ke GitHub.</p>
+
+<p class="hint-text admin-only">Sudah selesai edit shop? Klik tombol di bawah untuk unduh file <b>shop.html</b> terbaru, lalu upload/replace ke GitHub kamu.</p>
+
+<div class="shop-toolbar admin-only">
+    <button id="downloadShopBtn" class="shop-download-btn">
+        <i class="fa-solid fa-download"></i> Download shop.html Terbaru
+    </button>
+    <button id="addItemBtn" class="shop-add-btn">
+        <i class="fa-solid fa-plus"></i> Tambah Item Shop
+    </button>
+</div>
+
+<div class="shop-grid" id="shopGrid"><div class="shop-card" data-index="0">
+            <div class="shop-thumb">
+                <i class="fa-solid fa-image placeholder-icon"></i>
+                
+                <button class="btn-edit-item admin-only" title="Edit item"><i class="fa-solid fa-pen"></i></button>
+            </div>
+            <div class="shop-body">
+                <h2>Coming Soon</h2>
+                <p class="shop-desc"></p>
+                <div class="shop-price-row">
+                    <span class="shop-price">-</span>
+                    <a class="btn-buy" href="https://chat.whatsapp.com/HdmiMmTAYK0INQkH6Dl2T2" target="_blank" rel="noopener">
+                        <i class="fa-solid fa-cart-shopping"></i> Pesan
+                    </a>
+                </div>
+            </div>
+        </div><div class="shop-card" data-index="1">
+            <div class="shop-thumb">
+                <i class="fa-solid fa-image placeholder-icon"></i>
+                <span class="shop-category-badge">Rare Item</span>
+                <button class="btn-edit-item admin-only" title="Edit item"><i class="fa-solid fa-pen"></i></button>
+            </div>
+            <div class="shop-body">
+                <h2>Coming Soon</h2>
+                <p class="shop-desc"></p>
+                <div class="shop-price-row">
+                    <span class="shop-price">-</span>
+                    <a class="btn-buy" href="https://chat.whatsapp.com/HdmiMmTAYK0INQkH6Dl2T2" target="_blank" rel="noopener">
+                        <i class="fa-solid fa-cart-shopping"></i> Pesan
+                    </a>
+                </div>
+            </div>
+        </div><div class="shop-card" data-index="2">
+            <div class="shop-thumb">
+                <i class="fa-solid fa-image placeholder-icon"></i>
+                <span class="shop-category-badge">Rare Item</span>
+                <button class="btn-edit-item admin-only" title="Edit item"><i class="fa-solid fa-pen"></i></button>
+            </div>
+            <div class="shop-body">
+                <h2>Coming Soon</h2>
+                <p class="shop-desc"></p>
+                <div class="shop-price-row">
+                    <span class="shop-price">-</span>
+                    <a class="btn-buy" href="https://chat.whatsapp.com/HdmiMmTAYK0INQkH6Dl2T2" target="_blank" rel="noopener">
+                        <i class="fa-solid fa-cart-shopping"></i> Pesan
+                    </a>
+                </div>
+            </div>
+        </div><div class="shop-card" data-index="3">
+            <div class="shop-thumb">
+                <i class="fa-solid fa-image placeholder-icon"></i>
+                
+                <button class="btn-edit-item admin-only" title="Edit item"><i class="fa-solid fa-pen"></i></button>
+            </div>
+            <div class="shop-body">
+                <h2>Coming Soon</h2>
+                <p class="shop-desc"></p>
+                <div class="shop-price-row">
+                    <span class="shop-price">-</span>
+                    <a class="btn-buy" href="https://chat.whatsapp.com/HdmiMmTAYK0INQkH6Dl2T2" target="_blank" rel="noopener">
+                        <i class="fa-solid fa-cart-shopping"></i> Pesan
+                    </a>
+                </div>
+            </div>
+        </div><div class="shop-card" data-index="4">
+            <div class="shop-thumb">
+                <i class="fa-solid fa-image placeholder-icon"></i>
+                
+                <button class="btn-edit-item admin-only" title="Edit item"><i class="fa-solid fa-pen"></i></button>
+            </div>
+            <div class="shop-body">
+                <h2>Coming Soon</h2>
+                <p class="shop-desc"></p>
+                <div class="shop-price-row">
+                    <span class="shop-price">-</span>
+                    <a class="btn-buy" href="https://chat.whatsapp.com/HdmiMmTAYK0INQkH6Dl2T2" target="_blank" rel="noopener">
+                        <i class="fa-solid fa-cart-shopping"></i> Pesan
+                    </a>
+                </div>
+            </div>
+        </div><div class="shop-card" data-index="5">
+            <div class="shop-thumb">
+                <i class="fa-solid fa-image placeholder-icon"></i>
+                
+                <button class="btn-edit-item admin-only" title="Edit item"><i class="fa-solid fa-pen"></i></button>
+            </div>
+            <div class="shop-body">
+                <h2>Coming Soon</h2>
+                <p class="shop-desc"></p>
+                <div class="shop-price-row">
+                    <span class="shop-price">-</span>
+                    <a class="btn-buy" href="https://chat.whatsapp.com/HdmiMmTAYK0INQkH6Dl2T2" target="_blank" rel="noopener">
+                        <i class="fa-solid fa-cart-shopping"></i> Pesan
+                    </a>
+                </div>
+            </div>
+        </div><div class="shop-card" data-index="6">
+            <div class="shop-thumb">
+                <i class="fa-solid fa-image placeholder-icon"></i>
+                
+                <button class="btn-edit-item admin-only" title="Edit item"><i class="fa-solid fa-pen"></i></button>
+            </div>
+            <div class="shop-body">
+                <h2>Coming Soon</h2>
+                <p class="shop-desc"></p>
+                <div class="shop-price-row">
+                    <span class="shop-price">-</span>
+                    <a class="btn-buy" href="https://chat.whatsapp.com/HdmiMmTAYK0INQkH6Dl2T2" target="_blank" rel="noopener">
+                        <i class="fa-solid fa-cart-shopping"></i> Pesan
+                    </a>
+                </div>
+            </div>
+        </div><div class="shop-card" data-index="7">
+            <div class="shop-thumb">
+                <i class="fa-solid fa-image placeholder-icon"></i>
+                
+                <button class="btn-edit-item admin-only" title="Edit item"><i class="fa-solid fa-pen"></i></button>
+            </div>
+            <div class="shop-body">
+                <h2>Coming Soon</h2>
+                <p class="shop-desc"></p>
+                <div class="shop-price-row">
+                    <span class="shop-price">-</span>
+                    <a class="btn-buy" href="https://chat.whatsapp.com/HdmiMmTAYK0INQkH6Dl2T2" target="_blank" rel="noopener">
+                        <i class="fa-solid fa-cart-shopping"></i> Pesan
+                    </a>
+                </div>
+            </div>
+        </div><div class="shop-card" data-index="8">
+            <div class="shop-thumb">
+                <i class="fa-solid fa-image placeholder-icon"></i>
+                
+                <button class="btn-edit-item admin-only" title="Edit item"><i class="fa-solid fa-pen"></i></button>
+            </div>
+            <div class="shop-body">
+                <h2>Coming Soon</h2>
+                <p class="shop-desc"></p>
+                <div class="shop-price-row">
+                    <span class="shop-price">-</span>
+                    <a class="btn-buy" href="https://chat.whatsapp.com/HdmiMmTAYK0INQkH6Dl2T2" target="_blank" rel="noopener">
+                        <i class="fa-solid fa-cart-shopping"></i> Pesan
+                    </a>
+                </div>
+            </div>
+        </div></div>
+
+</main>
+
+<footer>
+
+<div class="footer-content">
+
+<img src="assets/logo.png" class="footer-logo">
+
+<h2>Atlantica Classic V3 Exynos</h2>
+
+<p>The Legendary MMORPG Returns</p>
+
+<div class="footer-menu">
+    <a href="index.html#home">Home</a>
+    <a href="index.html#download">Download</a>
+    <a href="index.html#news">News</a>
+    <a href="index.html#ranking">Ranking</a>
+    <a href="streamer.html">Streamer</a>
+    <a href="shop.html">Shop</a>
+    <a href="https://www.facebook.com/profile.php?id=100065644143073&amp;locale=pa_IN" target="_blank">Facebook</a>
+</div>
+
+<div class="copyright">© Mr 2026 Atlantica Classic V3 Exynos</div>
+
+</div>
+
+</footer>
+
+
+<div class="modal-overlay" id="editModal">
+    <div class="modal-box">
+        <h3><i class="fa-solid fa-pen"></i> Edit Item Shop</h3>
+
+        <div class="field">
+            <label for="fName">Nama Item</label>
+            <input type="text" id="fName" maxlength="60" placeholder="Contoh: Diamond 100 Pcs">
+        </div>
+
+        <div class="field-row-2">
+            <div class="field">
+                <label for="fPrice">Harga</label>
+                <input type="text" id="fPrice" maxlength="30" placeholder="Contoh: Rp 25.000">
+            </div>
+            <div class="field">
+                <label for="fCategory">Kategori (opsional)</label>
+                <input type="text" id="fCategory" maxlength="20" placeholder="Contoh: Diamond">
+            </div>
+        </div>
+
+        <div class="field">
+            <label for="fDesc">Deskripsi (opsional)</label>
+            <textarea id="fDesc" maxlength="140" rows="2" placeholder="Contoh: Bonus 10% untuk pembelian di atas Rp 100.000"></textarea>
+        </div>
+
+        <div class="field">
+            <label for="fLink">Link Order (opsional, kosongkan = pakai WhatsApp default)</label>
+            <input type="url" id="fLink" placeholder="https://wa.me/62xxxxxxxxxx">
+        </div>
+
+        <div class="field">
+            <label>Foto Item</label>
+            <div class="field-photo-row">
+                <div class="field-photo-preview" id="fPhotoPreview"><i class="fa-solid fa-image placeholder-icon"></i></div>
+                <input type="file" id="fPhotoFile" accept="image/*">
+            </div>
+        </div>
+
+        <div class="modal-actions">
+            <button class="btn-cancel" id="btnCancel">Batal</button>
+            <button class="btn-save" id="btnSave">Simpan</button>
+        </div>
+
+        <button class="btn-clear" id="btnRemoveSlot" style="color: var(--coral);">Hapus item ini dari shop</button>
+    </div>
+</div>
+
+<!-- EXYNOS Security Popup -->
+<div id="exynos-popup" style="display: none;">
+    <div class="popup-box">
+
+        <h2 style="margin:0;">
+    🛡️ <span class="emoji">😜</span>
+</h2>
+
+        <h3 style="color:#FFD700;">
+            EXYNOS SECURITY
+        </h3>
+
+        <p>
+            Mau Ngapain Bro? 😜<br>
+            Jangan Nakal Ya.<br>No No Ya.<br>
+        </p>
+
+        <button id="popup-ok">OK</button>
+
+    </div>
+</div>
+
+<!-- ADMIN ACCESS -->
+<button id="adminLockBtn" class="admin-lock-btn" title="Admin aktif — klik untuk keluar"><i class="fa-solid fa-lock-open"></i></button>
+
+<div class="modal-overlay" id="adminModal">
+    <div class="modal-box">
+        <h3><i class="fa-solid fa-lock"></i> Admin Login</h3>
+        <p>Masukkan PIN admin untuk mengaktifkan mode edit di browser ini.</p>
+        <input type="password" id="adminPinInput" placeholder="PIN Admin" maxlength="30">
+        <div class="modal-actions">
+            <button class="btn-cancel" id="adminCancelBtn">Batal</button>
+            <button class="btn-save" id="adminSubmitBtn">Masuk</button>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+ 
+    (function () {
+        const ADMIN_PIN = "EXYNOS3288"; 
+        const ADMIN_KEY = "atlantica_admin_unlocked_v1";
+
+        const adminLockBtn = document.getElementById("adminLockBtn");
+        const adminModal = document.getElementById("adminModal");
+        const adminPinInput = document.getElementById("adminPinInput");
+        const adminCancelBtn = document.getElementById("adminCancelBtn");
+        const adminSubmitBtn = document.getElementById("adminSubmitBtn");
+
+        if (!adminLockBtn || !adminModal) return;
+
+        function isAdminUnlocked() {
+            return localStorage.getItem(ADMIN_KEY) === "1";
+        }
+
+        function applyAdminState() {
+            if (isAdminUnlocked()) {
+                document.body.classList.add("admin-unlocked");
+                adminLockBtn.innerHTML = '<i class="fa-solid fa-lock-open"></i>';
+                adminLockBtn.title = "Admin aktif — klik untuk keluar";
+            } else {
+                document.body.classList.remove("admin-unlocked");
+                adminLockBtn.innerHTML = '<i class="fa-solid fa-lock"></i>';
+                adminLockBtn.title = "Admin";
+            }
+        }
+
+        adminLockBtn.addEventListener("click", function () {
+            if (isAdminUnlocked()) {
+                if (confirm("Keluar dari mode admin di browser ini?")) {
+                    localStorage.removeItem(ADMIN_KEY);
+                    applyAdminState();
+                }
+            } else {
+                adminPinInput.value = "";
+                adminModal.classList.add("open");
+                adminPinInput.focus();
+            }
+        });
+
+        adminCancelBtn.addEventListener("click", function () {
+            adminModal.classList.remove("open");
+        });
+
+        adminModal.addEventListener("click", function (e) {
+            if (e.target === adminModal) adminModal.classList.remove("open");
+        });
+
+        adminSubmitBtn.addEventListener("click", function () {
+            if (adminPinInput.value === ADMIN_PIN) {
+                localStorage.setItem(ADMIN_KEY, "1");
+                adminModal.classList.remove("open");
+                applyAdminState();
+            } else {
+                alert("PIN salah.");
+            }
+        });
+
+        adminPinInput.addEventListener("keydown", function (e) {
+            if (e.key === "Enter") adminSubmitBtn.click();
+        });
+
+        document.addEventListener("keydown", function (e) {
+            if (e.key === "Escape" && adminModal.classList.contains("open")) {
+                adminModal.classList.remove("open");
+            }
+        });
+
+        applyAdminState();
+    })();
+
+    /* ---------- Mobile nav toggle ---------- */
+    const navToggle = document.getElementById("navToggle");
+    const mainNav = document.getElementById("mainNav");
+
+    if (navToggle && mainNav) {
+        function closeNav() {
+            mainNav.classList.remove("open");
+            navToggle.setAttribute("aria-expanded", "false");
+        }
+        function openNav() {
+            mainNav.classList.add("open");
+            navToggle.setAttribute("aria-expanded", "true");
+        }
+        navToggle.addEventListener("click", function () {
+            if (mainNav.classList.contains("open")) closeNav(); else openNav();
+        });
+        mainNav.querySelectorAll("a").forEach(function (link) {
+            link.addEventListener("click", closeNav);
+        });
+        window.addEventListener("resize", function () {
+            if (window.innerWidth > 860) closeNav();
+        });
+    }
+
+   
+
+    const popup = document.getElementById("exynos-popup");
+    const okBtn = document.getElementById("popup-ok");
+    const popupBox = document.querySelector(".popup-box");
+
+    let moveCount = 0;
+
+    function showPopup() {
+        popup.style.display = "flex";
+    }
+
+    function closePopup() {
+        popup.style.display = "none";
+        moveCount = 0;
+        popupBox.style.transform = "translate(0,0)";
+        okBtn.innerText = "OK";
+        okBtn.style.left = "0px";
+        okBtn.style.top = "0px";
+    }
+
+    okBtn.addEventListener("mouseenter", function () {
+        if (moveCount < 6) {
+            const x = Math.random() * 300 - 150;
+            const y = Math.random() * 180 - 90;
+            popupBox.style.transform = `translate(${x}px, ${y}px)`;
+
+            const text = [
+                "🤣 WKWKWK",
+                "😜 Kejar Lagi",
+                "😂 Hampir",
+                "🤭 Hayooo",
+                "😏 Dikit Lagi",
+                "😅 Yaudah..."
+            ];
+
+            okBtn.innerText = text[moveCount];
+            moveCount++;
+        } else {
+            popupBox.style.transform = "translate(0,0)";
+            okBtn.innerText = "OK";
+        }
+    });
+
+    okBtn.addEventListener("click", closePopup);
+
+    // Klik kanan
+    document.addEventListener("contextmenu", function (e) {
+        e.preventDefault();
+        showPopup();
+    });
+
+    
+    document.addEventListener("keydown", function (e) {
+        const key = e.key.toUpperCase();
+        const tag = (e.target && e.target.tagName) || "";
+        const isFormField = tag === "INPUT" || tag === "TEXTAREA";
+
+        if (
+            e.key === "F12" ||
+            (e.ctrlKey && e.shiftKey && ["I", "J", "C"].includes(key)) ||
+            (!isFormField && e.ctrlKey && ["U", "S", "A", "C", "X", "V"].includes(key))
+        ) {
+            e.preventDefault();
+            showPopup();
+        }
+    });
+
+   
+    let devtoolsWarned = false;
+    setInterval(function () {
+        const threshold = 160;
+        const widthGap = window.outerWidth - window.innerWidth;
+        const heightGap = window.outerHeight - window.innerHeight;
+        if ((widthGap > threshold || heightGap > threshold) && !devtoolsWarned) {
+            devtoolsWarned = true;
+            showPopup();
+        }
+        if (widthGap <= threshold && heightGap <= threshold) {
+            devtoolsWarned = false;
+        }
+    }, 1200);
+
+    
+
+    const STORAGE_KEY = "atlantica_shop_items_v1";
+    const DEFAULT_BUY_LINK = "https://chat.whatsapp.com/HdmiMmTAYK0INQkH6Dl2T2";
+
+    function defaultItems() {
+        return [
+          {
+                    "name": "Coming Soon",
+                    "price": "",
+                    "category": "",
+                    "desc": "",
+                    "link": "",
+                    "photo": "assets/shop/item1.jpg"
+          },
+          {
+                    "name": "Coming Soon",
+                    "price": "",
+                    "category": "Rare Item",
+                    "desc": "",
+                    "link": "",
+                    "photo": "assets/shop/item2.jpg"
+          },
+          {
+                    "name": "Coming Soon",
+                    "price": "",
+                    "category": "Rare Item",
+                    "desc": "",
+                    "link": "",
+                    "photo": "assets/shop/item3.jpg"
+          },
+          {
+                    "name": "Coming Soon",
+                    "price": "",
+                    "category": "",
+                    "desc": "",
+                    "link": "",
+                    "photo": ""
+          },
+          {
+                    "name": "Coming Soon",
+                    "price": "",
+                    "category": "",
+                    "desc": "",
+                    "link": "",
+                    "photo": ""
+          },
+          {
+                    "name": "Coming Soon",
+                    "price": "",
+                    "category": "",
+                    "desc": "",
+                    "link": "",
+                    "photo": ""
+          },
+          {
+                    "name": "Coming Soon",
+                    "price": "",
+                    "category": "",
+                    "desc": "",
+                    "link": "",
+                    "photo": ""
+          },
+          {
+                    "name": "Coming Soon",
+                    "price": "",
+                    "category": "",
+                    "desc": "",
+                    "link": "",
+                    "photo": ""
+          },
+          {
+                    "name": "Coming Soon",
+                    "price": "",
+                    "category": "",
+                    "desc": "",
+                    "link": "",
+                    "photo": ""
+          }
+];
+    }
+
+    function loadItems() {
+        try {
+            const raw = localStorage.getItem(STORAGE_KEY);
+            if (!raw) return defaultItems();
+            const parsed = JSON.parse(raw);
+            if (!Array.isArray(parsed) || !parsed.length) return defaultItems();
+            return parsed;
+        } catch (e) {
+            return defaultItems();
+        }
+    }
+
+    function saveItems() {
+        try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+        } catch (e) {
+            console.warn("Gagal menyimpan data shop:", e);
+        }
+    }
+
+    let items = loadItems();
+
+    function escapeHtml(str) {
+        const div = document.createElement("div");
+        div.textContent = str || "";
+        return div.innerHTML;
+    }
+
+    
+    function renderCard(index) {
+        const item = items[index];
+        const isEmpty = !item.name;
+
+        const card = document.createElement("div");
+        card.className = "shop-card" + (isEmpty ? " is-empty" : "");
+        card.dataset.index = index;
+
+        const thumbInner = item.photo
+            ? `<img src="${item.photo}" alt="${escapeHtml(item.name || 'Item shop')}" onerror="this.replaceWith(Object.assign(document.createElement('i'),{className:'fa-solid fa-image placeholder-icon'}))">`
+            : `<i class="fa-solid fa-image placeholder-icon"></i>`;
+
+        const categoryBadge = item.category
+            ? `<span class="shop-category-badge">${escapeHtml(item.category)}</span>`
+            : "";
+
+        const buyHref = item.link || DEFAULT_BUY_LINK;
+
+        card.innerHTML = `
+            <div class="shop-thumb">
+                ${thumbInner}
+                ${categoryBadge}
+                <button class="btn-edit-item admin-only" title="Edit item"><i class="fa-solid fa-pen"></i></button>
+            </div>
+            <div class="shop-body">
+                <h2>${item.name ? escapeHtml(item.name) : "Slot Kosong"}</h2>
+                <p class="shop-desc">${item.desc ? escapeHtml(item.desc) : (isEmpty ? "Klik pensil untuk isi item ini." : "")}</p>
+                <div class="shop-price-row">
+                    <span class="shop-price">${item.price ? escapeHtml(item.price) : "-"}</span>
+                    <a class="btn-buy" href="${isEmpty ? '#' : buyHref}" target="_blank" rel="noopener" ${isEmpty ? 'tabindex="-1"' : ""}>
+                        <i class="fa-solid fa-cart-shopping"></i> Pesan
+                    </a>
+                </div>
+            </div>
+        `;
+
+        card.querySelector(".btn-edit-item").addEventListener("click", function () {
+            openModal(index);
+        });
+
+        return card;
+    }
+
+    function renderAll() {
+        const grid = document.getElementById("shopGrid");
+        grid.innerHTML = "";
+
+        if (!items.length) {
+            grid.innerHTML = '<div class="shop-empty-state">Belum ada item. Klik "Tambah Item Shop" untuk mulai mengisi.</div>';
+            return;
+        }
+
+        items.forEach((item, i) => {
+            grid.appendChild(renderCard(i));
+        });
+    }
+
+    
+    const modal = document.getElementById("editModal");
+    const fName = document.getElementById("fName");
+    const fPrice = document.getElementById("fPrice");
+    const fCategory = document.getElementById("fCategory");
+    const fDesc = document.getElementById("fDesc");
+    const fLink = document.getElementById("fLink");
+    const fPhotoFile = document.getElementById("fPhotoFile");
+    const fPhotoPreview = document.getElementById("fPhotoPreview");
+
+    let editingIndex = null;
+    let editingPhotoData = "";
+
+    function openModal(index) {
+        editingIndex = index;
+        const item = items[index];
+
+        fName.value = item.name || "";
+        fPrice.value = item.price || "";
+        fCategory.value = item.category || "";
+        fDesc.value = item.desc || "";
+        fLink.value = item.link || "";
+        editingPhotoData = item.photo || "";
+        fPhotoPreview.innerHTML = editingPhotoData
+            ? `<img src="${editingPhotoData}" alt="preview">`
+            : `<i class="fa-solid fa-image placeholder-icon"></i>`;
+        fPhotoFile.value = "";
+
+        modal.classList.add("open");
+        fName.focus();
+    }
+
+    function closeModal() {
+        modal.classList.remove("open");
+        editingIndex = null;
+    }
+
+    fPhotoFile.addEventListener("change", function () {
+        const file = fPhotoFile.files[0];
+        if (!file) return;
+
+        if (file.size > 1.5 * 1024 * 1024) {
+            alert("Ukuran foto maksimal 1.5MB ya, biar halaman tetap ringan.");
+            fPhotoFile.value = "";
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            editingPhotoData = e.target.result;
+            fPhotoPreview.innerHTML = `<img src="${editingPhotoData}" alt="preview">`;
+        };
+        reader.readAsDataURL(file);
+    });
+
+    document.getElementById("btnCancel").addEventListener("click", closeModal);
+
+    modal.addEventListener("click", function (e) {
+        if (e.target === modal) closeModal();
+    });
+
+    document.getElementById("btnSave").addEventListener("click", function () {
+        if (editingIndex === null) return;
+
+        items[editingIndex] = {
+            name: fName.value.trim(),
+            price: fPrice.value.trim(),
+            category: fCategory.value.trim(),
+            desc: fDesc.value.trim(),
+            link: fLink.value.trim(),
+            photo: editingPhotoData
+        };
+
+        saveItems();
+        renderAll();
+        closeModal();
+    });
+
+    document.getElementById("btnRemoveSlot").addEventListener("click", function () {
+        if (editingIndex === null) return;
+        if (!confirm("Hapus item ini sepenuhnya dari shop? Item yang sudah dihapus tidak bisa dikembalikan.")) return;
+
+        items.splice(editingIndex, 1);
+        saveItems();
+        renderAll();
+        closeModal();
+    });
+
+    
+    document.getElementById("addItemBtn").addEventListener("click", function () {
+        items.push({ name: "", price: "", category: "", desc: "", photo: "", link: "" });
+        saveItems();
+        renderAll();
+
+        
+        openModal(items.length - 1);
+    });
+
+    document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && modal.classList.contains("open")) closeModal();
+    });
+
+    renderAll();
+
+    
+    const downloadShopBtn = document.getElementById("downloadShopBtn");
+
+    if (downloadShopBtn) {
+        downloadShopBtn.addEventListener("click", function () {
+
+            
+            closeModal();
+            if (mainNav) mainNav.classList.remove("open");
+            if (navToggle) navToggle.setAttribute("aria-expanded", "false");
+            const securityPopup = document.getElementById("exynos-popup");
+            if (securityPopup) securityPopup.style.display = "none";
+
+            let htmlContent = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+
+            
+            const itemsJson = JSON.stringify(items, null, 12).replace(/<\/script/gi, "<\\/script");
+            htmlContent = htmlContent.replace(
+                /function defaultItems\(\) \{[\s\S]*?\n    \}/,
+                function () { return "function defaultItems() {\n        return " + itemsJson + ";\n    }"; }
+            );
+
+            const blob = new Blob([htmlContent], { type: "text/html" });
+            const url = URL.createObjectURL(blob);
+
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "shop.html";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        });
+    }
+
+});
+</script>
+
+
+
+</body></html>
